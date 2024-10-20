@@ -4,14 +4,27 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance; //constant across all projects, usable in other scripts
     [SerializeField] int moveSpeed = 1;
     [SerializeField] Rigidbody2D playerRigidBody;
     [SerializeField] Animator playerAnimator;
 
+    public string transitionAreaName; //given by area exits to give Player correct new position (by area entries)
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        //singelton pattern --> avoid duplicate Players in new scenes
+        if(instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+
+        DontDestroyOnLoad(gameObject); //gameObject == Player --> does not get destroyed when entering new scene 
     }
 
     // Update is called once per frame
