@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class Player : MonoBehaviour
     [SerializeField] Animator playerAnimator;
 
     public string transitionAreaName; //given by area exits to give Player correct new position (by area entries)
+
+    private Vector3 bottomLeftEdge;
+    private Vector3 topRightEdge;
+
+    [SerializeField] Tilemap tilemap; //the background one the should not leave
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +31,10 @@ public class Player : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject); //gameObject == Player --> does not get destroyed when entering new scene 
+
+        //limits for player movement based on current tilemap
+        bottomLeftEdge = tilemap.localBounds.min + new Vector3(0.5f, 0.75f, 0f); //+small offset
+        topRightEdge = tilemap.localBounds.max + new Vector3(-0.5f, -0.75f, 0f); //+small offset
     }
 
     // Update is called once per frame
@@ -43,5 +53,13 @@ public class Player : MonoBehaviour
             playerAnimator.SetFloat("lastX", horizontalMovement);
             playerAnimator.SetFloat("lastY", verticalMovement);
         }
+
+        //make sure player cannot leave scene
+        transform.position = new Vector3(
+            // keep player inside min-max position values based on tileset 
+            Mathf.Clamp(transform.position.x, bottomLeftEdge.x, topRightEdge.x),
+            Mathf.Clamp(transform.position.y, bottomLeftEdge.y, topRightEdge.y),
+            Mathf.Clamp(transform.position.z, bottomLeftEdge.z, topRightEdge.z)
+        );
     }
 }
