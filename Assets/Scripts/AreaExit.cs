@@ -26,7 +26,14 @@ public class AreaExit : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             Player.instance.transitionAreaName = transitionAreaName; // make Players transition name to this area exits transition name
-            SceneManager.LoadScene(sceneToLoad);
+            MenuManager.instance.FadeImage();
+            StartCoroutine(LoadSceneCoroutine()); // call defined coroutine (IEnumerator) with StartCoroutine
         }
+    }
+
+    IEnumerator LoadSceneCoroutine() // IEnumerator --> Coroutine --> hold (yield) process until certain condition is met
+    {
+        yield return new WaitForSeconds(1f);//wait 1sec before loading new scene, so Fade_End animation can play out 
+        SceneManager.LoadScene(sceneToLoad);
     }
 }

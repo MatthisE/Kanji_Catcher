@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
-    public static Player instance; //constant across all projects, usable in other scripts
+    public static Player instance; //constant across all projects, makes Player functions and vars usable in other scripts
     [SerializeField] int moveSpeed = 1;
     [SerializeField] Rigidbody2D playerRigidBody;
     [SerializeField] Animator playerAnimator;
@@ -14,8 +13,6 @@ public class Player : MonoBehaviour
 
     private Vector3 bottomLeftEdge;
     private Vector3 topRightEdge;
-
-    [SerializeField] Tilemap tilemap; //the background one the should not leave
 
     // Start is called before the first frame update
     void Start()
@@ -31,10 +28,6 @@ public class Player : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject); //gameObject == Player --> does not get destroyed when entering new scene 
-
-        //limits for player movement based on current tilemap
-        bottomLeftEdge = tilemap.localBounds.min + new Vector3(0.5f, 0.75f, 0f); //+small offset
-        topRightEdge = tilemap.localBounds.max + new Vector3(-0.5f, -0.75f, 0f); //+small offset
     }
 
     // Update is called once per frame
@@ -61,5 +54,12 @@ public class Player : MonoBehaviour
             Mathf.Clamp(transform.position.y, bottomLeftEdge.y, topRightEdge.y),
             Mathf.Clamp(transform.position.z, bottomLeftEdge.z, topRightEdge.z)
         );
+    }
+
+    // Method to accept the bottomLeftEdge and topRightEdge (called in LevelManager)
+    public void SetLimit(Vector3 bottomEdgeToSet, Vector3 topEdgeToSet)
+    {
+        bottomLeftEdge = bottomEdgeToSet;
+        topRightEdge = topEdgeToSet;
     }
 }
