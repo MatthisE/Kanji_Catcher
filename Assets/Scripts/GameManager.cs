@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [SerializeField] PlayerStats[] playerStats;
+
+    public bool gameMenuOpened, dialogBoxOpened; // considtions for player to stop moving
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +30,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // check if Player should stay still
+        if(gameMenuOpened || dialogBoxOpened)
+        {
+            Player.instance.deactivateMovement = true;
+        }else
+        {
+            Player.instance.deactivateMovement = false;
+        }
     }
 }

@@ -36,7 +36,7 @@ public class DialogController : MonoBehaviour
                     if(currentSentence >= dialogSentences.Length)
                     {
                         dialogBox.SetActive(false);
-                        Player.instance.deactivateMovement = false;
+                        GameManager.instance.dialogBoxOpened = false;
                     }
                     else
                     {
@@ -63,7 +63,7 @@ public class DialogController : MonoBehaviour
         dialogBox.SetActive(true);
 
         dialogJustStarted = true;
-        Player.instance.deactivateMovement = true;
+        GameManager.instance.dialogBoxOpened = true; //set condition for player to stop moving
     }
 
     // if a dialog line starts with hashtag, its a name. Check for name before going to next line in dialog
