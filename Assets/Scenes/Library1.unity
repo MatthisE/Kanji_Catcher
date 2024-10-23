@@ -855,8 +855,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8395785279682171498, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1332890780}
   m_SourcePrefab: {fileID: 100100000, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
+--- !u!1 &1332890779 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8395785279682171498, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
+  m_PrefabInstance: {fileID: 1332890778}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1332890780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332890779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5b3cfc0bc67df4c8c8448d37c83f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: Jimmy
+  playerLevel: 1
+  currentXP: 36
+  maxHP: 100
+  currentHP: 0
+  maxMana: 30
+  currentMana: 0
+  dexterity: 10
+  defence: 30
 --- !u!1001 &1454408224
 PrefabInstance:
   m_ObjectHideFlags: 0

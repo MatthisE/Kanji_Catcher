@@ -28,7 +28,6 @@ public class Player : MonoBehaviour
         {
             instance = this;
         }
-
         DontDestroyOnLoad(gameObject); //gameObject == Player --> does not get destroyed when entering new scene 
     }
 
