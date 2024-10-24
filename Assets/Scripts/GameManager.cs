@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] PlayerStats[] playerStats;
 
-    public bool gameMenuOpened, dialogBoxOpened; // considtions for player to stop moving
+    public bool gameMenuOpened, dialogBoxOpened; // conditions for player to stop moving
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         playerStats = FindObjectsOfType<PlayerStats>(); // add all objects that have a PlayerStats script to playerStats Array
+        Array.Reverse(playerStats); // revert array because it adds object in the wrong order
     }
 
     // Update is called once per frame
@@ -38,5 +40,10 @@ public class GameManager : MonoBehaviour
         {
             Player.instance.deactivateMovement = false;
         }
+    }
+
+    public PlayerStats[] GetPlayerStats()
+    {
+        return playerStats;
     }
 }
