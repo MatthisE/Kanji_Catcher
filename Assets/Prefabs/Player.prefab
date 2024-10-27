@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8220451204474045275}
   - component: {fileID: 7502847855001683380}
   - component: {fileID: 300189904936576933}
+  - component: {fileID: 5843296251898086296}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -176,7 +177,7 @@ MonoBehaviour:
   playerRigidBody: {fileID: 8220451204474045275}
   playerAnimator: {fileID: 300189904936576933}
   transitionAreaName: 
-  tilemap: {fileID: 0}
+  deactivateMovement: 0
 --- !u!95 &300189904936576933
 Animator:
   serializedVersion: 5
@@ -198,3 +199,28 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5843296251898086296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8395785279682171498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db5b3cfc0bc67df4c8c8448d37c83f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: Jimmy
+  characterImage: {fileID: -1787128002, guid: 04baaec2164f6b748a81c9bb01d8dd73, type: 3}
+  maxLevel: 50
+  playerLevel: 1
+  currentXP: 36
+  xpForNextLevel: 
+  baseLevelXP: 100
+  maxHP: 100
+  currentHP: 0
+  maxMana: 30
+  currentMana: 0
+  dexterity: 10
+  defence: 30

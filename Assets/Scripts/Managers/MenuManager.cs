@@ -23,6 +23,12 @@ public class MenuManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI statName, statHP, statMana;
     [SerializeField] Image characterSatImage;
 
+    [SerializeField] GameObject itemSlotContainer; // items button prefab
+    [SerializeField] Transform itemSlotContainerParent; // items display panel
+
+    public TextMeshProUGUI itemName, itemDescription;
+    public ItemsManager activeItem;
+
 
     private void Start()
     {
@@ -94,6 +100,48 @@ public class MenuManager : MonoBehaviour
         statMana.text =  playerSelected.currentMana.ToString() + "/" + playerSelected.maxMana.ToString();
 
         characterSatImage.sprite = playerSelected.characterImage;
+    }
+
+    // on click on items button:
+    public void UpdateItemsInventory()
+    {
+        foreach(Transform itemSlot in itemSlotContainerParent)
+        {
+            Destroy(itemSlot.gameObject); //destroy all previous item slots to not have doubles
+        }
+
+        foreach(ItemsManager item in Inventory.instance.GetItemsList())
+        {
+            // make each item in inventory a slot in items menu
+            RectTransform itemSlot = Instantiate(itemSlotContainer, itemSlotContainerParent).GetComponent<RectTransform>(); // Instantiate --> makes first value a child of the second value, then get that slot as a value
+
+            Image itemImage = itemSlot.Find("Items Image").GetComponent<Image>(); // get the image of the slot
+            itemImage.sprite = item.itemsImage; // set the image of the slot to the image of item in inventory
+
+            TextMeshProUGUI itemsAmountText = itemSlot.Find("Amount Text").GetComponent<TextMeshProUGUI>();
+            if(item.amount > 1)
+            {
+                itemsAmountText.text = item.amount.ToString();
+            }
+            else
+            {
+                itemsAmountText.text = "";
+            }
+
+            itemSlot.GetComponent<ItemButton>().itemOnButton = item;
+        }
+    }
+
+    public void DiscardItem()
+    {
+        Inventory.instance.RemoveItem(activeItem);
+        UpdateItemsInventory();
+    }
+
+    public void UseItem()
+    {
+        activeItem.UseItem();
+        DiscardItem();
     }
 
     public void QuitGame()

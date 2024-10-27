@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
+    public static PlayerStats instance;
     public string playerName;
     public Sprite characterImage;
 
@@ -26,6 +27,8 @@ public class PlayerStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
+
         // fill the xpForEachLevel array
         xpForNextLevel = new int[maxLevel];
         xpForNextLevel[1] = baseLevelXP;
@@ -66,6 +69,24 @@ public class PlayerStats : MonoBehaviour
             currentHP = maxHP;
 
             maxMana = Mathf.FloorToInt(maxMana * 1.06f);
+            currentMana = maxMana;
+        }
+    }
+
+    public void AddHP(int amountHPToAdd)
+    {
+        currentHP += amountHPToAdd;
+        if(currentHP > maxHP)
+        {
+            currentHP = maxHP;
+        }
+    }
+
+    public void AddMana(int amountManaToAdd)
+    {
+        currentMana += amountManaToAdd;
+        if(currentMana > maxMana)
+        {
             currentMana = maxMana;
         }
     }
