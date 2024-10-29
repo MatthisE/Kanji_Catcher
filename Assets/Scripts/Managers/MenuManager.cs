@@ -136,12 +136,16 @@ public class MenuManager : MonoBehaviour
     {
         Inventory.instance.RemoveItem(activeItem);
         UpdateItemsInventory();
+        AudioManager.instance.PlaySFX(3);
     }
 
     public void UseItem()
     {
         activeItem.UseItem();
-        DiscardItem();
+        
+        Inventory.instance.RemoveItem(activeItem);
+        UpdateItemsInventory();
+        AudioManager.instance.PlaySFX(8);
     }
 
     public void QuitGame()

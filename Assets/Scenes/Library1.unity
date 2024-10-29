@@ -215,30 +215,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff9f8ba8f2cb4df4ebf8b500a0c20c6f, type: 3}
---- !u!1 &238865702 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6831482827386924770, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
-  m_PrefabInstance: {fileID: 8193349973225923470}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &238865706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 238865702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcb658382296494478e8a1abdda6b891, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questNames:
-  - 
-  - Defeat Dragon
-  - Enter Cave
-  - Steal Gem
-  - Take Monster Soul
-  questMarkersCompleted: 
 --- !u!1 &317311059
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,6 +915,10 @@ PrefabInstance:
     - target: {fileID: 4666616608547527486, guid: 3a913f5e01f0df34ea339ecf9667c3fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7576455856415432111, guid: 3a913f5e01f0df34ea339ecf9667c3fe, type: 3}
+      propertyPath: musicToPlay
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7333,6 +7313,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 038bfe99bc2882b41a0ac1400ebdfb93, type: 3}
+--- !u!1001 &3506509805390593699
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4250226256655814990, guid: 53df45d0312309748ac68302e78fdd1e, type: 3}
+      propertyPath: m_Name
+      value: Audio Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103648590256479911, guid: 53df45d0312309748ac68302e78fdd1e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103648590256479911, guid: 53df45d0312309748ac68302e78fdd1e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103648590256479911, guid: 53df45d0312309748ac68302e78fdd1e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103648590256479911, guid: 53df45d0312309748ac68302e78fdd1e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103648590256479911, guid: 53df45d0312309748ac68302e78fdd1e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103648590256479911, guid: 53df45d0312309748ac68302e78fdd1e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103648590256479911, guid: 53df45d0312309748ac68302e78fdd1e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103648590256479911, guid: 53df45d0312309748ac68302e78fdd1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103648590256479911, guid: 53df45d0312309748ac68302e78fdd1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103648590256479911, guid: 53df45d0312309748ac68302e78fdd1e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 53df45d0312309748ac68302e78fdd1e, type: 3}
 --- !u!1001 &4540011343017916744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7689,22 +7726,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6492657526942526961, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
-      propertyPath: itemsAvailable.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6492657526942526961, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
-      propertyPath: itemsAvailable.Array.data[0]
-      value: 
-      objectReference: {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
-    - target: {fileID: 6492657526942526961, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
-      propertyPath: itemsAvailable.Array.data[1]
-      value: 
-      objectReference: {fileID: 8085695656425136084, guid: a88d37f965e00dd46933930aa3ac6751, type: 3}
-    - target: {fileID: 6492657526942526961, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
-      propertyPath: itemsAvailable.Array.data[2]
-      value: 
-      objectReference: {fileID: 3812089311744145277, guid: 0f933a5697787644e8fde9adece4f63b, type: 3}
     - target: {fileID: 6831482827386924770, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
       propertyPath: m_Name
       value: Game Manager
@@ -7712,10 +7733,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6831482827386924770, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 238865706}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -7733,3 +7751,4 @@ SceneRoots:
   - {fileID: 1033941299}
   - {fileID: 975399466}
   - {fileID: 1094263553}
+  - {fileID: 3506509805390593699}
