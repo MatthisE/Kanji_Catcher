@@ -23,6 +23,9 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] BattleMoves[] battleMovesList;
 
+    [SerializeField] ParticleSystem characterAttackEffect;
+    [SerializeField] CharacterDamageGUI damageText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -155,8 +158,8 @@ public class BattleManager : MonoBehaviour
 
     private void UpdateBattle()
     {
-        bool allEnemiesAreDead = false;
-        bool playerIsDead = false;
+        bool allEnemiesAreDead = true;
+        bool playerIsDead = true;
 
         // check HP of all active characters
         for(int i = 0; i < activeCharacters.Count; i++)
@@ -214,18 +217,65 @@ public class BattleManager : MonoBehaviour
 
     private void EnemyAttack()
     {
-        int selectedAttack = Random.Range(0, activeCharacters[currentTurn].AttackMovesAvailable().Length);
+        int selectedAttack = Random.Range(0, activeCharacters[currentTurn].AttackMovesAvailable().Length); // select random move of enemy
+        int movePower = 0;
 
         for(int i = 0; i < battleMovesList.Length; i++)
         {
-            if(battleMovesList[i].moveName == activeCharacters[currentTurn].AttackMovesAvailable()[selectedAttack]) // if battle manager has move of active chara
+            if(battleMovesList[i].moveName == activeCharacters[currentTurn].AttackMovesAvailable()[selectedAttack]) // if battle manager has move of active enemy
             {
                 Instantiate(
                     battleMovesList[i].effectToUse,
                     activeCharacters[0].transform.position, // position of player
                     activeCharacters[0].transform.rotation
                 );
+
+                movePower = battleMovesList[i].movePower; // set power of attack
             }
         }
+
+        // instantiating the particle effect on the attacking character
+        Instantiate(
+            characterAttackEffect,
+            activeCharacters[currentTurn].transform.position,
+            activeCharacters[currentTurn].transform.rotation
+        );
+
+        DealDamageToCharacters(0, movePower); // attack player (at position 0 of activeCharacters)
+    }
+
+    private void DealDamageToCharacters(int selectedCharacterToAttack, int movePower)
+    {
+        float attackPower = activeCharacters[currentTurn].dexterity; // power of current chara
+        float defenceAmount = activeCharacters[selectedCharacterToAttack].dexterity; // defence of chara to be attacked
+
+        float damageAmount = (attackPower / defenceAmount) * movePower * Random.Range(0.9f, 1.1f);
+        int damageToGive = (int)damageAmount;
+
+        damageToGive = CalculateCritical(damageToGive);
+
+        Debug.Log(activeCharacters[currentTurn].characterName + " just dealt " + damageAmount + "(" + damageToGive + ") to " + activeCharacters[selectedCharacterToAttack]);
+
+        activeCharacters[selectedCharacterToAttack].TakeHPDamage(damageToGive); // give chara damage
+
+        CharacterDamageGUI characterDamageText = Instantiate(
+            damageText,
+            activeCharacters[selectedCharacterToAttack].transform.position,
+            activeCharacters[selectedCharacterToAttack].transform.rotation
+        );
+
+        characterDamageText.SetDamage(damageToGive);
+    }
+
+    private int CalculateCritical(int damageToGive)
+    {
+        if(Random.value <= 0.8f) // this needs to change to 0.1f
+        {
+            Debug.Log("CRITICAL HIT!! instead of " + damageToGive + " points " + (damageToGive * 2) + " was dealt.");
+
+            return (damageToGive * 2);
+        }
+
+        return damageToGive;
     }
 }

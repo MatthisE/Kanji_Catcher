@@ -1081,6 +1081,8 @@ MonoBehaviour:
     movePower: 40
     manaCost: 400
     effectToUse: {fileID: 8071438814915944815, guid: 2d85cfc2eb642ee469462c50186e378b, type: 3}
+  characterAttackEffect: {fileID: 1376425950566678425, guid: e38f560910a74714d96882a1032f7b4e, type: 3}
+  damageText: {fileID: -2804553569871909716, guid: af88637250d721549b190099ea79d18e, type: 3}
 --- !u!4 &726964127
 Transform:
   m_ObjectHideFlags: 0
@@ -1818,10 +1820,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7502847855001683380, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
-      propertyPath: tilemap
-      value: 
-      objectReference: {fileID: 6566695244756012263}
     - target: {fileID: 8395785279682171498, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
       propertyPath: m_Name
       value: Player
@@ -9348,6 +9346,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1302233184287721426, guid: 172bf7e85a4ac5142bae96e7efc7c233, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3373720152748856316, guid: 172bf7e85a4ac5142bae96e7efc7c233, type: 3}
+      propertyPath: currentHP
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3700900799473777929, guid: 172bf7e85a4ac5142bae96e7efc7c233, type: 3}
