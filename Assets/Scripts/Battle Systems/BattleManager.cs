@@ -1,4 +1,4 @@
-using System;
+//using System;  --> comment System out so you can use Random
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +20,8 @@ public class BattleManager : MonoBehaviour
     [SerializeField] int currentTurn; // does not need to be serialized field
     [SerializeField] bool waitingForTurn; // does not need to be serialized field
     [SerializeField] GameObject UIButtonHolder;
+
+    [SerializeField] BattleMoves[] battleMovesList;
 
     // Start is called before the first frame update
     void Start()
@@ -212,6 +214,18 @@ public class BattleManager : MonoBehaviour
 
     private void EnemyAttack()
     {
-        
+        int selectedAttack = Random.Range(0, activeCharacters[currentTurn].AttackMovesAvailable().Length);
+
+        for(int i = 0; i < battleMovesList.Length; i++)
+        {
+            if(battleMovesList[i].moveName == activeCharacters[currentTurn].AttackMovesAvailable()[selectedAttack]) // if battle manager has move of active chara
+            {
+                Instantiate(
+                    battleMovesList[i].effectToUse,
+                    activeCharacters[0].transform.position, // position of player
+                    activeCharacters[0].transform.rotation
+                );
+            }
+        }
     }
 }

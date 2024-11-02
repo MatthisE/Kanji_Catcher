@@ -119,5 +119,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6339df088996b4da2d106783ce0440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectTime: 0.45
+  effectTime: 1
   SFXNumberToPlay: 7
