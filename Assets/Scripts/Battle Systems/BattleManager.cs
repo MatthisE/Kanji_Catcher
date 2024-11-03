@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class BattleManager : MonoBehaviour
 {
@@ -25,6 +27,10 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] ParticleSystem characterAttackEffect;
     [SerializeField] CharacterDamageGUI damageText;
+
+    [SerializeField] GameObject[] playersBattleStats;
+    [SerializeField] TextMeshProUGUI[] playersNameText; // just has 1 entry
+    [SerializeField] Slider[] playerHealthSlider, playerManaSlider; // just has 1 entry
 
     // Start is called before the first frame update
     void Start()
@@ -87,8 +93,10 @@ public class BattleManager : MonoBehaviour
 
             AddingEnemies(enemiesToSpawn);
 
+            UpdatePlayerStats(); // the UI
+
             waitingForTurn = true;
-            currentTurn = 0; // Random.Range(0, activeCharacters.Count);
+            currentTurn = 0; // or: Random.Range(0, activeCharacters.Count);
         }
     }
 
@@ -154,6 +162,8 @@ public class BattleManager : MonoBehaviour
 
         waitingForTurn = true;
         UpdateBattle();
+
+        UpdatePlayerStats(); // the UI
     }
 
     private void UpdateBattle()
@@ -202,6 +212,18 @@ public class BattleManager : MonoBehaviour
             GameManager.instance.battleIsActive = false;
             isBattleActive = false;
         }
+        else
+        {
+            // if a character is dead, skip his turn
+            while(activeCharacters[currentTurn].currentHP == 0)
+            {
+                currentTurn++;
+                if(currentTurn >= activeCharacters.Count)
+                {
+                    currentTurn = 0;
+                }
+            }
+        }
     }
 
     public IEnumerator EnemyMoveCoroutine()
@@ -242,6 +264,8 @@ public class BattleManager : MonoBehaviour
         );
 
         DealDamageToCharacters(0, movePower); // attack player (at position 0 of activeCharacters)
+
+        UpdatePlayerStats(); // the UI
     }
 
     private void DealDamageToCharacters(int selectedCharacterToAttack, int movePower)
@@ -277,5 +301,38 @@ public class BattleManager : MonoBehaviour
         }
 
         return damageToGive;
+    }
+
+    public void UpdatePlayerStats()
+    {
+        for(int i = 0; i < playersNameText.Length; i++)
+        {
+            if(activeCharacters.Count > i)
+            {
+                if(activeCharacters[i].IsPlayer())
+                {
+                    BattleCharacters playerData = activeCharacters[i]; // get player chara
+
+                    // put player info in stats UI
+                    playersNameText[i].text = playerData.characterName;
+
+                    playerHealthSlider[i].maxValue = playerData.maxHP;
+                    playerHealthSlider[i].value = playerData.currentHP;
+
+                    playerManaSlider[i].maxValue = playerData.maxMana;
+                    playerManaSlider[i].value = playerData.currentMana;
+                }
+                else
+                {
+                    // turn off player
+                    playersBattleStats[i].gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                // turn off player if you have less active charas than texts
+                playersBattleStats[i].gameObject.SetActive(false);
+            }
+        }
     }
 }

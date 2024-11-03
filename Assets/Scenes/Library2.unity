@@ -1083,6 +1083,14 @@ MonoBehaviour:
     effectToUse: {fileID: 8071438814915944815, guid: 2d85cfc2eb642ee469462c50186e378b, type: 3}
   characterAttackEffect: {fileID: 1376425950566678425, guid: e38f560910a74714d96882a1032f7b4e, type: 3}
   damageText: {fileID: -2804553569871909716, guid: af88637250d721549b190099ea79d18e, type: 3}
+  playersBattleStats:
+  - {fileID: 387371576}
+  playersNameText:
+  - {fileID: 999582377}
+  playerHealthSlider:
+  - {fileID: 1861823518}
+  playerManaSlider:
+  - {fileID: 1670198506}
 --- !u!4 &726964127
 Transform:
   m_ObjectHideFlags: 0
