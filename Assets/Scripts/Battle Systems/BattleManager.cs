@@ -39,6 +39,17 @@ public class BattleManager : MonoBehaviour
     public GameObject magicChoicePanel;
     [SerializeField] BattleMagicButtons[] magicButtons;
 
+    public BattleNotifications battleNotice;
+
+    [SerializeField] float chanceToRunAway = 0.5f;
+
+    public GameObject itemsToUseMenu;
+    [SerializeField] ItemsManager selectedItem;
+    [SerializeField] GameObject itemSlotContainer;
+    [SerializeField] Transform itemSlotContainerParent;
+    [SerializeField] TextMeshProUGUI itemName, itemDescription;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -442,4 +453,80 @@ public class BattleManager : MonoBehaviour
         return activeCharacters[currentTurn];
     }
 
+    public void RunAway()
+    {
+        if(Random.value > chanceToRunAway)
+        {
+            isBattleActive = false;
+            battleScene.SetActive(false);
+        }
+        else
+        {
+            NextTurn();
+            battleNotice.SetText("You failed to run away.");
+            battleNotice.Activate();
+        }
+    }
+
+    public void UpdateItemsInInventory()
+    {
+        itemsToUseMenu.SetActive(true);
+
+        // same as in Menu Manager
+        foreach(Transform itemSlot in itemSlotContainerParent)
+        {
+            Destroy(itemSlot.gameObject); //destroy all previous item slots to not have doubles
+        }
+
+        foreach(ItemsManager item in Inventory.instance.GetItemsList())
+        {
+            // make each item in inventory a slot in items menu
+            RectTransform itemSlot = Instantiate(itemSlotContainer, itemSlotContainerParent).GetComponent<RectTransform>(); // Instantiate --> makes first value a child of the second value, then get that slot as a value
+
+            Image itemImage = itemSlot.Find("Items Image").GetComponent<Image>(); // get the image of the slot
+            itemImage.sprite = item.itemsImage; // set the image of the slot to the image of item in inventory
+
+            TextMeshProUGUI itemsAmountText = itemSlot.Find("Amount Text").GetComponent<TextMeshProUGUI>();
+            if(item.amount > 1)
+            {
+                itemsAmountText.text = item.amount.ToString();
+            }
+            else
+            {
+                itemsAmountText.text = "";
+            }
+
+            itemSlot.GetComponent<ItemButton>().itemOnButton = item;
+        }
+    }
+
+    public void SelectedItemToUse(ItemsManager itemToUse)
+    {
+        selectedItem = itemToUse;
+        itemName.text = itemToUse.itemName;
+        itemDescription.text = itemToUse.itemDescription;
+    }
+
+    public void UseItemButton()
+    {
+        if(selectedItem)
+        {
+            activeCharacters[0].UseItemInBattle(selectedItem);
+            Inventory.instance.RemoveItem(selectedItem);
+
+            UpdatePlayerStats();
+
+            CloseItemsMenu();
+            UpdateItemsInInventory();
+
+        }
+        else{
+            print("No item selected.");
+        }
+    }
+
+    public void CloseItemsMenu()
+    {
+        itemsToUseMenu.SetActive(false);
+    }
 }

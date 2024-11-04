@@ -23,15 +23,36 @@ public class BattleCharacters : MonoBehaviour
 
     public void TakeHPDamage(int damageToReceive)
     {
-        Debug.Log("From " + currentHP);
-
         currentHP -= damageToReceive;
 
         if(currentHP < 0)
         {
             currentHP = 0;
         }
+    }
 
-        Debug.Log(" to " + currentHP);
+    public void UseItemInBattle(ItemsManager itemToUse)
+    {
+        if(itemToUse.itemType == ItemsManager.ItemType.Item)
+        {
+            if(itemToUse.affectType == ItemsManager.AffectType.HP)
+            {
+                AddHP(itemToUse.amountOfAffect);
+            }
+            else if(itemToUse.affectType == ItemsManager.AffectType.Mana)
+            {
+                AddMana(itemToUse.amountOfAffect);
+            }
+        }
+    }
+
+    private void AddHP(int amountOfAffect)
+    {
+        currentHP += amountOfAffect;
+    }
+
+    private void AddMana(int amountOfAffect)
+    {
+        currentMana += amountOfAffect;
     }
 }
