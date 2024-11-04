@@ -220,7 +220,7 @@ MonoBehaviour:
   baseLevelXP: 100
   maxHP: 200
   currentHP: 200
-  maxMana: 30
-  currentMana: 30
+  maxMana: 500
+  currentMana: 500
   dexterity: 10
   defence: 30

@@ -45,12 +45,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 1
-  attacksAvailable: []
+  attacksAvailable:
+  - Laser
+  - Blue Fireball
+  - Lightning
   characterName: Jimmy
   currentHP: 0
-  maxHP: 0
+  maxHP: 100
   currentMana: 0
-  maxMana: 0
-  dexterity: 0
-  defence: 0
+  maxMana: 30
+  dexterity: 10
+  defence: 30
   isDead: 0

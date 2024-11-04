@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class BattleManager : MonoBehaviour
 {
@@ -31,6 +32,12 @@ public class BattleManager : MonoBehaviour
     [SerializeField] GameObject[] playersBattleStats;
     [SerializeField] TextMeshProUGUI[] playersNameText; // just has 1 entry
     [SerializeField] Slider[] playerHealthSlider, playerManaSlider; // just has 1 entry
+
+    [SerializeField] GameObject enemyTargetPanel;
+    [SerializeField] BattleTargetButtons[] targetButtons;
+
+    public GameObject magicChoicePanel;
+    [SerializeField] BattleMagicButtons[] magicButtons;
 
     // Start is called before the first frame update
     void Start()
@@ -246,26 +253,25 @@ public class BattleManager : MonoBehaviour
         {
             if(battleMovesList[i].moveName == activeCharacters[currentTurn].AttackMovesAvailable()[selectedAttack]) // if battle manager has move of active enemy
             {
-                Instantiate(
-                    battleMovesList[i].effectToUse,
-                    activeCharacters[0].transform.position, // position of player
-                    activeCharacters[0].transform.rotation
-                );
-
-                movePower = battleMovesList[i].movePower; // set power of attack
+                movePower = GettingMovePowerAndEffectInstantiation(0, i); // 0 --> player as target
             }
         }
 
+        InstantiateEffectOnAttackingCharacter();
+
+        DealDamageToCharacters(0, movePower); // attack player (at position 0 of activeCharacters)
+
+        UpdatePlayerStats(); // the UI
+    }
+
+    private void InstantiateEffectOnAttackingCharacter()
+    {
         // instantiating the particle effect on the attacking character
         Instantiate(
             characterAttackEffect,
             activeCharacters[currentTurn].transform.position,
             activeCharacters[currentTurn].transform.rotation
         );
-
-        DealDamageToCharacters(0, movePower); // attack player (at position 0 of activeCharacters)
-
-        UpdatePlayerStats(); // the UI
     }
 
     private void DealDamageToCharacters(int selectedCharacterToAttack, int movePower)
@@ -335,4 +341,105 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+
+    // Player Attacking Methods
+    public void PlayerAttack(string moveName, int selectEnemyTarget)
+    {
+        //int selectEnemyTarget = 1;
+        int movePower = 0;
+
+        for(int i = 0; i < battleMovesList.Length; i++)
+        {
+            if(battleMovesList[i].moveName == moveName) // if battle manager has move of player
+            {
+                movePower = GettingMovePowerAndEffectInstantiation(selectEnemyTarget, i);
+            }
+        }
+
+        InstantiateEffectOnAttackingCharacter();
+
+        DealDamageToCharacters(selectEnemyTarget, movePower);
+
+        NextTurn();
+
+        enemyTargetPanel.SetActive(false);
+    }
+
+    public void OpenTargetMenu(string moveName)
+    {
+        enemyTargetPanel.SetActive(true); // activate enemy target select panel
+
+        // create list of all the enemies 
+        List<int> Enemies = new List<int>();
+
+        for(int i = 0; i < activeCharacters.Count; i++)
+        {
+            if(!activeCharacters[i].IsPlayer())
+            {
+                Enemies.Add(i);
+            }
+        }
+
+        //Debug.Log(Enemies.Count);
+
+        for(int i = 0; i < targetButtons.Length; i++)
+        {
+            if(Enemies.Count > i) // make sure you have enemies for the target buttons
+            {
+                targetButtons[i].gameObject.SetActive(true);
+                targetButtons[i].moveName = moveName; // set move name for the player attack
+                targetButtons[i].activeBattleTarget = Enemies[i];
+                targetButtons[i].targetName.text = activeCharacters[Enemies[i]].characterName;
+            }
+        }
+    }
+
+    private int GettingMovePowerAndEffectInstantiation(int selectedCharacterTarget, int i)
+    {
+        int movePower;
+
+        Instantiate(
+            battleMovesList[i].effectToUse,
+            activeCharacters[selectedCharacterTarget].transform.position, // position of selected target
+            activeCharacters[selectedCharacterTarget].transform.rotation
+        );
+
+        movePower = battleMovesList[i].movePower; // set power of attack
+        return movePower;
+    }
+
+    public void OpenMagicPanel()
+    {
+        magicChoicePanel.SetActive(true);
+
+        for(int i = 0; i < magicButtons.Length; i++)
+        {
+            if(activeCharacters[currentTurn].AttackMovesAvailable().Length > i)
+            {
+                // set spell names on buttons
+                magicButtons[i].gameObject.SetActive(true);
+                magicButtons[i].spellName = GetCurrentActiveCharacter().AttackMovesAvailable()[i];
+                magicButtons[i].spellNameText.text = magicButtons[i].spellName;
+
+                for(int j = 0; j < battleMovesList.Length; j++)
+                {
+                    if(battleMovesList[j].moveName == magicButtons[i].spellName)
+                    {
+                        magicButtons[i].spellCost = battleMovesList[j].manaCost;
+                        magicButtons[i].spellCostText.text = magicButtons[i].spellCost.ToString();
+                    }
+                }
+            }
+            else
+            {
+                magicButtons[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public BattleCharacters GetCurrentActiveCharacter()
+    {
+        return activeCharacters[currentTurn];
+    }
+
 }
