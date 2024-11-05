@@ -10,6 +10,34 @@ public class BattleCharacters : MonoBehaviour
     public string characterName;
     public int currentHP, maxHP, currentMana, maxMana, dexterity, defence;
     public bool isDead;
+
+    private void Update()
+    {
+        if(!isPlayer && isDead)
+        {
+            FadeOutEnemy();
+        }
+    }
+
+    private void FadeOutEnemy()
+    {
+        GetComponent<SpriteRenderer>().color = new Color(
+            Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.r, 1f, 0.9f * Time.deltaTime), // red component 
+            Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.g, 0f, 0.9f * Time.deltaTime), // green component 
+            Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.b, 0f, 0.9f * Time.deltaTime), // blue component 
+            Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.a, 0f, 0.9f * Time.deltaTime) // alpha component 
+        );
+
+        if(GetComponent<SpriteRenderer>().color.a == 0)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void KillEnemy()
+    {
+        isDead = true;
+    }
     
     public bool IsPlayer()
     {
@@ -54,5 +82,10 @@ public class BattleCharacters : MonoBehaviour
     private void AddMana(int amountOfAffect)
     {
         currentMana += amountOfAffect;
+    }
+
+    public void KillPlayer()
+    {
+        isDead = true;
     }
 }

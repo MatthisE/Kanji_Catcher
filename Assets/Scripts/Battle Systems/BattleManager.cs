@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
@@ -48,6 +49,8 @@ public class BattleManager : MonoBehaviour
     [SerializeField] GameObject itemSlotContainer;
     [SerializeField] Transform itemSlotContainerParent;
     [SerializeField] TextMeshProUGUI itemName, itemDescription;
+
+    [SerializeField] string gameOverScene;
 
 
     // Start is called before the first frame update
@@ -199,7 +202,15 @@ public class BattleManager : MonoBehaviour
 
             if(activeCharacters[i].currentHP == 0)
             {
-                // kill character
+                if(activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead)
+                {
+                    activeCharacters[i].KillPlayer();
+                }
+
+                if(!activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead)
+                {
+                    activeCharacters[i].KillEnemy(); // so far same as kill player because I dont have death particles
+                }
             }
             else
             {
@@ -218,17 +229,12 @@ public class BattleManager : MonoBehaviour
         {
             if(allEnemiesAreDead)
             {
-                print("WE WON!!!");
+                StartCoroutine(EndBattleCoroutine());
             }
             else if(playerIsDead)
             {
-                print("WE LOST!!!");
+                StartCoroutine(GameOverCoroutine());
             }
-
-            // exit battle mode
-            battleScene.SetActive(false);
-            GameManager.instance.battleIsActive = false;
-            isBattleActive = false;
         }
         else
         {
@@ -395,12 +401,16 @@ public class BattleManager : MonoBehaviour
 
         for(int i = 0; i < targetButtons.Length; i++)
         {
-            if(Enemies.Count > i) // make sure you have enemies for the target buttons
+            if(Enemies.Count > i && activeCharacters[Enemies[i]].currentHP > 0) // make sure you have (alive) enemies for the target buttons
             {
                 targetButtons[i].gameObject.SetActive(true);
                 targetButtons[i].moveName = moveName; // set move name for the player attack
                 targetButtons[i].activeBattleTarget = Enemies[i];
                 targetButtons[i].targetName.text = activeCharacters[Enemies[i]].characterName;
+            }
+            else
+            {
+                targetButtons[i].gameObject.SetActive(false); // turn off enemy target button
             }
         }
     }
@@ -457,8 +467,7 @@ public class BattleManager : MonoBehaviour
     {
         if(Random.value > chanceToRunAway)
         {
-            isBattleActive = false;
-            battleScene.SetActive(false);
+            StartCoroutine(EndBattleCoroutine());
         }
         else
         {
@@ -528,5 +537,51 @@ public class BattleManager : MonoBehaviour
     public void CloseItemsMenu()
     {
         itemsToUseMenu.SetActive(false);
+    }
+
+    public IEnumerator EndBattleCoroutine()
+    {
+        isBattleActive = false;
+        UIButtonHolder.SetActive(false);
+        enemyTargetPanel.SetActive(false);
+        magicChoicePanel.SetActive(false);
+        battleNotice.SetText("WE WON!!");
+        battleNotice.Activate();
+
+        yield return new WaitForSeconds(3f);
+
+        foreach(BattleCharacters playerInBattle in activeCharacters)
+        {
+            if(playerInBattle.IsPlayer())
+            {
+                foreach(PlayerStats playerWithStats in GameManager.instance.GetPlayerStats())
+                {
+                    if(playerInBattle.characterName == playerWithStats.playerName)
+                    {
+                        playerWithStats.currentHP = playerInBattle.currentHP;
+                        playerWithStats.currentMana = playerInBattle.currentMana;
+                    }
+                }
+            }
+
+            Destroy(playerInBattle.gameObject);
+        }
+
+        battleScene.SetActive(false);
+        activeCharacters.Clear();
+
+        currentTurn = 0;
+        GameManager.instance.battleIsActive = false;
+    }
+
+    public IEnumerator GameOverCoroutine()
+    {
+        battleNotice.SetText("WE LOST!");
+        battleNotice.Activate();
+
+        yield return new WaitForSeconds(3f);
+
+        isBattleActive = false;
+        SceneManager.LoadScene(gameOverScene);
     }
 }

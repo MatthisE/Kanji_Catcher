@@ -101,7 +101,7 @@ MonoBehaviour:
   attacksAvailable:
   - Laser
   characterName: Warlock
-  currentHP: 200
+  currentHP: 50
   maxHP: 200
   currentMana: 500
   maxMana: 500

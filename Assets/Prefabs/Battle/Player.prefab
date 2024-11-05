@@ -57,3 +57,4 @@ MonoBehaviour:
   dexterity: 10
   defence: 30
   isDead: 0
+  deathParticles: {fileID: 2193848087741577477, guid: 0c3ade43e15de0a4c996358d284b6f54, type: 3}
