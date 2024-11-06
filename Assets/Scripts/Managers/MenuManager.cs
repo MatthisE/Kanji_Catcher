@@ -160,4 +160,9 @@ public class MenuManager : MonoBehaviour
     {
         imageToFade.GetComponent<Animator>().SetTrigger("Start Fading");
     }
+
+    public void FadeOut()
+    {
+        imageToFade.GetComponent<Animator>().SetTrigger("End Fading"); // --> trigger in animator for image
+    }
 }

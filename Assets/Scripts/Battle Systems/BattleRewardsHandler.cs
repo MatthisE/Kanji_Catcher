@@ -12,7 +12,15 @@ public class BattleRewardsHandler : MonoBehaviour
     [SerializeField] GameObject rewardScreen;
 
     [SerializeField] ItemsManager[] rewardItems;
-    [SerializeField] int xpRewards;
+    [SerializeField] int xpReward;
+
+    public bool markQuestComplete;
+    public string questToComplete;
+
+    private void Start()
+    {
+        instance = this;
+    }
 
     private void Update()
     {
@@ -24,7 +32,7 @@ public class BattleRewardsHandler : MonoBehaviour
 
     public void OpenRewardScreen(int xpEarned, ItemsManager[] itemsEarned)
     {
-        xpRewards = xpEarned;
+        xpReward = xpEarned;
         rewardItems = itemsEarned;
 
         XPText.text = xpEarned + " XP";
@@ -38,8 +46,27 @@ public class BattleRewardsHandler : MonoBehaviour
         rewardScreen.SetActive(true);
     }
 
-    public void CloseButton()
+    public void CloseRewardScreen()
     {
+        foreach(PlayerStats activePlayer in GameManager.instance.GetPlayerStats())
+        {
+            if(activePlayer.gameObject.activeInHierarchy)
+            {
+                activePlayer.AddXP(xpReward);
+            }
+        }
+
+        foreach(ItemsManager itemrewarded in rewardItems)
+        {
+            Inventory.instance.AddItems(itemrewarded);
+        }
+
         rewardScreen.SetActive(false);
+        GameManager.instance.battleIsActive = false; // keep player still while showing rewards
+
+        if(markQuestComplete)
+        {
+            QuestManager.instance.MarkQuestComplete(questToComplete);
+        }
     }
 }

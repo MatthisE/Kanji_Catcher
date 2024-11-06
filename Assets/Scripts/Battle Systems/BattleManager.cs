@@ -51,6 +51,11 @@ public class BattleManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI itemName, itemDescription;
 
     [SerializeField] string gameOverScene;
+    private bool runningAway;
+    public int XPRewardAmount;
+    public ItemsManager[] itemsReward;
+
+    private bool canRun;
 
 
     // Start is called before the first frame update
@@ -65,7 +70,7 @@ public class BattleManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.B))
         {
-            StartBattle(new string[] {"Mage", "Warlock"});
+            StartBattle(new string[] {"Mage", "Warlock"}, true);
         }
 
         if(Input.GetKeyDown(KeyCode.N))
@@ -96,10 +101,11 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void StartBattle(string[] enemiesToSpawn)
+    public void StartBattle(string[] enemiesToSpawn, bool canRunAway)
     {
         if(!isBattleActive)
         {
+            canRun = canRunAway; // define if you can or cannot run away
             SettingUpBattle();
 
             BattleCharacters newPlayer = Instantiate(
@@ -465,15 +471,19 @@ public class BattleManager : MonoBehaviour
 
     public void RunAway()
     {
-        if(Random.value > chanceToRunAway)
+        if(canRun)
         {
-            StartCoroutine(EndBattleCoroutine());
-        }
-        else
-        {
-            NextTurn();
-            battleNotice.SetText("You failed to run away.");
-            battleNotice.Activate();
+            if(Random.value > chanceToRunAway)
+            {
+                runningAway = true;
+                StartCoroutine(EndBattleCoroutine());
+            }
+            else
+            {
+                NextTurn();
+                battleNotice.SetText("You failed to run away.");
+                battleNotice.Activate();
+            }
         }
     }
 
@@ -545,11 +555,16 @@ public class BattleManager : MonoBehaviour
         UIButtonHolder.SetActive(false);
         enemyTargetPanel.SetActive(false);
         magicChoicePanel.SetActive(false);
-        battleNotice.SetText("WE WON!!");
-        battleNotice.Activate();
+
+        if(!runningAway)
+        {
+            battleNotice.SetText("WE WON!!");
+            battleNotice.Activate();
+        }
 
         yield return new WaitForSeconds(3f);
 
+        // put stats of battle characters in overworld characters (?)
         foreach(BattleCharacters playerInBattle in activeCharacters)
         {
             if(playerInBattle.IsPlayer())
@@ -570,8 +585,17 @@ public class BattleManager : MonoBehaviour
         battleScene.SetActive(false);
         activeCharacters.Clear();
 
+        if(runningAway)
+        {
+            GameManager.instance.battleIsActive = false; // deactivate battle scene (also handeled by BattleRewardsHandler)
+            runningAway = false;
+        }
+        else
+        {
+            BattleRewardsHandler.instance.OpenRewardScreen(XPRewardAmount, itemsReward);
+        }
+
         currentTurn = 0;
-        GameManager.instance.battleIsActive = false;
     }
 
     public IEnumerator GameOverCoroutine()

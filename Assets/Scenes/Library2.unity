@@ -256,6 +256,118 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 385071572}
   m_CullTransparentMesh: 1
+--- !u!1 &420192168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 420192171}
+  - component: {fileID: 420192170}
+  - component: {fileID: 420192169}
+  m_Layer: 0
+  m_Name: BattleZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &420192169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420192168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c5c51b99b728943bac1bbb7c297baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableBattles:
+  - enemies:
+    - Blueface
+    rewardXP: 100
+    rewardItems:
+    - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
+  - enemies:
+    - Mage
+    rewardXP: 100
+    rewardItems:
+    - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
+  - enemies:
+    - Warlock
+    rewardXP: 100
+    rewardItems:
+    - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
+  activateOnEnter: 0
+  timeBetweenBattles: 1
+  deactivateAfterStarting: 0
+  canRunAway: 1
+  shouldCompleteQuest: 0
+  questToComplete: 
+--- !u!61 &420192170
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420192168}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.3249979, y: -0.433331}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.045208, y: 5.0237856}
+  m_EdgeRadius: 0
+--- !u!4 &420192171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420192168}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.7, y: 2.93, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &504855046
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,7 +783,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4278190335
   m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -933,6 +1045,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1834023852057777914, guid: 038bfe99bc2882b41a0ac1400ebdfb93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3783788027346822851, guid: 038bfe99bc2882b41a0ac1400ebdfb93, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1009,7 +1125,9 @@ MonoBehaviour:
   - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
   - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
   - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
-  xpRewards: 0
+  xpReward: 0
+  markQuestComplete: 0
+  questToComplete: 
 --- !u!1001 &1479863070
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1075,6 +1193,165 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a913f5e01f0df34ea339ecf9667c3fe, type: 3}
+--- !u!1 &1525023717
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1525023719}
+  - component: {fileID: 1525023718}
+  - component: {fileID: 1525023721}
+  - component: {fileID: 1525023720}
+  m_Layer: 0
+  m_Name: Boss Battle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &1525023718
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525023717}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1103741633
+  m_SortingLayer: 2
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 05b9967826a965d49bc44bb2a900ff81, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1.74, y: 1.03}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1525023719
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525023717}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.6, y: 5.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1525023720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525023717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c5c51b99b728943bac1bbb7c297baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableBattles:
+  - enemies:
+    - Boss Dragon
+    rewardXP: 1000
+    rewardItems:
+    - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
+    - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
+    - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
+    - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
+    - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
+  activateOnEnter: 0
+  timeBetweenBattles: 1
+  deactivateAfterStarting: 1
+  canRunAway: 0
+  shouldCompleteQuest: 1
+  questToComplete: Defeat Big Dragon Boss
+--- !u!61 &1525023721
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525023717}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 3.676114, y: -1.7694287}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 10.875, y: 6.4375}
+    newSize: {x: 1.74, y: 1.03}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.8202381, y: 4.951577}
+  m_EdgeRadius: 0
 --- !u!1001 &1530355203
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1083,6 +1360,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 790537179013800102, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
+      propertyPath: questNames.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 790537179013800102, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
+      propertyPath: questNames.Array.data[5]
+      value: Defeat Big Dragon Boss
+      objectReference: {fileID: 0}
     - target: {fileID: 1979113009451938360, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1340,7 +1625,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4278190335
   m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1485,7 +1770,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1421217051}
         m_TargetAssemblyTypeName: BattleRewardsHandler, Assembly-CSharp
-        m_MethodName: CloseButton
+        m_MethodName: CloseRewardScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4697,6 +4982,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Battle Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
+      propertyPath: gameOverScene
+      value: GameOverScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
+      propertyPath: XPRewardAmount
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
+      propertyPath: itemsReward.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
+      propertyPath: enemiesPrefabs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
+      propertyPath: itemsReward.Array.data[0]
+      value: 
+      objectReference: {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
+    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
+      propertyPath: itemsReward.Array.data[1]
+      value: 
+      objectReference: {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
+    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
+      propertyPath: enemiesPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 4223708421095260246, guid: 6a31b282a338f3348abb7f8351ca0f7c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7912,3 +8225,5 @@ SceneRoots:
   - {fileID: 2143481490}
   - {fileID: 532230211}
   - {fileID: 1188990400}
+  - {fileID: 420192171}
+  - {fileID: 1525023719}
