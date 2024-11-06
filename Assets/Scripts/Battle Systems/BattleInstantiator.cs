@@ -71,7 +71,6 @@ public class BattleInstantiator : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            print("Enter");
             if(activateOnEnter)
             {
                 StartCoroutine(StartBattleCoroutine());
@@ -87,7 +86,6 @@ public class BattleInstantiator : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            print("Exit");
             inArea = false;
         }
     }

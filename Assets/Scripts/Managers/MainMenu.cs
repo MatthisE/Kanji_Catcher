@@ -8,6 +8,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] string newGameScene;
     [SerializeField] GameObject continueButton;
 
+    [SerializeField] int musicToPlay;
+    private bool musicAlreadyPlaying;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +28,11 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(!musicAlreadyPlaying)
+            {
+                musicAlreadyPlaying = true;
+                AudioManager.instance.PlayBackgroundMusic(musicToPlay);
+            }   
     }
 
     // give these functions to the corresponding buttons

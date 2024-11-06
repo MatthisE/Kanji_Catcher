@@ -1301,7 +1301,7 @@ MonoBehaviour:
     - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
     - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
     - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
-  activateOnEnter: 0
+  activateOnEnter: 1
   timeBetweenBattles: 1
   deactivateAfterStarting: 1
   canRunAway: 0

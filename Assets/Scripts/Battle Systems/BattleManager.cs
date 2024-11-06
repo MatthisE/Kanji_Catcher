@@ -61,7 +61,15 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
+        //singelton pattern --> avoid duplicates in new scenes
+        if(instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
         DontDestroyOnLoad(gameObject);
     }
 
@@ -471,18 +479,28 @@ public class BattleManager : MonoBehaviour
 
     public void RunAway()
     {
+        StartCoroutine(RunAwayCoroutine());
+    }
+
+    private IEnumerator RunAwayCoroutine()
+    {
         if(canRun)
         {
             if(Random.value > chanceToRunAway)
             {
                 runningAway = true;
+                battleNotice.SetText("You managed to run away.");
+                battleNotice.Activate();
                 StartCoroutine(EndBattleCoroutine());
             }
             else
             {
-                NextTurn();
                 battleNotice.SetText("You failed to run away.");
                 battleNotice.Activate();
+                
+                yield return new WaitUntil(() => !battleNotice.gameObject.activeSelf); // Wait until the notice disappears
+
+                NextTurn();
             }
         }
     }
@@ -562,7 +580,7 @@ public class BattleManager : MonoBehaviour
             battleNotice.Activate();
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
         // put stats of battle characters in overworld characters (?)
         foreach(BattleCharacters playerInBattle in activeCharacters)
@@ -603,7 +621,7 @@ public class BattleManager : MonoBehaviour
         battleNotice.SetText("WE LOST!");
         battleNotice.Activate();
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
 
         isBattleActive = false;
         SceneManager.LoadScene(gameOverScene);
