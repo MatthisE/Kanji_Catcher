@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// controls dialog boxes and their text, can mark a quest, used by DialogHandler
 public class DialogController : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI dialogText, nameText;
@@ -15,18 +16,16 @@ public class DialogController : MonoBehaviour
 
     private bool dialogJustStarted;
 
-    private string questToMark;
-    private bool markQuestComplete;
     private bool shouldMarkQuest;
+    private string questToMark;
+    private bool markQuestComplete; // false --> mark as incomplete
 
-    // Start is called before the first frame update
     void Start()
     {
         instance = this;
-        dialogText.text = dialogSentences[currentSentence];
+        //dialogText.text = dialogSentences[currentSentence]; I dont think I need this
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(dialogBox.activeInHierarchy) // box got activated by NPCs dialog handler
@@ -39,13 +38,15 @@ public class DialogController : MonoBehaviour
                     currentSentence++;
                     if(currentSentence >= dialogSentences.Length)
                     {
+                        // after end of dialog
                         dialogBox.SetActive(false);
                         GameManager.instance.dialogBoxOpened = false;
 
-                        // activate quest
+                        // activate quest after opening dialog for the first time
                         if(shouldMarkQuest)
                         {
                             shouldMarkQuest = false;
+                            // mark quest complete or incomplete
                             if(markQuestComplete)
                             {
                                 QuestManager.instance.MarkQuestComplete(questToMark);
@@ -56,15 +57,16 @@ public class DialogController : MonoBehaviour
                             }
                         }
                     }
-                    else
+                    else // not end of dialog
                     {
-                        CheckForName();
-                        dialogText.text = dialogSentences[currentSentence];
+                        CheckForName(); // display current name
+                        dialogText.text = dialogSentences[currentSentence]; // diaplay current sentence
                     }
                 }
                 else
                 {
-                    dialogJustStarted = false;
+                    // show first sentence defined in Start()
+                    dialogJustStarted = false; // then go to code that progresses the dialog
                 }
             }
         }
@@ -81,6 +83,7 @@ public class DialogController : MonoBehaviour
     // gets activated by NPCs dialog handler
     public void ActivateDialog(string[] newSentencesToUse)
     {
+        // set values for start of dialog
         dialogSentences = newSentencesToUse;
         currentSentence = 0;
 
@@ -97,12 +100,12 @@ public class DialogController : MonoBehaviour
     {
         if(dialogSentences[currentSentence].StartsWith("#"))
         {
-            nameText.text = dialogSentences[currentSentence].Replace("#","");
-            currentSentence++;
+            nameText.text = dialogSentences[currentSentence].Replace("#",""); // remove hashtag from line and set it as name
+            currentSentence++; // move to next line
         }
     }
 
-    // needed by NPCs dialog handler to only call the Box at the start of the dialog
+    // needed by NPCs dialog handler to only call the box at the start of the dialog
     public bool IsDialogBoxActive()
     {
         return dialogBox.activeInHierarchy;

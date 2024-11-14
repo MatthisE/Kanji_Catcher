@@ -2,31 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// given to a battle zone object
 public class BattleInstantiator : MonoBehaviour
 {
-    [SerializeField] BattleTypeManager[] availableBattles;
-    [SerializeField] bool activateOnEnter;
-    private bool inArea;
+    [SerializeField] BattleTypeManager[] availableBattles; // the kind of battles that can happen in that zone
+    [SerializeField] bool activateOnEnter; // a battle starts immediately when entering the zone, you can only have one battle in it (useful for bosses)
 
     [SerializeField] float timeBetweenBattles;
-    private float battleCounter;
+    private float battleCounter; // to count the time between battles
+    private bool inArea; // make Update() able to reduce battleCounter
 
-    [SerializeField] bool deactivateAfterStarting; // true --> you can only have 1 battle in that zone
+    [SerializeField] bool deactivateAfterStarting; // after 1 battle starts, zone disappears (should be used along activateOnEnter)
 
     [SerializeField] bool canRunAway;
 
-    [SerializeField] bool shouldCompleteQuest;
+    [SerializeField] bool shouldCompleteQuest; // winning a battle in this zone completes a quest (useful for bosses)
     public string questToComplete;
 
     private void Start()
     {
-        battleCounter = Random.Range(timeBetweenBattles * 0.5f, timeBetweenBattles * 1.5f);
-        inArea = false;
+        battleCounter = Random.Range(timeBetweenBattles * 0.5f, timeBetweenBattles * 1.5f); // define a random time around timeBetweenBattles
+    
+        inArea = false; // when entering a new scene, you are not automatically in a battle zone
     }
 
     private void Update()
     {
-        if(inArea && !Player.instance.deactivateMovement) // player is in area an able to move (menu not open)
+        // count down time between battles
+        if(inArea && !Player.instance.deactivateMovement) // player is in this battle zone an able to move (menu not open)
         {
             if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) // when player moves, reduce battle counter
             {
@@ -34,39 +37,40 @@ public class BattleInstantiator : MonoBehaviour
             }
         }
 
+        // start a new battle when counter reaches 0
         if(battleCounter <= 0) 
         {
-            battleCounter = Random.Range(timeBetweenBattles * 0.5f, timeBetweenBattles * 1.5f);
-            StartCoroutine(StartBattleCoroutine());
+            battleCounter = Random.Range(timeBetweenBattles * 0.5f, timeBetweenBattles * 1.5f); // set new counter
+            StartCoroutine(StartBattleCoroutine()); // start battle coroutine
         }
     }
 
     private IEnumerator StartBattleCoroutine()
     {
-        MenuManager.instance.FadeImage();
-        GameManager.instance.battleIsActive = true;
+        MenuManager.instance.FadeImage(); // fade to black
+        GameManager.instance.battleIsActive = true; // make player unable to move
 
+        // set up a random possible battle scenario
         int selectBattle = Random.Range(0, availableBattles.Length);
 
         BattleManager.instance.itemsReward = availableBattles[selectBattle].rewardItems;
         BattleManager.instance.XPRewardAmount = availableBattles[selectBattle].rewardXP;
 
+        // tell RewardsHandler to mark a quest as complete if the battle is won (optional)
         BattleRewardsHandler.instance.markQuestComplete = shouldCompleteQuest;
         BattleRewardsHandler.instance.questToComplete = questToComplete;
 
-        yield return new WaitForSeconds(1.5f);
-
-        MenuManager.instance.FadeOut();
-
-        BattleManager.instance.StartBattle(availableBattles[selectBattle].enemies, canRunAway);
+        yield return new WaitForSeconds(1.5f); // wait 1.5sec
+        BattleManager.instance.StartBattle(availableBattles[selectBattle].enemies, canRunAway); // activate battle scene
+        MenuManager.instance.FadeOut(); // fade out to reveal battle scene
 
         if(deactivateAfterStarting)
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // destroy zone
         }
     }
 
-    // when entering battle zone, start battle
+    // when player enters battle zone, either start battle or start counter
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
@@ -77,16 +81,17 @@ public class BattleInstantiator : MonoBehaviour
             }
             else
             {
-                inArea = true;
+                inArea = true; // starts counter in Update()
             }
         }
     }
 
+    // when player exits battle zone, stop counter
     private void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
         {
-            inArea = false;
+            inArea = false; // Update() can no longer reduce counter
         }
     }
 }

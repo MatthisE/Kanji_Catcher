@@ -4,7 +4,8 @@ using UnityEngine;
 
 [System.Serializable] // this class can be used anywhere
 
-public class BattleMoves // should not be attached to anything, is just source of information
+// define a battle move, BattleManager has a list of them
+public class BattleMoves // should not be attached to an object, is just source of information (framework)
 {
     public string moveName;
     public int movePower;

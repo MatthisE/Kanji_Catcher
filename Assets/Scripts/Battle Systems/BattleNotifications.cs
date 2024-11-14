@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+// set a notification text and make it appear and disappear after certain time
 public class BattleNotifications : MonoBehaviour
 {
     [SerializeField] float timeAlive;

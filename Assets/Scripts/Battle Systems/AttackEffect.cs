@@ -7,15 +7,15 @@ public class AttackEffect : MonoBehaviour
     [SerializeField] float effectTime;
     [SerializeField] int SFXNumberToPlay;
 
-    // Start is called before the first frame update
     void Start()
     {
+        // play the right sound when the effect appears
         AudioManager.instance.PlaySFX(SFXNumberToPlay);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // destroy the effect after a certain time
         Destroy(gameObject, effectTime);
     }
 }

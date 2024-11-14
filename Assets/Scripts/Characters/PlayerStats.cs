@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// given to Player object, handels all his stats
 public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats instance;
@@ -24,7 +25,6 @@ public class PlayerStats : MonoBehaviour
     public int dexterity;
     public int defence;
 
-    // Start is called before the first frame update
     void Start()
     {
         instance = this;
@@ -39,7 +39,6 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.L))
@@ -53,9 +52,10 @@ public class PlayerStats : MonoBehaviour
         currentXP += amountOfXp;
         if(currentXP > xpForNextLevel[playerLevel]) // level up
         {
-            currentXP -= xpForNextLevel[playerLevel]; // reset Player XP to around 0
+            currentXP -= xpForNextLevel[playerLevel]; // reset Player XP 0 + left over XP from the level up 
             playerLevel++;
 
+            // for each level up switc between increasing dexterity and defence
             if(playerLevel % 2 == 0)
             {
                 dexterity++;
@@ -65,6 +65,7 @@ public class PlayerStats : MonoBehaviour
                 defence++;
             }
 
+            // increase maxHP and maxMana and set current values to them
             maxHP = Mathf.FloorToInt(maxHP * 1.06f);
             currentHP = maxHP;
 
@@ -73,6 +74,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    // add HP or mana, cannot go above max values, used by items
     public void AddHP(int amountHPToAdd)
     {
         currentHP += amountHPToAdd;

@@ -4,16 +4,19 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// displays rewards after a won battle and can complete a quest
 public class BattleRewardsHandler : MonoBehaviour
 {
     public static BattleRewardsHandler instance;
 
+    // display elements
     [SerializeField] TextMeshProUGUI XPText, itemsText;
     [SerializeField] GameObject rewardScreen;
 
     [SerializeField] ItemsManager[] rewardItems;
     [SerializeField] int xpReward;
 
+    // optional quest completion
     public bool markQuestComplete;
     public string questToComplete;
 
@@ -30,6 +33,7 @@ public class BattleRewardsHandler : MonoBehaviour
         }
     }
 
+    // open reward screen with given elements
     public void OpenRewardScreen(int xpEarned, ItemsManager[] itemsEarned)
     {
         xpReward = xpEarned;
@@ -38,9 +42,10 @@ public class BattleRewardsHandler : MonoBehaviour
         XPText.text = xpEarned + " XP";
         itemsText.text = "";
 
+        itemsText.text += " * ";
         foreach(ItemsManager rewardItemText in rewardItems)
         {
-            itemsText.text += rewardItemText.itemName + " ";
+            itemsText.text += rewardItemText.itemName + " * ";
         }
 
         rewardScreen.SetActive(true);
@@ -48,6 +53,7 @@ public class BattleRewardsHandler : MonoBehaviour
 
     public void CloseRewardScreen()
     {
+        // give player his won XP
         foreach(PlayerStats activePlayer in GameManager.instance.GetPlayerStats())
         {
             if(activePlayer.gameObject.activeInHierarchy)
@@ -56,14 +62,17 @@ public class BattleRewardsHandler : MonoBehaviour
             }
         }
 
+        // add won items to inventory
         foreach(ItemsManager itemrewarded in rewardItems)
         {
             Inventory.instance.AddItems(itemrewarded);
         }
 
+        // colse reward display
         rewardScreen.SetActive(false);
         GameManager.instance.battleIsActive = false; // keep player still while showing rewards
 
+        // mark given quest as complete (optional)
         if(markQuestComplete)
         {
             QuestManager.instance.MarkQuestComplete(questToComplete);

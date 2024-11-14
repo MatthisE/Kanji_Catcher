@@ -13,6 +13,7 @@ public class BattleCharacters : MonoBehaviour
 
     private void Update()
     {
+        // make enemies disappear after they die
         if(!isPlayer && isDead)
         {
             FadeOutEnemy();
@@ -21,6 +22,7 @@ public class BattleCharacters : MonoBehaviour
 
     private void FadeOutEnemy()
     {
+        // make all the color values of the sprite of the object go to transparent
         GetComponent<SpriteRenderer>().color = new Color(
             Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.r, 1f, 0.9f * Time.deltaTime), // red component 
             Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.g, 0f, 0.9f * Time.deltaTime), // green component 
@@ -28,27 +30,14 @@ public class BattleCharacters : MonoBehaviour
             Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.a, 0f, 0.9f * Time.deltaTime) // alpha component 
         );
 
+        // once fully transparent deactivate object
         if(GetComponent<SpriteRenderer>().color.a == 0)
         {
             gameObject.SetActive(false);
         }
     }
 
-    public void KillEnemy()
-    {
-        isDead = true;
-    }
-    
-    public bool IsPlayer()
-    {
-        return isPlayer;
-    }
-
-    public string[] AttackMovesAvailable()
-    {
-        return attacksAvailable;
-    }
-
+    // substract damage from hp, cannot go below 0
     public void TakeHPDamage(int damageToReceive)
     {
         currentHP -= damageToReceive;
@@ -59,6 +48,18 @@ public class BattleCharacters : MonoBehaviour
         }
     }
 
+    // set battle character to dead
+    public void KillEnemy()
+    {
+        isDead = true;
+    }
+
+    public void KillPlayer()
+    {
+        isDead = true;
+    }
+
+    // use item to either heal hp or mana depending on its affect type
     public void UseItemInBattle(ItemsManager itemToUse)
     {
         if(itemToUse.itemType == ItemsManager.ItemType.Item)
@@ -84,8 +85,14 @@ public class BattleCharacters : MonoBehaviour
         currentMana += amountOfAffect;
     }
 
-    public void KillPlayer()
+    // get info about character
+    public bool IsPlayer()
     {
-        isDead = true;
+        return isPlayer;
+    }
+
+    public string[] AttackMovesAvailable()
+    {
+        return attacksAvailable;
     }
 }
