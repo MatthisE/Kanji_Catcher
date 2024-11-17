@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// given to player object, handels its movement
 public class Player : MonoBehaviour
 {
-    public static Player instance; //constant across all projects, makes Player functions and vars usable in other scripts
+    public static Player instance; //constant across all projects, makes player functions and vars usable in other scripts
 
     [SerializeField] int moveSpeed = 1; // used for rigid body velocity
     [SerializeField] Rigidbody2D playerRigidBody;
     [SerializeField] Animator playerAnimator;
 
-    public string transitionAreaName; // given by area exits to give Player correct new position (at area entries)
+    public string transitionAreaName; // given by area exits to give player correct new position (at area entries)
 
     // limits of tileset scene that player cannot exit
     private Vector3 bottomLeftEdge;
@@ -20,7 +21,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        // singelton pattern --> avoid duplicate Players in new scenes
+        // singelton pattern --> avoid duplicate players in new scenes
         if(instance != null && instance != this)
         {
             Destroy(this.gameObject); // destroy duplicate
@@ -29,7 +30,7 @@ public class Player : MonoBehaviour
         {
             instance = this;
         }
-        DontDestroyOnLoad(gameObject); //gameObject = Player --> does not get destroyed when entering new scene 
+        DontDestroyOnLoad(gameObject); //gameObject = player --> does not get destroyed when entering new scene 
     }
 
     void Update()
@@ -37,7 +38,7 @@ public class Player : MonoBehaviour
         float horizontalMovement = Input.GetAxisRaw("Horizontal"); // up, down, W, S keys
         float verticalMovement = Input.GetAxisRaw("Vertical"); // left, right, A, D keys
 
-        if(deactivateMovement) // make Player stand still (for example by NPC dialog)
+        if(deactivateMovement) // make player stand still (for example by NPC dialog)
         {
             playerRigidBody.velocity = Vector2.zero; // turn all values to 0
         }
@@ -47,30 +48,30 @@ public class Player : MonoBehaviour
             playerRigidBody.velocity = new Vector2(horizontalMovement, verticalMovement) * moveSpeed;
         }
 
-        // set values of Player Animator depending on object's movement
+        // set values of player Animator depending on object's movement
         playerAnimator.SetFloat("movementX", playerRigidBody.velocity.x);
         playerAnimator.SetFloat("movementY", playerRigidBody.velocity.y);
 
-        // set Animator values of last X and Y movements to make Player look in that direction when he stops moving
+        // set Animator values of last X and Y movements to make player look in that direction when he stops moving
         if(horizontalMovement == 1 || horizontalMovement == -1 || verticalMovement == 1 || verticalMovement == -1)
         {
-            if(!deactivateMovement) // Player should not be able to look around when still
+            if(!deactivateMovement) // player should not be able to look around when still
             {
                 playerAnimator.SetFloat("lastX", horizontalMovement);
                 playerAnimator.SetFloat("lastY", verticalMovement);
             }
         }
 
-        // make sure Player cannot leave scene
+        // make sure player cannot leave scene
         transform.position = new Vector3(
-            // keep Player inside min-max position values based on tileset 
+            // keep player inside min-max position values based on tileset 
             Mathf.Clamp(transform.position.x, bottomLeftEdge.x, topRightEdge.x),
             Mathf.Clamp(transform.position.y, bottomLeftEdge.y, topRightEdge.y),
             Mathf.Clamp(transform.position.z, bottomLeftEdge.z, topRightEdge.z)
         );
     }
 
-    // Method to accept the bottomLeftEdge and topRightEdge (called in LevelManager)
+    // method to accept the bottomLeftEdge and topRightEdge (called in LevelManager)
     public void SetLimit(Vector3 bottomEdgeToSet, Vector3 topEdgeToSet)
     {
         bottomLeftEdge = bottomEdgeToSet;

@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// handels list of items
 public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
     private List<ItemsManager> itemsList;
 
-    // Start is called before the first frame update
     void Start()
     {
         instance = this;
@@ -49,13 +49,14 @@ public class Inventory : MonoBehaviour
     {
         if(item.isStackable)
         {
-            ItemsManager inventoryItem = null; // set it to item to be removed
+            ItemsManager inventoryItem = null; // later: set it to item to be removed
 
+            // look for item to be removed
             foreach(ItemsManager itemInInventory in itemsList)
             {
                 if(itemInInventory.itemName == item.itemName)
                 {
-                    itemInInventory.amount--;
+                    itemInInventory.amount--; // decrease counter
                     inventoryItem = itemInInventory;
                 }
             }

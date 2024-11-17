@@ -60,12 +60,12 @@ public class DialogController : MonoBehaviour
                     else // not end of dialog
                     {
                         CheckForName(); // display current name
-                        dialogText.text = dialogSentences[currentSentence]; // diaplay current sentence
+                        dialogText.text = dialogSentences[currentSentence]; // display current sentence
                     }
                 }
                 else
                 {
-                    // show first sentence defined in Start()
+                    // show first sentence
                     dialogJustStarted = false; // then go to code that progresses the dialog
                 }
             }

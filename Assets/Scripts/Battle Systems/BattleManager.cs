@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
+// given to battle manager object
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
@@ -57,8 +58,6 @@ public class BattleManager : MonoBehaviour
 
     private bool canRun;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         //singelton pattern --> avoid duplicates in new scenes
@@ -73,7 +72,6 @@ public class BattleManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.B))

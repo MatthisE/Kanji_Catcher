@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// given to game manager, defines available items in game
 public class ItemsAssets : MonoBehaviour
 {
     public static ItemsAssets instance;
     [SerializeField] ItemsManager[] itemsAvailable;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         //singelton pattern --> avoid duplicate in new scenes
@@ -21,7 +22,7 @@ public class ItemsAssets : MonoBehaviour
         }
     }
 
-    // get an item if it is available
+    // get an item (if it is available)
     public ItemsManager GetItemAsset(string itemToGetName)
     {
         foreach(ItemsManager item in itemsAvailable)

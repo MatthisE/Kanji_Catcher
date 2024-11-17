@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+// given to objects that can activate quests (on enter or on enter + Fire1)
+public class QuestZone : MonoBehaviour
 {
 
-    [SerializeField] string questToMark; // what quest to mark
-    [SerializeField] bool markAsComplete; // how to mark it
+    [SerializeField] string questToMark;
+    [SerializeField] bool markAsComplete; // false --> mark as incomplete
 
-    [SerializeField] bool markOnEnter; // when to mark (true --> when hitting collider, false --> after hitting collider and doing smt (eg pressing Fire1))
-    private bool canMark; // set true when hitting collider (and not immediately mark on enter)
+    [SerializeField] bool markOnEnter; // when to mark quest (true --> when hitting collider, false --> when in collider and pressing Fire1)
+    private bool canMark; // true when in collider of zone, otherwise false
 
-    public bool deactivateOnMarking; // if you want to turn off the zone (or destroy trigger item) after marking quest
+    public bool deactivateOnMarking; // turn off zone (or destroy trigger item) after marking quest
 
     private void Update()
     {
@@ -36,10 +37,10 @@ public class NewBehaviourScript : MonoBehaviour
             QuestManager.instance.MarkQuestIncomplete(questToMark); // could be useful
         }
 
-        gameObject.SetActive(!deactivateOnMarking); // if deactivateOnMarking --> set active to false
+        gameObject.SetActive(!deactivateOnMarking); // deactivate zone (if deactivateOnMarking == true)
     }
 
-    // either immediately mark quest or just setting canMark to true
+    // either immediately mark quest or just set canMark to true
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))

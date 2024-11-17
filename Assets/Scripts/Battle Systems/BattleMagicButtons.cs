@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+// given to spell buttons in battle menu
 public class BattleMagicButtons : MonoBehaviour
 {
     public string spellName;

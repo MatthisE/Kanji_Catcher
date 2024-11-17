@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// part of a battle move
 public class AttackEffect : MonoBehaviour
 {
     [SerializeField] float effectTime;

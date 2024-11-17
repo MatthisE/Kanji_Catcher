@@ -4,7 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-// displays rewards after a won battle and can complete a quest
+// displays rewards after a won battle and can complete a quest, called in BattleManager and BattleInstantiator
 public class BattleRewardsHandler : MonoBehaviour
 {
     public static BattleRewardsHandler instance;

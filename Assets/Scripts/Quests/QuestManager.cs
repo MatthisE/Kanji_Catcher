@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
+// given to game manager object
 public class QuestManager : MonoBehaviour
 {
     [SerializeField] string[] questNames;
-    [SerializeField] bool[] questMarkersCompleted;
+    [SerializeField] bool[] questMarkersCompleted; // set by code, each bool stands for one of the quests in questNames
 
     public static QuestManager instance;
 
-    // Start is called before the first frame update
     void Start()
     {
         instance = this;
-        questMarkersCompleted = new bool[questNames.Length];
+        questMarkersCompleted = new bool[questNames.Length]; // set length of questMarkersCompleted
     }
 
-    // Update is called once per frame
     void Update()
     {
         // save quest data
@@ -43,6 +42,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    // get index of quest in questNames
     public int GetQuestNumber(string questToFind)
     {
         for(int i = 0; i < questNames.Length; i++)
@@ -69,7 +69,7 @@ public class QuestManager : MonoBehaviour
         return false; // false because quest does not exist
     }
 
-    // after (in)completing a quest, update all game objects (to set and unset them)
+    // after (in)completing a quest, update all quest objects (to de-/activate them)
     public void UpdateQuestObjects()
     {
         QuestObject[] questObjects = FindObjectsOfType<QuestObject>();
@@ -82,6 +82,8 @@ public class QuestManager : MonoBehaviour
             }
         }
     }
+
+    // mark quest as in/complete and update quest objects
 
     public void MarkQuestComplete(string questToMark)
     {
@@ -99,6 +101,7 @@ public class QuestManager : MonoBehaviour
         UpdateQuestObjects();
     }
 
+    // save completion data (1,0) of each quest in PlayerPrefs (using keyword "QuestMarker_") 
     public void SaveQuestData()
     {
         for(int i = 0; i < questNames.Length; i++)
@@ -114,6 +117,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    // look for QuestMarker of each quest in PlayerPrefs and set the completion statuses in questMarkersCompleted accordingly
     public void LoadQuestData()
     {
         for(int i = 0; i < questNames.Length; i++)

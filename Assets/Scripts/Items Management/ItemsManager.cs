@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// given to item objects
 public class ItemsManager : MonoBehaviour
 {
     public enum ItemType { Item, Weapon, Armor }
@@ -23,7 +24,7 @@ public class ItemsManager : MonoBehaviour
 
     public void UseItem()
     {
-        if(itemType == ItemType.Item)
+        if(itemType == ItemType.Item) // if item is of type item (not weapon or armor)
         {
             if(affectType == AffectType.HP)
             {
@@ -38,6 +39,7 @@ public class ItemsManager : MonoBehaviour
         }
     }
 
+    // collecting an item on the map
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))

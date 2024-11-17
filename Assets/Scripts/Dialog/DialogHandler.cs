@@ -6,7 +6,7 @@ using UnityEngine;
 public class DialogHandler : MonoBehaviour
 {
     public string[] sentences;
-    private bool canActivateBox; // can only be activated inside objects trigger box
+    private bool canActivateBox; 
 
     [SerializeField] bool shouldActivateQuest;
     [SerializeField] string questToMark;
@@ -16,15 +16,16 @@ public class DialogHandler : MonoBehaviour
     {
         if(canActivateBox && Input.GetButtonDown("Fire1") && !DialogController.instance.IsDialogBoxActive()) // only call if the box is not already active
         {
-            DialogController.instance.ActivateDialog(sentences);
+            DialogController.instance.ActivateDialog(sentences); // open box with first sentence
 
             if(shouldActivateQuest)
             {
-                DialogController.instance.ActivateQuestAtEnd(questToMark, markAsComplete);
+                DialogController.instance.ActivateQuestAtEnd(questToMark, markAsComplete); // activate quest after dialog
             }
         }
     }
 
+    // box can only be activated when player is inside object's trigger collider
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))

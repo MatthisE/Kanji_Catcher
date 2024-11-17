@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// given to Player object, handels all his stats
+// given to player object, handels all his stats
 public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats instance;
@@ -52,7 +52,7 @@ public class PlayerStats : MonoBehaviour
         currentXP += amountOfXp;
         if(currentXP > xpForNextLevel[playerLevel]) // level up
         {
-            currentXP -= xpForNextLevel[playerLevel]; // reset Player XP 0 + left over XP from the level up 
+            currentXP -= xpForNextLevel[playerLevel]; // reset player XP 0 + left over XP from the level up 
             playerLevel++;
 
             // for each level up switc between increasing dexterity and defence

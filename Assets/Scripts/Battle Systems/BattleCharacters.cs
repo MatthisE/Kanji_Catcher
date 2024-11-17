@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// given to a battle character object
 public class BattleCharacters : MonoBehaviour
 {
     [SerializeField] bool isPlayer;
