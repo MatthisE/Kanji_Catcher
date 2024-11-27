@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// given to loader object of loading scene
 public class LoadingScene : MonoBehaviour
 {
     [SerializeField] float waitToLoadTime;
 
-    // Start is called before the first frame update
     void Start()
     {
         if(waitToLoadTime > 0)
@@ -20,8 +20,8 @@ public class LoadingScene : MonoBehaviour
     {
         yield return new WaitForSeconds(waitToLoadTime);
 
-        SceneManager.LoadScene(PlayerPrefs.GetString("Current_Scene"));
-        GameManager.instance.LoadData();
+        SceneManager.LoadScene(PlayerPrefs.GetString("Current_Scene")); // load scene that was last saved in PlayerPrefs
+        GameManager.instance.LoadData(); // load other PlayerPrefs
         //QuestManager.instance.LoadQuestData();
     }
 }

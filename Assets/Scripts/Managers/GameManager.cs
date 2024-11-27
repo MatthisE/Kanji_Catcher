@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// given to game manager object
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
     [SerializeField] PlayerStats[] playerStats;
 
-    public bool gameMenuOpened, dialogBoxOpened, battleIsActive; // conditions for player to stop moving
+    public bool gameMenuOpened, dialogBoxOpened, battleIsActive, goThroughExit; // conditions for player to stop moving
 
-    // Start is called before the first frame update
     void Start()
     {
         //singelton pattern --> avoid duplicate GameManagers in new scenes
@@ -30,17 +30,16 @@ public class GameManager : MonoBehaviour
         Array.Reverse(playerStats); // revert array because it adds object in the wrong order
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // save quest data
+        // save data (quest data is saved in quest manager)
         if(Input.GetKeyDown(KeyCode.I))
         {
             Debug.Log("Data has been saved.");
             SaveData();
         }
 
-        // load quest data
+        // load data (quest data is loaded in quest manager)
         if(Input.GetKeyDown(KeyCode.O))
         {
             Debug.Log("Data has been loaded.");
@@ -48,7 +47,7 @@ public class GameManager : MonoBehaviour
         }
 
         // check if Player should stay still
-        if(gameMenuOpened || dialogBoxOpened || battleIsActive)
+        if(gameMenuOpened || dialogBoxOpened || battleIsActive || goThroughExit)
         {
             Player.instance.deactivateMovement = true;
         }else
@@ -62,6 +61,7 @@ public class GameManager : MonoBehaviour
         return playerStats;
     }
 
+    // save data (scene, items, player position, player stats)
     public void SaveData()
     {
         SavingPlayerPosition();
@@ -94,6 +94,7 @@ public class GameManager : MonoBehaviour
     {
         for(int i = 0; i < playerStats.Length; i++)
         {
+            // players' active statuses
             if(playerStats[i].gameObject.activeInHierarchy)
             {
                 PlayerPrefs.SetInt("Player_" + playerStats[i].playerName + "_active", 1);
@@ -103,6 +104,7 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetInt("Player_" + playerStats[i].playerName + "_active", 0);
             }
 
+            // players' stats
             PlayerPrefs.SetInt("Player_" + playerStats[i].playerName + "_Level", playerStats[i].playerLevel);
             PlayerPrefs.SetInt("Player_" + playerStats[i].playerName + "_CurrentXP", playerStats[i].currentXP);
 
@@ -117,6 +119,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // load data (items, player position, player stats), scene is loaded by LoadingScene.cs
     public void LoadData()
     {
         LoadingPlayerPosition();

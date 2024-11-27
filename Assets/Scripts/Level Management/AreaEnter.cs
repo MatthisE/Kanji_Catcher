@@ -11,7 +11,8 @@ public class AreaEnter : MonoBehaviour
     {
         if(transitionAreaName == Player.instance.transitionAreaName) // if player is supposed to come out of this entry
         {
-            Player.instance.transform.position = transform.position; //make player position the position of this area entry
+            GameManager.instance.goThroughExit = false; // make player be able to move again
+            Player.instance.transform.position = transform.position; // make player position the position of this area entry
         }
         
     }

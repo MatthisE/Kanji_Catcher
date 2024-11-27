@@ -14,6 +14,7 @@ public class AreaExit : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
+            GameManager.instance.goThroughExit = true; //set condition for player to stop moving
             Player.instance.transitionAreaName = transitionAreaName; // make player's transition name to this area exit's transition name
             MenuManager.instance.FadeImage(); // fade to black
             StartCoroutine(LoadSceneCoroutine());

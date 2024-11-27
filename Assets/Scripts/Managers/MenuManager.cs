@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
 
+// given to canvas object
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] Image imageToFade;
@@ -26,6 +27,9 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] GameObject itemSlotContainer; // items button prefab
     [SerializeField] Transform itemSlotContainerParent; // items display panel
+
+    [SerializeField] GameObject itemsPanel;
+    [SerializeField] GameObject statusPanel;
 
     public TextMeshProUGUI itemName, itemDescription;
     public ItemsManager activeItem;
@@ -48,6 +52,9 @@ public class MenuManager : MonoBehaviour
             }
             else
             {
+                itemsPanel.SetActive(false);
+                statusPanel.SetActive(false);
+
                 UpdateStats(); // display all current characters with stats
                 menu.SetActive(true);
                 GameManager.instance.gameMenuOpened = true; //set condition for player to stop moving
@@ -55,16 +62,18 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    // when opening menu, overview of stats should be displayed (different from stats menu)
     public void UpdateStats()
     {
         playerStats = GameManager.instance.GetPlayerStats();
 
+        // go through all current players (aka their stats)
         for(int i = 0; i < playerStats.Length; i++)
         {
-            // make player sets of this object visible in menu
+            // make panel for this character visible in menu
             characterPanel[i].SetActive(true);
 
-            // set the player sets for every object that has them
+            // fill panel with info of this character from their playerStats object
             characterImage[i].sprite = playerStats[i].characterImage;
 
             nameText[i].text = playerStats[i].playerName;
@@ -81,10 +90,11 @@ public class MenuManager : MonoBehaviour
     // when opening stats menu
     public void StatsMenu()
     {
+        // go through all current players (aka their stats)
         for(int i = 0; i < playerStats.Length; i++)
         {
+            // make a button for each of them
             statsButtons[i].SetActive(true);
-
             statsButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = playerStats[i].playerName; // set text in buttons to player names
         }
 
@@ -106,9 +116,10 @@ public class MenuManager : MonoBehaviour
     // on click on items button:
     public void UpdateItemsInventory()
     {
+        //destroy all previous item slots to not have doubles
         foreach(Transform itemSlot in itemSlotContainerParent)
         {
-            Destroy(itemSlot.gameObject); //destroy all previous item slots to not have doubles
+            Destroy(itemSlot.gameObject);
         }
 
         foreach(ItemsManager item in Inventory.instance.GetItemsList())
@@ -119,6 +130,7 @@ public class MenuManager : MonoBehaviour
             Image itemImage = itemSlot.Find("Items Image").GetComponent<Image>(); // get the image of the slot
             itemImage.sprite = item.itemsImage; // set the image of the slot to the image of item in inventory
 
+            // set the amount text to a number if the amount is bigger than 1
             TextMeshProUGUI itemsAmountText = itemSlot.Find("Amount Text").GetComponent<TextMeshProUGUI>();
             if(item.amount > 1)
             {
@@ -129,10 +141,12 @@ public class MenuManager : MonoBehaviour
                 itemsAmountText.text = "";
             }
 
+            // set item of item button (script given to botton component of item slot object)
             itemSlot.GetComponent<ItemButton>().itemOnButton = item;
         }
     }
 
+    // remove item from inventory and reload item menu
     public void DiscardItem()
     {
         Inventory.instance.RemoveItem(activeItem);
@@ -140,6 +154,7 @@ public class MenuManager : MonoBehaviour
         AudioManager.instance.PlaySFX(3);
     }
 
+    // use item, remove item from inventory and reload item menu
     public void UseItem()
     {
         activeItem.UseItem();
@@ -151,14 +166,15 @@ public class MenuManager : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
+        // turn off app
         Debug.Log("We have quit the game.");
+        Application.Quit();
     }
 
     // activate trigger for animator to fade
     public void FadeImage()
     {
-        imageToFade.GetComponent<Animator>().SetTrigger("Start Fading");
+        imageToFade.GetComponent<Animator>().SetTrigger("Start Fading"); // --> trigger in animator for image
     }
 
     public void FadeOut()

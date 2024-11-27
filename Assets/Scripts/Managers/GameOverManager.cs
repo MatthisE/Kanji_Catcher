@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// given to canvas object of game over scene
 public class GameOverManager : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
+        // play death music and turn off other objects
         AudioManager.instance.PlayBackgroundMusic(5);
         Player.instance.gameObject.SetActive(false);
         MenuManager.instance.gameObject.SetActive(false);
         BattleManager.instance.gameObject.SetActive(false);
     }
 
+    // functions for the menu buttons
     public void QuitToMainMenu()
     {
         DestroyGameSession();
@@ -28,7 +30,7 @@ public class GameOverManager : MonoBehaviour
 
     private static void DestroyGameSession()
     {
-        // managers needs to be destroyed
+        // destroy managers
         Destroy(GameManager.instance.gameObject);
         Destroy(Player.instance.gameObject);
         Destroy(MenuManager.instance.gameObject);
@@ -37,6 +39,7 @@ public class GameOverManager : MonoBehaviour
 
     public void QuitGame()
     {
+        // turn off app
         Debug.Log("We have quit the game.");
         Application.Quit();
     }

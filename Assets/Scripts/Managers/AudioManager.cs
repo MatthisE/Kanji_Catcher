@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// given to audio manager object
 public class AudioManager : MonoBehaviour
 {
     // background music of a scene is set by its virtual camera
@@ -9,7 +10,6 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance;
 
-    // Start is called before the first frame update
     void Start()
     {
         //singelton pattern --> avoid duplicate Players in new scenes
@@ -24,9 +24,9 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // just for testing
         if(Input.GetKeyDown(KeyCode.F))
         {
             PlayBackgroundMusic(5);

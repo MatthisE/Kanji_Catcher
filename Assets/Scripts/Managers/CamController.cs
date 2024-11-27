@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
+// given to virtual camere object
 public class CamController : MonoBehaviour
 {
-    private Player playerTarget; //is set dynamically by script
+    private Player playerTarget; // is set dynamically by script
     private CinemachineVirtualCamera virtualCamera;
 
     [SerializeField] int musicToPlay;
     private bool musicAlreadyPlaying;
 
-    // Start is called before the first frame update
     void Start()
     {
-        playerTarget = FindObjectOfType<Player>(); //dynamically find Player
+        playerTarget = FindObjectOfType<Player>(); // dynamically find Player
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
 
-        virtualCamera.Follow = playerTarget.transform; //asign it to "Follow" of virtual camera
+        virtualCamera.Follow = playerTarget.transform; // asign player position to "Follow" of virtual camera
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // activate background music of scene
         if(!musicAlreadyPlaying)
         {
             musicAlreadyPlaying = true;

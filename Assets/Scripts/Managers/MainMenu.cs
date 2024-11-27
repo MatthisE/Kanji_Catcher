@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// given to main menu canvas object of main menu scene
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] string newGameScene;
@@ -11,7 +12,6 @@ public class MainMenu : MonoBehaviour
     [SerializeField] int musicToPlay;
     private bool musicAlreadyPlaying;
 
-    // Start is called before the first frame update
     void Start()
     {
         // check any key in player prefs to see if continue button should be displayed
@@ -25,9 +25,9 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // play background music
         if(!musicAlreadyPlaying)
             {
                 musicAlreadyPlaying = true;
@@ -35,7 +35,7 @@ public class MainMenu : MonoBehaviour
             }   
     }
 
-    // give these functions to the corresponding buttons
+    // functions for the menu buttons
     public void NewGameButton()
     {
         SceneManager.LoadScene(newGameScene);
@@ -43,7 +43,9 @@ public class MainMenu : MonoBehaviour
 
     public void ExitButton()
     {
-        Debug.Log("We just quit the game.");
+        // turn off app
+        Debug.Log("We have quit the game.");
+        Application.Quit();
     }
 
     public void ContinueButton()
