@@ -13,50 +13,58 @@ public class BattleManager : MonoBehaviour
     public static BattleManager instance;
     private bool isBattleActive;
 
+    // scene with characters and their positions
     [SerializeField] GameObject battleScene;
     [SerializeField] List<BattleCharacters> activeCharacters = new List<BattleCharacters>();
-
     [SerializeField] Transform playerPosition;
     [SerializeField] BattleCharacters player;
-
     [SerializeField] Transform[] enemiesPositions;
     [SerializeField] BattleCharacters[] enemiesPrefabs;
 
-    [SerializeField] int currentTurn; // does not need to be serialized field
-    [SerializeField] bool waitingForTurn; // does not need to be serialized field
-    [SerializeField] GameObject UIButtonHolder;
-
-    [SerializeField] BattleMoves[] battleMovesList;
-
-    [SerializeField] ParticleSystem characterAttackEffect;
-    [SerializeField] CharacterDamageGUI damageText;
-
+    // info of player
     [SerializeField] GameObject[] playersBattleStats;
     [SerializeField] TextMeshProUGUI[] playersNameText; // just has 1 entry
     [SerializeField] Slider[] playerHealthSlider, playerManaSlider; // just has 1 entry
 
+    // attacks of battle characters
+    [SerializeField] BattleMoves[] battleMovesList;
+    [SerializeField] ParticleSystem characterAttackEffect;
+    [SerializeField] CharacterDamageGUI damageText;
+
+    // turn based system
+    [SerializeField] int currentTurn; // does not need to be serialized field
+    [SerializeField] bool waitingForTurn; // does not need to be serialized field
+
+    // buttons
+    [SerializeField] GameObject UIButtonHolder;
+
+    // which enemy to target
     [SerializeField] GameObject enemyTargetPanel;
     [SerializeField] BattleTargetButtons[] targetButtons;
 
+    // what magic attack
     public GameObject magicChoicePanel;
     [SerializeField] BattleMagicButtons[] magicButtons;
 
-    public BattleNotifications battleNotice;
-
+    // running away
     [SerializeField] float chanceToRunAway = 0.5f;
+    private bool canRun;
+    private bool runningAway;
+    [SerializeField] string gameOverScene;
 
+    // items
     public GameObject itemsToUseMenu;
     [SerializeField] ItemsManager selectedItem;
     [SerializeField] GameObject itemSlotContainer;
     [SerializeField] Transform itemSlotContainerParent;
     [SerializeField] TextMeshProUGUI itemName, itemDescription;
 
-    [SerializeField] string gameOverScene;
-    private bool runningAway;
+    // battle notifications
+    public BattleNotifications battleNotice;
+
+    // rewards
     public int XPRewardAmount;
     public ItemsManager[] itemsReward;
-
-    private bool canRun;
 
     void Start()
     {
@@ -72,8 +80,10 @@ public class BattleManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    // when battle is active, always check if it is player's turn (show UI) or enemies' turn (make enemy move)
     void Update()
     {
+        /*
         if(Input.GetKeyDown(KeyCode.B))
         {
             StartBattle(new string[] {"Mage", "Warlock"}, true);
@@ -83,6 +93,7 @@ public class BattleManager : MonoBehaviour
         {
             NextTurn();
         }
+        */
 
         CheckPlayerButtonHolder();
     }
@@ -96,23 +107,24 @@ public class BattleManager : MonoBehaviour
             {
                 if(activeCharacters[currentTurn].IsPlayer())
                 {
-                    UIButtonHolder.SetActive(true);
+                    UIButtonHolder.SetActive(true); // activate
                 }
                 else
                 {
                     UIButtonHolder.SetActive(false);
-                    StartCoroutine(EnemyMoveCoroutine());
+                    StartCoroutine(EnemyMoveCoroutine()); // dactivate and make enemy move
                 }
             }
         }
     }
 
+    // battle started by battle zone, display scene with player, his stats, enemies and UI
     public void StartBattle(string[] enemiesToSpawn, bool canRunAway)
     {
         if(!isBattleActive)
         {
             canRun = canRunAway; // define if you can or cannot run away
-            SettingUpBattle();
+            SettingUpBattle(); 
 
             BattleCharacters newPlayer = Instantiate(
                 player, // original object
@@ -136,21 +148,23 @@ public class BattleManager : MonoBehaviour
     private void SettingUpBattle()
     {
         isBattleActive = true;
-        GameManager.instance.battleIsActive = true;
+        GameManager.instance.battleIsActive = true; // make player stop moving in overworld
 
+        // make camera point to battle scene
         transform.position = new Vector3(
             Camera.main.transform.position.x,
             Camera.main.transform.position.y,
             transform.position.z
         );
-        battleScene.SetActive(true);
+        battleScene.SetActive(true); // diaply battle scene
     }
 
     private void ImportPlayerStats(int i)
     {
-        PlayerStats playerStats = GameManager.instance.GetPlayerStats()[0]; // get player stats of player (first (AND ONLY) in array)
+        PlayerStats playerStats = GameManager.instance.GetPlayerStats()[0]; // get stats of player (first (AND ONLY) in array)
 
-        activeCharacters[i].currentHP = playerStats.currentHP; // set stats in players activeCharacters slot (0)
+        // set stats in player's activeCharacters slot (0)
+        activeCharacters[i].currentHP = playerStats.currentHP;
         activeCharacters[i].maxHP = playerStats.maxHP;
 
         activeCharacters[i].currentMana = playerStats.currentMana;
@@ -184,84 +198,40 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void NextTurn()
+    public void UpdatePlayerStats()
     {
-        // loop through turn counter
-        currentTurn++;
-        if(currentTurn >= activeCharacters.Count)
+        for(int i = 0; i < playersNameText.Length; i++) // we just have 1 player
         {
-            currentTurn = 0;
-        }
-
-        waitingForTurn = true;
-        UpdateBattle();
-
-        UpdatePlayerStats(); // the UI
-    }
-
-    private void UpdateBattle()
-    {
-        bool allEnemiesAreDead = true;
-        bool playerIsDead = true;
-
-        // check HP of all active characters
-        for(int i = 0; i < activeCharacters.Count; i++)
-        {
-            if(activeCharacters[i].currentHP < 0)
+            if(activeCharacters.Count > i)
             {
-                activeCharacters[i].currentHP = 0; // min HP
-            }
-
-            if(activeCharacters[i].currentHP == 0)
-            {
-                if(activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead)
+                if(activeCharacters[i].IsPlayer())
                 {
-                    activeCharacters[i].KillPlayer();
+                    BattleCharacters playerData = activeCharacters[i]; // get player chara (for his stats that were set by ImportPlayerStats())
+
+                    // put player info in stats UI
+                    playersNameText[i].text = playerData.characterName;
+
+                    playerHealthSlider[i].maxValue = playerData.maxHP;
+                    playerHealthSlider[i].value = playerData.currentHP;
+
+                    playerManaSlider[i].maxValue = playerData.maxMana;
+                    playerManaSlider[i].value = playerData.currentMana;
                 }
-
-                if(!activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead)
+                else
                 {
-                    activeCharacters[i].KillEnemy(); // so far same as kill player because I dont have death particles
+                    // turn off player
+                    playersBattleStats[i].gameObject.SetActive(false);
                 }
             }
             else
             {
-                if(activeCharacters[i].IsPlayer())
-                {
-                    playerIsDead = false;
-                }
-                else
-                {
-                    allEnemiesAreDead = false;
-                }
-            }
-        }
-
-        if(allEnemiesAreDead || playerIsDead)
-        {
-            if(allEnemiesAreDead)
-            {
-                StartCoroutine(EndBattleCoroutine());
-            }
-            else if(playerIsDead)
-            {
-                StartCoroutine(GameOverCoroutine());
-            }
-        }
-        else
-        {
-            // if a character is dead, skip his turn
-            while(activeCharacters[currentTurn].currentHP == 0)
-            {
-                currentTurn++;
-                if(currentTurn >= activeCharacters.Count)
-                {
-                    currentTurn = 0;
-                }
+                // turn off player if you have less active charas than texts
+                playersBattleStats[i].gameObject.SetActive(false);
             }
         }
     }
 
+    // enemy attacks player, then a new turn begins (or battle ends)
     public IEnumerator EnemyMoveCoroutine()
     {
         waitingForTurn = false;
@@ -282,15 +252,30 @@ public class BattleManager : MonoBehaviour
         {
             if(battleMovesList[i].moveName == activeCharacters[currentTurn].AttackMovesAvailable()[selectedAttack]) // if battle manager has move of active enemy
             {
-                movePower = GettingMovePowerAndEffectInstantiation(0, i); // 0 --> player as target
+                movePower = GettingMovePowerAndEffectInstantiation(0, i); // get power of attack and put damage effect on player (0 --> player as target)
             }
         }
 
-        InstantiateEffectOnAttackingCharacter();
+        InstantiateEffectOnAttackingCharacter(); // put attack effect on enemy
 
-        DealDamageToCharacters(0, movePower); // attack player (at position 0 of activeCharacters)
+        DealDamageToCharacters(0, movePower); // calculate damage to player and attack him (at position 0 of activeCharacters), show damage number
 
-        UpdatePlayerStats(); // the UI
+        UpdatePlayerStats(); // update player stats UI (might not need this here since it is also in NextTurn())
+    }
+
+    private int GettingMovePowerAndEffectInstantiation(int selectedCharacterTarget, int i)
+    {
+        int movePower;
+
+        // put damage effect of attack move on player
+        Instantiate(
+            battleMovesList[i].effectToUse,
+            activeCharacters[selectedCharacterTarget].transform.position, // position of selected target
+            activeCharacters[selectedCharacterTarget].transform.rotation
+        );
+
+        movePower = battleMovesList[i].movePower; // set power of attack
+        return movePower;
     }
 
     private void InstantiateEffectOnAttackingCharacter()
@@ -317,18 +302,19 @@ public class BattleManager : MonoBehaviour
 
         activeCharacters[selectedCharacterToAttack].TakeHPDamage(damageToGive); // give chara damage
 
+        // put damage number on chara
         CharacterDamageGUI characterDamageText = Instantiate(
             damageText,
             activeCharacters[selectedCharacterToAttack].transform.position,
             activeCharacters[selectedCharacterToAttack].transform.rotation
         );
-
         characterDamageText.SetDamage(damageToGive);
     }
 
     private int CalculateCritical(int damageToGive)
     {
-        if(Random.value <= 0.8f) // this needs to change to 0.1f
+        // double damage on rare occasion
+        if(Random.value <= 0.1f)
         {
             Debug.Log("CRITICAL HIT!! instead of " + damageToGive + " points " + (damageToGive * 2) + " was dealt.");
 
@@ -338,63 +324,125 @@ public class BattleManager : MonoBehaviour
         return damageToGive;
     }
 
-    public void UpdatePlayerStats()
+    private void NextTurn()
     {
-        for(int i = 0; i < playersNameText.Length; i++)
+        // loop through turn counter
+        currentTurn++;
+        if(currentTurn >= activeCharacters.Count)
         {
-            if(activeCharacters.Count > i)
+            currentTurn = 0;
+        }
+
+        waitingForTurn = true;
+        UpdateBattle(); // check who died and if battle is over
+
+        UpdatePlayerStats(); // update player stats UI
+    }
+
+    private void UpdateBattle()
+    {
+        bool allEnemiesAreDead = true;
+        bool playerIsDead = true;
+
+        // check HP of all active characters
+        for(int i = 0; i < activeCharacters.Count; i++)
+        {
+            if(activeCharacters[i].currentHP < 0)
             {
-                if(activeCharacters[i].IsPlayer())
+                activeCharacters[i].currentHP = 0; // min HP
+            }
+
+            if(activeCharacters[i].currentHP == 0)
+            {
+                // kill player
+                if(activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead)
                 {
-                    BattleCharacters playerData = activeCharacters[i]; // get player chara
-
-                    // put player info in stats UI
-                    playersNameText[i].text = playerData.characterName;
-
-                    playerHealthSlider[i].maxValue = playerData.maxHP;
-                    playerHealthSlider[i].value = playerData.currentHP;
-
-                    playerManaSlider[i].maxValue = playerData.maxMana;
-                    playerManaSlider[i].value = playerData.currentMana;
+                    activeCharacters[i].KillPlayer();
                 }
-                else
+
+                // kill enemy
+                if(!activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead)
                 {
-                    // turn off player
-                    playersBattleStats[i].gameObject.SetActive(false);
+                    activeCharacters[i].KillEnemy(); // so far same as kill player because I don't have death particles
                 }
             }
             else
             {
-                // turn off player if you have less active charas than texts
-                playersBattleStats[i].gameObject.SetActive(false);
+                if(activeCharacters[i].IsPlayer())
+                {
+                    playerIsDead = false;
+                }
+                else
+                {
+                    allEnemiesAreDead = false;
+                }
             }
         }
-    }
 
-    // Player Attacking Methods
-    public void PlayerAttack(string moveName, int selectEnemyTarget)
-    {
-        //int selectEnemyTarget = 1;
-        int movePower = 0;
-
-        for(int i = 0; i < battleMovesList.Length; i++)
+        // end battle
+        if(allEnemiesAreDead || playerIsDead)
         {
-            if(battleMovesList[i].moveName == moveName) // if battle manager has move of player
+            if(allEnemiesAreDead)
             {
-                movePower = GettingMovePowerAndEffectInstantiation(selectEnemyTarget, i);
+                StartCoroutine(EndBattleCoroutine());
+            }
+            else if(playerIsDead)
+            {
+                StartCoroutine(GameOverCoroutine());
             }
         }
-
-        InstantiateEffectOnAttackingCharacter();
-
-        DealDamageToCharacters(selectEnemyTarget, movePower);
-
-        NextTurn();
-
-        enemyTargetPanel.SetActive(false);
+        else
+        {
+            // if a character is dead, skip his turn
+            while(activeCharacters[currentTurn].currentHP == 0)
+            {
+                currentTurn++;
+                if(currentTurn >= activeCharacters.Count)
+                {
+                    currentTurn = 0;
+                }
+            }
+        }
     }
 
-    public void OpenTargetMenu(string moveName)
+    // pick an attack, pick an enemy, make player attack
+    public void OpenMagicPanel() // on click on magic panel
+    {
+        magicChoicePanel.SetActive(true);
+
+        for(int i = 0; i < magicButtons.Length; i++)
+        {
+            if(activeCharacters[currentTurn].AttackMovesAvailable().Length > i)
+            {
+                // set spell names on buttons
+                magicButtons[i].gameObject.SetActive(true);
+                magicButtons[i].spellName = GetCurrentActiveCharacter().AttackMovesAvailable()[i];
+                magicButtons[i].spellNameText.text = magicButtons[i].spellName;
+
+                for(int j = 0; j < battleMovesList.Length; j++)
+                {
+                    if(battleMovesList[j].moveName == magicButtons[i].spellName)
+                    {
+                        // set stats of moves
+                        magicButtons[i].spellCost = battleMovesList[j].manaCost;
+                        magicButtons[i].spellCostText.text = magicButtons[i].spellCost.ToString();
+                    }
+                }
+            }
+            else
+            {
+                // no moves available
+                magicButtons[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public BattleCharacters GetCurrentActiveCharacter()
+    {
+        return activeCharacters[currentTurn];
+    }
+
+    public void OpenTargetMenu(string moveName) // on click on an attack
     {
         enemyTargetPanel.SetActive(true); // activate enemy target select panel
 
@@ -408,8 +456,6 @@ public class BattleManager : MonoBehaviour
                 Enemies.Add(i);
             }
         }
-
-        //Debug.Log(Enemies.Count);
 
         for(int i = 0; i < targetButtons.Length; i++)
         {
@@ -427,65 +473,40 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private int GettingMovePowerAndEffectInstantiation(int selectedCharacterTarget, int i)
+    public void PlayerAttack(string moveName, int selectEnemyTarget) // on click on an enemy
     {
-        int movePower;
+        int movePower = 0;
 
-        Instantiate(
-            battleMovesList[i].effectToUse,
-            activeCharacters[selectedCharacterTarget].transform.position, // position of selected target
-            activeCharacters[selectedCharacterTarget].transform.rotation
-        );
-
-        movePower = battleMovesList[i].movePower; // set power of attack
-        return movePower;
-    }
-
-    public void OpenMagicPanel()
-    {
-        magicChoicePanel.SetActive(true);
-
-        for(int i = 0; i < magicButtons.Length; i++)
+        for(int i = 0; i < battleMovesList.Length; i++)
         {
-            if(activeCharacters[currentTurn].AttackMovesAvailable().Length > i)
+            if(battleMovesList[i].moveName == moveName) // if battle manager has selected move
             {
-                // set spell names on buttons
-                magicButtons[i].gameObject.SetActive(true);
-                magicButtons[i].spellName = GetCurrentActiveCharacter().AttackMovesAvailable()[i];
-                magicButtons[i].spellNameText.text = magicButtons[i].spellName;
-
-                for(int j = 0; j < battleMovesList.Length; j++)
-                {
-                    if(battleMovesList[j].moveName == magicButtons[i].spellName)
-                    {
-                        magicButtons[i].spellCost = battleMovesList[j].manaCost;
-                        magicButtons[i].spellCostText.text = magicButtons[i].spellCost.ToString();
-                    }
-                }
-            }
-            else
-            {
-                magicButtons[i].gameObject.SetActive(false);
+                movePower = GettingMovePowerAndEffectInstantiation(selectEnemyTarget, i); // get power of attack and put damage effect on enemy
             }
         }
+
+        InstantiateEffectOnAttackingCharacter(); // put attack effect on player
+
+        DealDamageToCharacters(selectEnemyTarget, movePower); // calculate damage to player and attack him, show damage number
+
+        NextTurn();
+
+        enemyTargetPanel.SetActive(false);
     }
 
-    public BattleCharacters GetCurrentActiveCharacter()
-    {
-        return activeCharacters[currentTurn];
-    }
-
-    public void RunAway()
+    // run away
+    public void RunAway() // on click on run away
     {
         StartCoroutine(RunAwayCoroutine());
     }
 
     private IEnumerator RunAwayCoroutine()
     {
-        if(canRun)
+        if(canRun) // if the battle allows you to run
         {
             if(Random.value > chanceToRunAway)
             {
+                // run and end battle
                 runningAway = true;
                 battleNotice.SetText("You managed to run away.");
                 battleNotice.Activate();
@@ -493,14 +514,46 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
+                // you wasted your turn
                 battleNotice.SetText("You failed to run away.");
                 battleNotice.Activate();
                 
-                yield return new WaitUntil(() => !battleNotice.gameObject.activeSelf); // Wait until the notice disappears
+                yield return new WaitUntil(() => !battleNotice.gameObject.activeSelf); // wait until the notice disappears
 
                 NextTurn();
             }
         }
+    }
+
+    // items
+    public void SelectedItemToUse(ItemsManager itemToUse) // used in ItemsButton.Press() to select item
+    {
+        selectedItem = itemToUse;
+        itemName.text = itemToUse.itemName;
+        itemDescription.text = itemToUse.itemDescription;
+    }
+
+    public void UseItemButton() // on click on use item
+    {
+        if(selectedItem)
+        {
+            activeCharacters[0].UseItemInBattle(selectedItem); // make player use item
+            Inventory.instance.RemoveItem(selectedItem); // remove item from inventory
+
+            UpdatePlayerStats(); // update player stats UI
+
+            CloseItemsMenu();
+            UpdateItemsInInventory();
+
+        }
+        else{
+            print("No item selected.");
+        }
+    }
+
+    public void CloseItemsMenu()
+    {
+        itemsToUseMenu.SetActive(false);
     }
 
     public void UpdateItemsInInventory()
@@ -521,6 +574,7 @@ public class BattleManager : MonoBehaviour
             Image itemImage = itemSlot.Find("Items Image").GetComponent<Image>(); // get the image of the slot
             itemImage.sprite = item.itemsImage; // set the image of the slot to the image of item in inventory
 
+            // set the amount text to a number if the amount is bigger than 1
             TextMeshProUGUI itemsAmountText = itemSlot.Find("Amount Text").GetComponent<TextMeshProUGUI>();
             if(item.amount > 1)
             {
@@ -531,47 +585,21 @@ public class BattleManager : MonoBehaviour
                 itemsAmountText.text = "";
             }
 
+            // set item of item button (script given to botton component of item slot object)
             itemSlot.GetComponent<ItemButton>().itemOnButton = item;
         }
     }
 
-    public void SelectedItemToUse(ItemsManager itemToUse)
-    {
-        selectedItem = itemToUse;
-        itemName.text = itemToUse.itemName;
-        itemDescription.text = itemToUse.itemDescription;
-    }
-
-    public void UseItemButton()
-    {
-        if(selectedItem)
-        {
-            activeCharacters[0].UseItemInBattle(selectedItem);
-            Inventory.instance.RemoveItem(selectedItem);
-
-            UpdatePlayerStats();
-
-            CloseItemsMenu();
-            UpdateItemsInInventory();
-
-        }
-        else{
-            print("No item selected.");
-        }
-    }
-
-    public void CloseItemsMenu()
-    {
-        itemsToUseMenu.SetActive(false);
-    }
-
+    // end of battle
     public IEnumerator EndBattleCoroutine()
     {
+        // deactivate battle scene components
         isBattleActive = false;
         UIButtonHolder.SetActive(false);
         enemyTargetPanel.SetActive(false);
         magicChoicePanel.SetActive(false);
 
+        // display notice
         if(!runningAway)
         {
             battleNotice.SetText("WE WON!!");
@@ -580,7 +608,7 @@ public class BattleManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        // put stats of battle characters in overworld characters (?)
+        // put HP and mana of battle player in overworld player
         foreach(BattleCharacters playerInBattle in activeCharacters)
         {
             if(playerInBattle.IsPlayer())
@@ -595,20 +623,22 @@ public class BattleManager : MonoBehaviour
                 }
             }
 
-            Destroy(playerInBattle.gameObject);
+            Destroy(playerInBattle.gameObject); // destroy battle player
         }
 
+        // deactivate battle scene components
         battleScene.SetActive(false);
         activeCharacters.Clear();
 
         if(runningAway)
         {
-            GameManager.instance.battleIsActive = false; // deactivate battle scene (also handeled by BattleRewardsHandler)
+            GameManager.instance.battleIsActive = false; // make player movable again
             runningAway = false;
         }
         else
         {
-            BattleRewardsHandler.instance.OpenRewardScreen(XPRewardAmount, itemsReward);
+            // give rewards (and make player movable again)
+            BattleRewardsHandler.instance.OpenRewardScreen(XPRewardAmount, itemsReward); 
         }
 
         currentTurn = 0;
@@ -616,12 +646,13 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator GameOverCoroutine()
     {
+        // display notice
         battleNotice.SetText("WE LOST!");
         battleNotice.Activate();
 
         yield return new WaitForSeconds(1.5f);
 
         isBattleActive = false;
-        SceneManager.LoadScene(gameOverScene);
+        SceneManager.LoadScene(gameOverScene); // load game over scene
     }
 }
