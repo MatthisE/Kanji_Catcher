@@ -102,10 +102,10 @@ MonoBehaviour:
   - Blue Fireball
   - Tentacles
   characterName: Blueface
-  currentHP: 200
-  maxHP: 200
+  currentHP: 70
+  maxHP: 70
   currentMana: 300
   maxMana: 300
-  dexterity: 12
-  defence: 12
+  dexterity: 5
+  defence: 7
   isDead: 0

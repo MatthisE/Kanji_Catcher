@@ -38,6 +38,8 @@ public class MainMenu : MonoBehaviour
     // functions for the menu buttons
     public void NewGameButton()
     {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
         SceneManager.LoadScene(newGameScene);
     }
 

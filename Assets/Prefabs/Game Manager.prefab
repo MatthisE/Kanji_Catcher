@@ -50,6 +50,8 @@ MonoBehaviour:
   playerStats: []
   gameMenuOpened: 0
   dialogBoxOpened: 0
+  battleIsActive: 0
+  goThroughExit: 0
 --- !u!114 &4227534879324725388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +82,7 @@ MonoBehaviour:
   - Enter Cave
   - Steal Gem
   - Take Monster Soul
+  - Defeat Big Dragon Boss
   questMarkersCompleted: 
 --- !u!114 &6492657526942526961
 MonoBehaviour:

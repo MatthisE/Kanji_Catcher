@@ -102,10 +102,10 @@ MonoBehaviour:
   - Lightning
   - Purple Acid
   characterName: Mage
-  currentHP: 666
-  maxHP: 666
+  currentHP: 60
+  maxHP: 60
   currentMana: 666
   maxMana: 666
-  dexterity: 23
-  defence: 12
+  dexterity: 4
+  defence: 4
   isDead: 0

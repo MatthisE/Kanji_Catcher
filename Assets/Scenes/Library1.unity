@@ -811,6 +811,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5843296251898086296, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
+      propertyPath: currentXP
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7170900143880797391, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1149,7 +1153,6 @@ GameObject:
   - component: {fileID: 1723445603}
   - component: {fileID: 1723445602}
   - component: {fileID: 1723445604}
-  - component: {fileID: 1723445605}
   m_Layer: 0
   m_Name: Librarian NPC
   m_TagString: Untagged
@@ -1335,31 +1338,6 @@ MonoBehaviour:
   shouldActivateQuest: 1
   questToMark: Steal Gem
   markAsComplete: 1
---- !u!114 &1723445605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1723445599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db5b3cfc0bc67df4c8c8448d37c83f65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: Librarian
-  characterImage: {fileID: 337528447, guid: dc263ca36b0aa324b946a3f7abb773bf, type: 3}
-  maxLevel: 50
-  playerLevel: 1
-  currentXP: 0
-  xpForNextLevel: 
-  baseLevelXP: 100
-  maxHP: 100
-  currentHP: 0
-  maxMana: 30
-  currentMana: 0
-  dexterity: 0
-  defence: 0
 --- !u!4 &1908023414 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 830188544410623444, guid: 0f933a5697787644e8fde9adece4f63b, type: 3}
@@ -7330,6 +7308,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 744937881012927346, guid: 038bfe99bc2882b41a0ac1400ebdfb93, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3783788027346822851, guid: 038bfe99bc2882b41a0ac1400ebdfb93, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8038084645460461162, guid: 038bfe99bc2882b41a0ac1400ebdfb93, type: 3}

@@ -518,7 +518,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 955485987789435491}
   m_HandleRect: {fileID: 0}
@@ -3795,9 +3795,15 @@ MonoBehaviour:
   - {fileID: 1891174368392725338, guid: a11b57d394fcfb04fa66b90e22c6ac94, type: 3}
   - {fileID: 8609917575726481370, guid: ece75922372f05547bfee78ecd53b5a3, type: 3}
   - {fileID: 1459637201668392875, guid: 4a26e9fadd88b3341afdcf0f4d838d01, type: 3}
-  currentTurn: 0
-  waitingForTurn: 1
-  UIButtonHolder: {fileID: 4394610476682425944}
+  - {fileID: 4223708421095260246, guid: 6a31b282a338f3348abb7f8351ca0f7c, type: 3}
+  playersBattleStats:
+  - {fileID: 1178986676602592589}
+  playersNameText:
+  - {fileID: 8281170608797867027}
+  playerHealthSlider:
+  - {fileID: 7418587882632248904}
+  playerManaSlider:
+  - {fileID: 6003489191273973980}
   battleMovesList:
   - moveName: Blue Fireball
     movePower: 15
@@ -3825,14 +3831,9 @@ MonoBehaviour:
     effectToUse: {fileID: 8071438814915944815, guid: 2d85cfc2eb642ee469462c50186e378b, type: 3}
   characterAttackEffect: {fileID: 1376425950566678425, guid: e38f560910a74714d96882a1032f7b4e, type: 3}
   damageText: {fileID: -2804553569871909716, guid: af88637250d721549b190099ea79d18e, type: 3}
-  playersBattleStats:
-  - {fileID: 1178986676602592589}
-  playersNameText:
-  - {fileID: 8281170608797867027}
-  playerHealthSlider:
-  - {fileID: 7418587882632248904}
-  playerManaSlider:
-  - {fileID: 6003489191273973980}
+  currentTurn: 0
+  waitingForTurn: 1
+  UIButtonHolder: {fileID: 4394610476682425944}
   enemyTargetPanel: {fileID: 7849035659111096452}
   targetButtons:
   - {fileID: 5004185016787143584}
@@ -3849,15 +3850,19 @@ MonoBehaviour:
   - {fileID: 5952351906336903876}
   - {fileID: 5953730129742085621}
   - {fileID: 1387772040026095788}
-  battleNotice: {fileID: 8910457768480438210}
   chanceToRunAway: 0.5
+  gameOverScene: GameOverScene
   itemsToUseMenu: {fileID: 8289333728353119351}
   selectedItem: {fileID: 0}
   itemSlotContainer: {fileID: 2821126834776400439, guid: 35197a1b991ee3c4c8cc8ab47abe4a0a, type: 3}
   itemSlotContainerParent: {fileID: 5825841355126214886}
   itemName: {fileID: 888830244102098491}
   itemDescription: {fileID: 8794169119626422611}
-  gameOverScene: 
+  battleNotice: {fileID: 8910457768480438210}
+  XPRewardAmount: 2000
+  itemsReward:
+  - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
+  - {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
 --- !u!1 &4230452790425859615
 GameObject:
   m_ObjectHideFlags: 0
@@ -8256,7 +8261,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 9130903295208739118}
   m_HandleRect: {fileID: 0}

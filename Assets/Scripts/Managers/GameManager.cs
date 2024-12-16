@@ -35,14 +35,12 @@ public class GameManager : MonoBehaviour
         // save data (quest data is saved in quest manager)
         if(Input.GetKeyDown(KeyCode.I))
         {
-            Debug.Log("Data has been saved.");
             SaveData();
         }
 
         // load data (quest data is loaded in quest manager)
         if(Input.GetKeyDown(KeyCode.O))
         {
-            Debug.Log("Data has been loaded.");
             LoadData();
         }
 
@@ -64,6 +62,12 @@ public class GameManager : MonoBehaviour
     // save data (scene, items, player position, player stats)
     public void SaveData()
     {
+        Debug.Log("Data has been saved.");
+
+        // fill player stats again because this function is given to save button and it does not wait for Start()
+        playerStats = FindObjectsOfType<PlayerStats>(); // add all objects that have a PlayerStats script to playerStats Array
+        Array.Reverse(playerStats); // revert array because it adds object in the wrong order
+
         SavingPlayerPosition();
         SavingPlayerStats();
 
@@ -79,6 +83,26 @@ public class GameManager : MonoBehaviour
             if(itemInInventory.isStackable)
             {
                 PlayerPrefs.SetInt("Items_" + i + "_Name", itemInInventory.amount); // save item amount
+            }
+        }
+    }
+
+    void PrintPlayerPrefs()
+    {
+        // Get the total number of PlayerPrefs entries
+        int count = PlayerPrefs.GetInt("PlayerPrefsCount", 0);
+
+        // Print each PlayerPref key and its value
+        for (int i = 0; i < count; i++)
+        {
+            string key = PlayerPrefs.GetString("PlayerPrefsKey_" + i, null);
+            if (key != null)
+            {
+                if (PlayerPrefs.HasKey(key))
+                {
+                    string value = PlayerPrefs.GetString(key);  // Change this if you're saving other types
+                    Debug.Log(key + ": " + value);
+                }
             }
         }
     }
@@ -104,6 +128,8 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetInt("Player_" + playerStats[i].playerName + "_active", 0);
             }
 
+            Debug.Log(PlayerPrefs.GetString("Player_Jimmy_active"));
+
             // players' stats
             PlayerPrefs.SetInt("Player_" + playerStats[i].playerName + "_Level", playerStats[i].playerLevel);
             PlayerPrefs.SetInt("Player_" + playerStats[i].playerName + "_CurrentXP", playerStats[i].currentXP);
@@ -122,6 +148,8 @@ public class GameManager : MonoBehaviour
     // load data (items, player position, player stats), scene is loaded by LoadingScene.cs
     public void LoadData()
     {
+        Debug.Log("Data has been loaded.");
+
         LoadingPlayerPosition();
         LoadingPlayerStats();
         

@@ -1360,14 +1360,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 790537179013800102, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
-      propertyPath: questNames.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 790537179013800102, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
-      propertyPath: questNames.Array.data[5]
-      value: Defeat Big Dragon Boss
-      objectReference: {fileID: 0}
     - target: {fileID: 1979113009451938360, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4982,34 +4974,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Battle Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
-      propertyPath: gameOverScene
-      value: GameOverScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
-      propertyPath: XPRewardAmount
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
-      propertyPath: itemsReward.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
-      propertyPath: enemiesPrefabs.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
-      propertyPath: itemsReward.Array.data[0]
-      value: 
-      objectReference: {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
-    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
-      propertyPath: itemsReward.Array.data[1]
-      value: 
-      objectReference: {fileID: 5012072546324205730, guid: c19cdc1891c6bef4c933578abeea7183, type: 3}
-    - target: {fileID: 4831421564396976847, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
-      propertyPath: enemiesPrefabs.Array.data[3]
-      value: 
-      objectReference: {fileID: 4223708421095260246, guid: 6a31b282a338f3348abb7f8351ca0f7c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

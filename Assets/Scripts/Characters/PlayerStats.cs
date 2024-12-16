@@ -50,7 +50,7 @@ public class PlayerStats : MonoBehaviour
     public void AddXP(int amountOfXp)
     {
         currentXP += amountOfXp;
-        if(currentXP > xpForNextLevel[playerLevel]) // level up
+        while(currentXP > xpForNextLevel[playerLevel]) // level up
         {
             currentXP -= xpForNextLevel[playerLevel]; // reset player XP 0 + left over XP from the level up 
             playerLevel++;

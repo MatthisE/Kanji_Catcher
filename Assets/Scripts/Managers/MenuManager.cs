@@ -164,6 +164,12 @@ public class MenuManager : MonoBehaviour
         AudioManager.instance.PlaySFX(8);
     }
 
+    public void CloseMenu()
+    {
+        menu.SetActive(false);
+        GameManager.instance.gameMenuOpened = false; // make player movable
+    }
+
     public void QuitGame()
     {
         // turn off app
