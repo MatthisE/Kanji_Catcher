@@ -88,7 +88,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!61 &6364735272589046595
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d3b3045e117ab45a52dbdf304e81cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fixedJoystick: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
   moveSpeed: 5
   playerRigidBody: {fileID: 8220451204474045275}
   playerAnimator: {fileID: 300189904936576933}
@@ -215,7 +216,7 @@ MonoBehaviour:
   characterImage: {fileID: -1787128002, guid: 04baaec2164f6b748a81c9bb01d8dd73, type: 3}
   maxLevel: 50
   playerLevel: 1
-  currentXP: 36
+  currentXP: 0
   xpForNextLevel: 
   baseLevelXP: 100
   maxHP: 200

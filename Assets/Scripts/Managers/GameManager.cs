@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -48,9 +49,12 @@ public class GameManager : MonoBehaviour
         if(gameMenuOpened || dialogBoxOpened || battleIsActive || goThroughExit)
         {
             Player.instance.deactivateMovement = true;
+            Joystick.ActivateJoystick(false);
+            Joystick.instance.ResetJoystick();
         }else
         {
             Player.instance.deactivateMovement = false;
+            Joystick.ActivateJoystick(true);
         }
     }
 

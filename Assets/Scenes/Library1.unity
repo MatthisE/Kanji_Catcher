@@ -811,10 +811,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5843296251898086296, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
-      propertyPath: currentXP
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7170900143880797391, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -855,6 +851,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7502847855001683380, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
+      propertyPath: fixedJoystick
+      value: 
+      objectReference: {fileID: 1832004058}
     - target: {fileID: 8395785279682171498, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1200,7 +1200,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1103741633
   m_SortingLayer: 2
-  m_SortingOrder: -1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 337528447, guid: dc263ca36b0aa324b946a3f7abb773bf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1211,7 +1211,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!4 &1723445601
 Transform:
   m_ObjectHideFlags: 0
@@ -1304,7 +1304,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.43495774}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1315,7 +1315,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3333334, y: 1.5}
+  m_Size: {x: 1.3333334, y: 0.6300845}
   m_EdgeRadius: 0
 --- !u!114 &1723445604
 MonoBehaviour:
@@ -1338,6 +1338,17 @@ MonoBehaviour:
   shouldActivateQuest: 1
   questToMark: Steal Gem
   markAsComplete: 1
+--- !u!114 &1832004058 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1862514343368385801, guid: 038bfe99bc2882b41a0ac1400ebdfb93, type: 3}
+  m_PrefabInstance: {fileID: 2459790083668476765}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45977bbae16431c46a013576a1aea384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1908023414 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 830188544410623444, guid: 0f933a5697787644e8fde9adece4f63b, type: 3}

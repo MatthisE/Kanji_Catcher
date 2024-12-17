@@ -30,7 +30,7 @@ public class DialogController : MonoBehaviour
     {
         if(dialogBox.activeInHierarchy) // box got activated by NPCs dialog handler
         {
-            if(Input.GetButtonUp("Fire1")) // Fire1 --> left mouse button (Project Settings --> Input Manager)
+            if(Input.GetButtonUp("Jump")) // Jump --> space button (Project Settings --> Input Manager)
             {
                 if(!dialogJustStarted)
                 {

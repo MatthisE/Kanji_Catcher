@@ -35,8 +35,13 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        /*
         float horizontalMovement = Input.GetAxisRaw("Horizontal"); // up, down, W, S keys
         float verticalMovement = Input.GetAxisRaw("Vertical"); // left, right, A, D keys
+        */
+
+        float horizontalMovement = Joystick.instance.Horizontal;
+        float verticalMovement = Joystick.instance.Vertical;
 
         if(deactivateMovement) // make player stand still (for example by NPC dialog)
         {
@@ -53,7 +58,7 @@ public class Player : MonoBehaviour
         playerAnimator.SetFloat("movementY", playerRigidBody.velocity.y);
 
         // set Animator values of last X and Y movements to make player look in that direction when he stops moving
-        if(horizontalMovement == 1 || horizontalMovement == -1 || verticalMovement == 1 || verticalMovement == -1)
+        if(horizontalMovement != 0 || horizontalMovement != 0 || verticalMovement != 0 || verticalMovement != 0)
         {
             if(!deactivateMovement) // player should not be able to look around when still
             {

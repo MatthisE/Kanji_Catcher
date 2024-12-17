@@ -31,7 +31,7 @@ public class BattleInstantiator : MonoBehaviour
         // count down time between battles
         if(inArea && !Player.instance.deactivateMovement) // player is in this battle zone an able to move (menu not open)
         {
-            if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) // when player moves, reduce battle counter
+            if(Joystick.instance.Horizontal != 0 || Joystick.instance.Vertical != 0) // when player moves, reduce battle counter
             {
                 battleCounter -= Time.deltaTime; // this could go below 0
             }

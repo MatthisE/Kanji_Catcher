@@ -107,7 +107,6 @@ public class BattleManager : MonoBehaviour
             {
                 if(activeCharacters[currentTurn].IsPlayer())
                 {
-                    Debug.Log("HERE!!!");
                     UIButtonHolder.SetActive(true); // activate
                 }
                 else
@@ -519,8 +518,12 @@ public class BattleManager : MonoBehaviour
                 battleNotice.SetText("You failed to run away.");
                 battleNotice.Activate();
                 
+                waitingForTurn = false; // false so Update() does not set UIButtonHolder to active
+                UIButtonHolder.SetActive(false);
+                
                 yield return new WaitUntil(() => !battleNotice.gameObject.activeSelf); // wait until the notice disappears
 
+                waitingForTurn = true;
                 NextTurn();
             }
         }
