@@ -12,14 +12,12 @@ public class CamController : MonoBehaviour
     [SerializeField] int musicToPlay;
     private bool musicAlreadyPlaying;
 
-    [SerializeField] private float smoothSpeed = 0.125f; // smooth transition speed between scenes
-    private Vector3 currentVelocity = Vector3.zero;
-
     void Start()
     {
         playerTarget = FindObjectOfType<Player>(); // dynamically find Player
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
 
+        //transform.position = playerTarget.transform.position;
         virtualCamera.Follow = playerTarget.transform; // asign player position to "Follow" of virtual camera
     }
 
@@ -38,17 +36,8 @@ public class CamController : MonoBehaviour
             playerTarget = FindObjectOfType<Player>();
             if(virtualCamera )
             {
-                // set the position of the camera's GameObject directly
-                GameObject cameraGameObject = virtualCamera.gameObject;
-                cameraGameObject.transform.position = playerTarget.transform.position;
-
                 virtualCamera.Follow = playerTarget.transform;
             }
         }
-
-        // smoothly transition camera's position to the player's position when entering new scene
-        Vector3 desiredPosition = playerTarget.transform.position;
-        Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, desiredPosition, ref currentVelocity, smoothSpeed);
-        transform.position = smoothedPosition;
     }
 }

@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 // given to canvas object of game over scene
 public class GameOverManager : MonoBehaviour
 {
+    [SerializeField] GameObject continueButton;
+    
     void Start()
     {
         // play death music and turn off other objects
@@ -13,6 +15,16 @@ public class GameOverManager : MonoBehaviour
         Player.instance.gameObject.SetActive(false);
         MenuManager.instance.gameObject.SetActive(false);
         BattleManager.instance.gameObject.SetActive(false);
+
+        // check any key in player prefs to see if continue button should be displayed
+        if(PlayerPrefs.HasKey("Player_Pos_X"))
+        {
+            continueButton.SetActive(true);
+        }
+        else
+        {
+            continueButton.SetActive(false);
+        }
     }
 
     // functions for the menu buttons

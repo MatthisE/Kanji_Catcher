@@ -1500,7 +1500,7 @@ GameObject:
   - component: {fileID: 5643025989073724830}
   - component: {fileID: 5962424264318105762}
   - component: {fileID: 8986503293516236479}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3049,7 +3049,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &283104502602919779
 RectTransform:
   m_ObjectHideFlags: 0

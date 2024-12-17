@@ -107,6 +107,7 @@ public class BattleManager : MonoBehaviour
             {
                 if(activeCharacters[currentTurn].IsPlayer())
                 {
+                    Debug.Log("HERE!!!");
                     UIButtonHolder.SetActive(true); // activate
                 }
                 else
@@ -599,14 +600,16 @@ public class BattleManager : MonoBehaviour
         enemyTargetPanel.SetActive(false);
         magicChoicePanel.SetActive(false);
 
+        yield return new WaitForSeconds(2f);
+
         // display notice
+        /*
         if(!runningAway)
         {
             battleNotice.SetText("WE WON!!");
             battleNotice.Activate();
         }
-
-        yield return new WaitForSeconds(2f);
+        */
 
         // put HP and mana of battle player in overworld player
         foreach(BattleCharacters playerInBattle in activeCharacters)
@@ -647,12 +650,19 @@ public class BattleManager : MonoBehaviour
     public IEnumerator GameOverCoroutine()
     {
         // display notice
+        /*
         battleNotice.SetText("WE LOST!");
         battleNotice.Activate();
+        */
 
-        yield return new WaitForSeconds(1.5f);
-
+        // deactivate battle scene components
         isBattleActive = false;
+        UIButtonHolder.SetActive(false);
+        enemyTargetPanel.SetActive(false);
+        magicChoicePanel.SetActive(false);
+
+        yield return new WaitForSeconds(1f);
+
         SceneManager.LoadScene(gameOverScene); // load game over scene
     }
 }

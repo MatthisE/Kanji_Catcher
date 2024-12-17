@@ -23,7 +23,7 @@ public class AreaExit : MonoBehaviour
 
     IEnumerator LoadSceneCoroutine()
     {
-        yield return new WaitForSeconds(1f); // wait 1sec before loading new scene, so Fade_End animation can play out 
+        yield return new WaitForSeconds(0.5f); // wait 1sec before loading new scene, so Fade_End animation can play out 
         SceneManager.LoadScene(sceneToLoad); // load new scene
     }
 }
