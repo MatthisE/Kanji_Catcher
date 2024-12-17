@@ -47,17 +47,21 @@ public class MenuManager : MonoBehaviour
         {
             if(menu.activeInHierarchy)
             {
+                // close menu
                 menu.SetActive(false);
                 GameManager.instance.gameMenuOpened = false;
             }
             else
             {
-                itemsPanel.SetActive(false);
-                statusPanel.SetActive(false);
+                if(GameManager.instance.dialogBoxOpened != true && GameManager.instance.battleIsActive != true && GameManager.instance.goThroughExit != true){ // don't open if one of these are true
+                    // open menu
+                    itemsPanel.SetActive(false);
+                    statusPanel.SetActive(false);
 
-                UpdateStats(); // display all current characters with stats
-                menu.SetActive(true);
-                GameManager.instance.gameMenuOpened = true; //set condition for player to stop moving
+                    UpdateStats(); // display all current characters with stats
+                    menu.SetActive(true);
+                    GameManager.instance.gameMenuOpened = true; //set condition for player to stop moving
+                }
             }
         }
     }
