@@ -14,7 +14,7 @@ public class DialogHandler : MonoBehaviour
 
     void Update()
     {
-        if(canActivateBox && Input.GetButtonDown("Jump") && !DialogController.instance.IsDialogBoxActive()) // only call if the box is not already active
+        if(canActivateBox && Input.GetButtonDown("Jump") && !DialogController.instance.IsDialogBoxActive() && GameManager.instance.gameMenuOpened != true) // only call if the box is not already active and menu is not open
         {
             DialogController.instance.ActivateDialog(sentences); // open box with first sentence
 
