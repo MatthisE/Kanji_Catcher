@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance;
 
+    public int prevMusic; // previous music needs to be safed in global object, current music in local object (camera)
+
     void Start()
     {
         //singelton pattern --> avoid duplicate Players in new scenes

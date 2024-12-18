@@ -32,6 +32,7 @@ public class MainMenu : MonoBehaviour
             {
                 musicAlreadyPlaying = true;
                 AudioManager.instance.PlayBackgroundMusic(musicToPlay);
+                AudioManager.instance.prevMusic = musicToPlay; // set prevMusic
             }   
     }
 

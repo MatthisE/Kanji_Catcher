@@ -7,11 +7,14 @@ using UnityEngine.SceneManagement;
 public class GameOverManager : MonoBehaviour
 {
     [SerializeField] GameObject continueButton;
-    
+
+    [SerializeField] int musicToPlay;
+
     void Start()
     {
         // play death music and turn off other objects
-        AudioManager.instance.PlayBackgroundMusic(5);
+        AudioManager.instance.PlayBackgroundMusic(musicToPlay);
+        AudioManager.instance.prevMusic = musicToPlay; // set prevMusic
         Player.instance.gameObject.SetActive(false);
         MenuManager.instance.gameObject.SetActive(false);
         BattleManager.instance.gameObject.SetActive(false);

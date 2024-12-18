@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using System;
 
 // given to virtual camere object
 public class CamController : MonoBehaviour
@@ -26,8 +27,11 @@ public class CamController : MonoBehaviour
         // activate background music of scene
         if(!musicAlreadyPlaying)
         {
-            musicAlreadyPlaying = true;
-            AudioManager.instance.PlayBackgroundMusic(musicToPlay);
+            musicAlreadyPlaying = true; // only on load of new scene
+            if(musicToPlay != AudioManager.instance.prevMusic){ // only if different from previous music
+                AudioManager.instance.PlayBackgroundMusic(musicToPlay);
+            }
+            AudioManager.instance.prevMusic = musicToPlay; // set prevMusic
         }
 
         // make camera also follow player in new area
