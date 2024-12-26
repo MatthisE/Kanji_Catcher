@@ -173,7 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d3b3045e117ab45a52dbdf304e81cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fixedJoystick: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
   moveSpeed: 5
   playerRigidBody: {fileID: 8220451204474045275}
   playerAnimator: {fileID: 300189904936576933}
@@ -225,3 +224,8 @@ MonoBehaviour:
   currentMana: 500
   dexterity: 10
   defence: 30
+  collectedKanji:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

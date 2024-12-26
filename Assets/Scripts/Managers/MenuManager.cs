@@ -17,9 +17,11 @@ public class MenuManager : MonoBehaviour
     public static MenuManager instance;
 
     private PlayerStats[] playerStats;
-    [SerializeField] TextMeshProUGUI[] nameText, hpText, manaText, currentXPText, xpText;
+    private KanjiManager[] collectedKanji;
+
+    [SerializeField] TextMeshProUGUI[] xpText;
     [SerializeField] Slider[] xpSlider;
-    [SerializeField] Image[] characterImage;
+    [SerializeField] Sprite[] characterImage;
     [SerializeField] GameObject[] characterPanel;
 
     [SerializeField] TextMeshProUGUI statName, statHP, statMana;
@@ -71,24 +73,22 @@ public class MenuManager : MonoBehaviour
     {
         playerStats = GameManager.instance.GetPlayerStats();
 
-        // go through all current players (aka their stats)
-        for(int i = 0; i < playerStats.Length; i++)
+        collectedKanji = playerStats[0].collectedKanji;
+
+        // go through all collected kanji
+        for(int i = 0; i < collectedKanji.Length; i++)
         {
             // make panel for this character visible in menu
             characterPanel[i].SetActive(true);
 
-            // fill panel with info of this character from their playerStats object
-            characterImage[i].sprite = playerStats[i].characterImage;
+            // fill panel with info of this character from their kanjiManager object
+            characterImage[i] = collectedKanji[i].kanjiImage;
 
-            nameText[i].text = playerStats[i].playerName;
-            hpText[i].text = "HP: " + playerStats[i].currentHP + "/" + playerStats[i].maxHP;
-            manaText[i].text = "Mana: " + playerStats[i].currentMana + "/" + playerStats[i].maxMana;
-            currentXPText[i].text = "Current XP: " + playerStats[i].currentXP;
-
-            xpText[i].text = playerStats[i].currentXP.ToString() + "/" + playerStats[i].xpForNextLevel[playerStats[i].playerLevel];
-            xpSlider[i].maxValue = playerStats[i].xpForNextLevel[playerStats[i].playerLevel]; // max value of XP slider --> needed XP for next level
-            xpSlider[i].value = playerStats[i].currentXP;
+            xpText[i].text = collectedKanji[i].currentXP.ToString() + "/" + 100;
+            xpSlider[i].maxValue = 100; // max value of XP slider --> needed XP
+            xpSlider[i].value = collectedKanji[i].currentXP;
         }
+
     }
 
     // when opening stats menu

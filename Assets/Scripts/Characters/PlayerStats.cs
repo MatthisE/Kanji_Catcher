@@ -25,6 +25,8 @@ public class PlayerStats : MonoBehaviour
     public int dexterity;
     public int defence;
 
+    public KanjiManager[] collectedKanji;
+
     void Start()
     {
         instance = this;
