@@ -66,6 +66,9 @@ public class BattleManager : MonoBehaviour
     public int XPRewardAmount;
     public ItemsManager[] itemsReward;
 
+    private PlayerStats[] playerStats;
+    private KanjiManager[] collectedKanji;
+
     void Start()
     {
         //singelton pattern --> avoid duplicates in new scenes
@@ -78,6 +81,8 @@ public class BattleManager : MonoBehaviour
             instance = this;
         }
         DontDestroyOnLoad(gameObject);
+
+        setAttacks();
     }
 
     // when battle is active, always check if it is player's turn (show UI) or enemies' turn (make enemy move)
@@ -437,6 +442,24 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public void setAttacks(){
+        for(int i = 0; i < magicButtons.Length; i++)
+        {
+            playerStats = GameManager.instance.GetPlayerStats();
+            collectedKanji = playerStats[0].collectedKanji;
+
+            // Get the random word
+            int randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
+            TrainingWord[] randomTrainingWords = collectedKanji[randomIndex].trainingWords;
+            int randomIndex2 = Mathf.FloorToInt(Random.value * randomTrainingWords.Length);
+            string randomWord = randomTrainingWords[randomIndex2].inKana;
+
+            // set attack word on buttons
+            magicButtons[i].spellName = randomWord;
+            magicButtons[i].spellNameText.text = magicButtons[i].spellName;
+        }
+    }
+
     public BattleCharacters GetCurrentActiveCharacter()
     {
         return activeCharacters[currentTurn];
@@ -492,6 +515,7 @@ public class BattleManager : MonoBehaviour
         NextTurn();
 
         enemyTargetPanel.SetActive(false);
+        setAttacks();
     }
 
     // run away
@@ -504,6 +528,8 @@ public class BattleManager : MonoBehaviour
     {
         if(canRun) // if the battle allows you to run
         {
+            setAttacks();
+
             if(Random.value > chanceToRunAway)
             {
                 // run and end battle
