@@ -242,17 +242,19 @@ public class BattleManager : MonoBehaviour
         waitingForTurn = false;
 
         yield return new WaitForSeconds(1f);
-        EnemyAttack();
+        StartCoroutine(EnemyAttack());
 
         yield return new WaitForSeconds(1f);
         NextTurn();
     }
 
-    private void EnemyAttack()
+    private IEnumerator EnemyAttack()
     {
         int selectedAttack = Random.Range(0, activeCharacters[currentTurn].AttackMovesAvailable().Length); // select random move of enemy
         int movePower = 0;
 
+        yield return StartCoroutine(MoveCharacter(activeCharacters[currentTurn].GetComponent<SpriteRenderer>().transform, -0.1f, 0.2f));
+        
         for(int i = 0; i < battleMovesList.Length; i++)
         {
             if(battleMovesList[i].moveName == activeCharacters[currentTurn].AttackMovesAvailable()[selectedAttack]) // if battle manager has move of active enemy
@@ -261,11 +263,33 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        InstantiateEffectOnAttackingCharacter(); // put attack effect on enemy
+        //InstantiateEffectOnAttackingCharacter(); // put attack effect on enemy
 
         DealDamageToCharacters(0, movePower); // calculate damage to player and attack him (at position 0 of activeCharacters), show damage number
 
         UpdatePlayerStats(); // update player stats UI (might not need this here since it is also in NextTurn())
+    }
+
+    private IEnumerator MoveCharacter(Transform charTransform, float moveDistance, float duration)
+    {
+        Vector3 originalPosition = charTransform.position;
+        Vector3 targetPosition = originalPosition + new Vector3(0, moveDistance, 0);
+
+        // Move Down
+        for (float t = 0; t < duration / 2f; t += Time.deltaTime)
+        {
+            charTransform.position = Vector3.Lerp(originalPosition, targetPosition, t / (duration / 2f));
+            yield return null;
+        }
+        charTransform.position = targetPosition;
+
+        // Move Up
+        for (float t = 0; t < duration / 2f; t += Time.deltaTime)
+        {
+            charTransform.position = Vector3.Lerp(targetPosition, originalPosition, t / (duration / 2f));
+            yield return null;
+        }
+        charTransform.position = originalPosition;
     }
 
     private int GettingMovePowerAndEffectInstantiation(int selectedCharacterTarget, int i)
@@ -496,9 +520,18 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void PlayerAttack(string moveName, int selectEnemyTarget) // on click on an enemy
+    public void PlayerAttack(string moveName, int selectEnemyTarget){
+        StartCoroutine(PlayerAttackCoroutine(moveName, selectEnemyTarget));
+    }
+    public IEnumerator PlayerAttackCoroutine(string moveName, int selectEnemyTarget) // on click on an enemy
     {
         int movePower = 0;
+
+        enemyTargetPanel.SetActive(false);
+        waitingForTurn = false;
+        UIButtonHolder.SetActive(false);
+
+        yield return StartCoroutine(MoveCharacter(playerPosition, 0.1f, 0.2f));
 
         for(int i = 0; i < battleMovesList.Length; i++)
         {
@@ -508,13 +541,12 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        InstantiateEffectOnAttackingCharacter(); // put attack effect on player
+        //InstantiateEffectOnAttackingCharacter(); // put attack effect on player
 
         DealDamageToCharacters(selectEnemyTarget, movePower); // calculate damage to player and attack him, show damage number
 
         NextTurn();
 
-        enemyTargetPanel.SetActive(false);
         setAttacks();
     }
 
