@@ -69,6 +69,8 @@ public class BattleManager : MonoBehaviour
     private PlayerStats[] playerStats;
     private KanjiManager[] collectedKanji;
 
+    [SerializeField] GameObject enemyAttackMenu;
+
     void Start()
     {
         //singelton pattern --> avoid duplicates in new scenes
@@ -254,6 +256,9 @@ public class BattleManager : MonoBehaviour
         int movePower = 0;
 
         yield return StartCoroutine(MoveCharacter(activeCharacters[currentTurn].GetComponent<SpriteRenderer>().transform, -0.1f, 0.2f));
+
+        enemyAttackMenu.SetActive(true);
+        enemyAttackMenu.GetComponent<EnemyAttack>().setWords(getRandomWord());
         
         for(int i = 0; i < battleMovesList.Length; i++)
         {
@@ -469,19 +474,23 @@ public class BattleManager : MonoBehaviour
     public void setAttacks(){
         for(int i = 0; i < magicButtons.Length; i++)
         {
-            playerStats = GameManager.instance.GetPlayerStats();
-            collectedKanji = playerStats[0].collectedKanji;
+            TrainingWord randomWord = getRandomWord();
 
-            // Get the random word
-            int randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
-            TrainingWord[] randomTrainingWords = collectedKanji[randomIndex].trainingWords;
-            int randomIndex2 = Mathf.FloorToInt(Random.value * randomTrainingWords.Length);
-            string randomWord = randomTrainingWords[randomIndex2].inKana;
-
-            // set attack word on buttons
-            magicButtons[i].spellName = randomWord;
+            // set attack words on buttons
+            magicButtons[i].spellName = randomWord.inKana;
             magicButtons[i].spellNameText.text = magicButtons[i].spellName;
         }
+    }
+
+    private TrainingWord getRandomWord(){
+        playerStats = GameManager.instance.GetPlayerStats();
+        collectedKanji = playerStats[0].collectedKanji;
+
+        // Get the random word
+        int randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
+        TrainingWord[] randomTrainingWords = collectedKanji[randomIndex].trainingWords;
+        int randomIndex2 = Mathf.FloorToInt(Random.value * randomTrainingWords.Length);
+        return randomTrainingWords[randomIndex2];
     }
 
     public BattleCharacters GetCurrentActiveCharacter()
