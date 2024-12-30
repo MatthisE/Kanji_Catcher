@@ -230,8 +230,12 @@ MonoBehaviour:
   trainingWords:
   - wordImage:
     - {fileID: 21300000, guid: 6e89f393cae0e3845a7904fd7839a03b, type: 3}
+    - {fileID: 21300000, guid: e65d5f44a616db54b9160f4f10fd2f52, type: 3}
+    - {fileID: 21300000, guid: 45e1a7bcb1798fd428ef45ea824030a5, type: 3}
     strokeOrder:
     - {fileID: 21300000, guid: 2256a5178202a9e4a9af0253fbe99153, type: 3}
+    - {fileID: 21300000, guid: 250b860c98927d945956e641c0d3f64f, type: 3}
+    - {fileID: 21300000, guid: 605a243778a46c5419987f32d8aac896, type: 3}
     inKanji: "\u7530\u3093\u307C"
     inKana: "\u305F\u3093\u307C"
     englishMeaning: rice field

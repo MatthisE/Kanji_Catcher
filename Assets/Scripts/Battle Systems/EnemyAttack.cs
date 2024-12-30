@@ -117,11 +117,11 @@ public class EnemyAttack : MonoBehaviour
         helpButton.SetActive(false);
         lessDefenceText.SetActive(true);
 
-        showHint();
+        ShowHint();
         hintGiven = true;
     }
 
-    public void showHint()
+    public void ShowHint()
     {
         hintText.SetActive(true);
 
@@ -138,7 +138,7 @@ public class EnemyAttack : MonoBehaviour
     public void CheckAnswer(TextMeshProUGUI pressedMeaning){
         helpButton.SetActive(false);
         lessDefenceText.SetActive(false);
-        showHint();
+        ShowHint();
 
         StartCoroutine(CheckAnswerCoroutine(pressedMeaning));
     }

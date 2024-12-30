@@ -37,32 +37,38 @@ public class PlayerAttack : MonoBehaviour
         helpButton.SetActive(false);
         lessDamageText.SetActive(true);
 
-        showStrokeOrder();
+        ShowStrokeOrder();
         strokeOrderDisplayed = true;
     }
     
-    private void showStrokeOrder()
+    private void ShowStrokeOrder()
     {
-        RawImage rawImage = rawImages[0].GetComponent<RawImage>(); 
-        Sprite  overlaySprite = trainingWord.strokeOrder[0];
-        
-        // Create a new GameObject for the overlay
-        overlayObject = new GameObject("SpriteOverlay");
-        overlayObject.transform.SetParent(rawImage.transform, false); // Make it a child of the RawImage
+        for(int i = 0; i < imageAmount; i++)
+        {
+            if(rawImages[i].activeInHierarchy)
+            {
+                RawImage rawImage = rawImages[i].GetComponent<RawImage>(); 
+                Sprite  overlaySprite = trainingWord.strokeOrder[i];
+                
+                // Create a new GameObject for the overlay
+                overlayObject = new GameObject("SpriteOverlay");
+                overlayObject.transform.SetParent(rawImage.transform, false); // Make it a child of the RawImage
 
-        // Add an Image component to the overlay GameObject
-        Image overlayImage = overlayObject.AddComponent<Image>();
+                // Add an Image component to the overlay GameObject
+                Image overlayImage = overlayObject.AddComponent<Image>();
 
-        // Set the sprite and transparency
-        overlayImage.sprite = overlaySprite;
-        overlayImage.color = new Color(1, 1, 1, 0.5f); // RGB stays the same; modify alpha for transparency
+                // Set the sprite and transparency
+                overlayImage.sprite = overlaySprite;
+                overlayImage.color = new Color(1, 1, 1, 0.5f); // RGB stays the same; modify alpha for transparency
 
-        // Match the size and position of the RawImage
-        RectTransform overlayTransform = overlayObject.GetComponent<RectTransform>();
-        overlayTransform.anchorMin = new Vector2(0, 0);
-        overlayTransform.anchorMax = new Vector2(1, 1);
-        overlayTransform.offsetMin = Vector2.zero;
-        overlayTransform.offsetMax = Vector2.zero;
+                // Match the size and position of the RawImage
+                RectTransform overlayTransform = overlayObject.GetComponent<RectTransform>();
+                overlayTransform.anchorMin = new Vector2(0, 0);
+                overlayTransform.anchorMax = new Vector2(1, 1);
+                overlayTransform.offsetMin = Vector2.zero;
+                overlayTransform.offsetMax = Vector2.zero;
+            }
+        }
     }
 
     public void CheckAnswer()
@@ -73,7 +79,7 @@ public class PlayerAttack : MonoBehaviour
     public IEnumerator CheckAnswerCoroutine()
     {
         if(!strokeOrderDisplayed){
-            showStrokeOrder();
+            ShowStrokeOrder();
         }
 
         helpButton.SetActive(false);
@@ -101,6 +107,11 @@ public class PlayerAttack : MonoBehaviour
             {
                 Destroy(obj); // destroy the object
             }
+        }
+
+        for(int i=0; i<imageAmount; i++)
+        {
+            rawImages[i].SetActive(false);
         }
 
         battleManager.StartPlayerAttackImpact();
