@@ -25,6 +25,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] GameObject[] playersBattleStats;
     [SerializeField] TextMeshProUGUI[] playersNameText; // just has 1 entry
     [SerializeField] Slider[] playerHealthSlider, playerManaSlider; // just has 1 entry
+    [SerializeField] TextMeshProUGUI hpText;
 
     // attacks of battle characters
     [SerializeField] BattleMoves[] battleMovesList;
@@ -37,6 +38,7 @@ public class BattleManager : MonoBehaviour
 
     // buttons
     [SerializeField] GameObject UIButtonHolder;
+    [SerializeField] GameObject actionsMenu;
 
     // which enemy to target
     [SerializeField] GameObject enemyTargetPanel;
@@ -66,9 +68,7 @@ public class BattleManager : MonoBehaviour
     public int XPRewardAmount;
     public ItemsManager[] itemsReward;
 
-    private PlayerStats[] playerStats;
-    private KanjiManager[] collectedKanji;
-
+    // enemy attack
     [SerializeField] GameObject enemyAttackMenu;
 
     void Start()
@@ -84,7 +84,7 @@ public class BattleManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
 
-        setAttacks();
+        SetAttacks();
     }
 
     // when battle is active, always check if it is player's turn (show UI) or enemies' turn (make enemy move)
@@ -115,6 +115,10 @@ public class BattleManager : MonoBehaviour
                 if(activeCharacters[currentTurn].IsPlayer())
                 {
                     UIButtonHolder.SetActive(true); // activate
+
+                    if(enemyTargetPanel.activeInHierarchy != true){
+                        actionsMenu.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -221,6 +225,8 @@ public class BattleManager : MonoBehaviour
                     playerHealthSlider[i].maxValue = playerData.maxHP;
                     playerHealthSlider[i].value = playerData.currentHP;
 
+                    hpText.text = playerData.currentHP + "/" + playerData.maxHP;
+
                     playerManaSlider[i].maxValue = playerData.maxMana;
                     playerManaSlider[i].value = playerData.currentMana;
                 }
@@ -245,21 +251,27 @@ public class BattleManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         StartCoroutine(EnemyAttack());
-
-        yield return new WaitForSeconds(1f);
-        NextTurn();
     }
 
     private IEnumerator EnemyAttack()
     {
-        int selectedAttack = Random.Range(0, activeCharacters[currentTurn].AttackMovesAvailable().Length); // select random move of enemy
-        int movePower = 0;
-
         yield return StartCoroutine(MoveCharacter(activeCharacters[currentTurn].GetComponent<SpriteRenderer>().transform, -0.1f, 0.2f));
 
         enemyAttackMenu.SetActive(true);
-        enemyAttackMenu.GetComponent<EnemyAttack>().setWords(getRandomWord());
-        
+        enemyAttackMenu.GetComponent<EnemyAttack>().setWords();
+    }
+
+    public void StartEnemyAttackImpact(float defence){
+        StartCoroutine(EnemyAttackImpact(defence));
+    }
+
+    public IEnumerator EnemyAttackImpact(float defence)
+    {
+        enemyAttackMenu.SetActive(false);
+
+        int selectedAttack = Random.Range(0, activeCharacters[currentTurn].AttackMovesAvailable().Length); // select random move of enemy
+        int movePower = 0;
+
         for(int i = 0; i < battleMovesList.Length; i++)
         {
             if(battleMovesList[i].moveName == activeCharacters[currentTurn].AttackMovesAvailable()[selectedAttack]) // if battle manager has move of active enemy
@@ -270,9 +282,14 @@ public class BattleManager : MonoBehaviour
 
         //InstantiateEffectOnAttackingCharacter(); // put attack effect on enemy
 
+        movePower = (int)(movePower * defence);
+
         DealDamageToCharacters(0, movePower); // calculate damage to player and attack him (at position 0 of activeCharacters), show damage number
 
         UpdatePlayerStats(); // update player stats UI (might not need this here since it is also in NextTurn())
+
+        yield return new WaitForSeconds(1f);
+        NextTurn();
     }
 
     private IEnumerator MoveCharacter(Transform charTransform, float moveDistance, float duration)
@@ -332,7 +349,7 @@ public class BattleManager : MonoBehaviour
 
         damageToGive = CalculateCritical(damageToGive);
 
-        Debug.Log(activeCharacters[currentTurn].characterName + " just dealt " + damageAmount + "(" + damageToGive + ") to " + activeCharacters[selectedCharacterToAttack]);
+        //Debug.Log(activeCharacters[currentTurn].characterName + " just dealt " + damageAmount + "(" + damageToGive + ") to " + activeCharacters[selectedCharacterToAttack]);
 
         activeCharacters[selectedCharacterToAttack].TakeHPDamage(damageToGive); // give chara damage
 
@@ -471,10 +488,10 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void setAttacks(){
+    public void SetAttacks(){
         for(int i = 0; i < magicButtons.Length; i++)
         {
-            TrainingWord randomWord = getRandomWord();
+            TrainingWord randomWord = GetRandomWord();
 
             // set attack words on buttons
             magicButtons[i].spellName = randomWord.inKana;
@@ -482,13 +499,14 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private TrainingWord getRandomWord(){
-        playerStats = GameManager.instance.GetPlayerStats();
-        collectedKanji = playerStats[0].collectedKanji;
+    public TrainingWord GetRandomWord(){
+        PlayerStats[] playerStats = GameManager.instance.GetPlayerStats();
+        KanjiManager[] collectedKanji = playerStats[0].collectedKanji;
 
-        // Get the random word
+        // Get random kanji
         int randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
         TrainingWord[] randomTrainingWords = collectedKanji[randomIndex].trainingWords;
+        // Get random training word
         int randomIndex2 = Mathf.FloorToInt(Random.value * randomTrainingWords.Length);
         return randomTrainingWords[randomIndex2];
     }
@@ -501,6 +519,7 @@ public class BattleManager : MonoBehaviour
     public void OpenTargetMenu(string moveName) // on click on an attack
     {
         enemyTargetPanel.SetActive(true); // activate enemy target select panel
+        actionsMenu.SetActive(false); // activate enemy target select panel
 
         // create list of all the enemies 
         List<int> Enemies = new List<int>();
@@ -556,7 +575,7 @@ public class BattleManager : MonoBehaviour
 
         NextTurn();
 
-        setAttacks();
+        SetAttacks();
     }
 
     // run away
@@ -569,7 +588,7 @@ public class BattleManager : MonoBehaviour
     {
         if(canRun) // if the battle allows you to run
         {
-            setAttacks();
+            SetAttacks();
 
             if(Random.value > chanceToRunAway)
             {
