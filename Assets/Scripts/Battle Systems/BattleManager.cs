@@ -43,6 +43,7 @@ public class BattleManager : MonoBehaviour
     // which enemy to target
     [SerializeField] GameObject enemyTargetPanel;
     [SerializeField] BattleTargetButtons[] targetButtons;
+    private int selectEnemyTarget;
 
     // what magic attack
     public GameObject magicChoicePanel;
@@ -68,8 +69,9 @@ public class BattleManager : MonoBehaviour
     public int XPRewardAmount;
     public ItemsManager[] itemsReward;
 
-    // enemy attack
+    // attack menus
     [SerializeField] GameObject enemyAttackMenu;
+    [SerializeField] GameObject playerAttackMenu;
 
     void Start()
     {
@@ -258,7 +260,7 @@ public class BattleManager : MonoBehaviour
         yield return StartCoroutine(MoveCharacter(activeCharacters[currentTurn].GetComponent<SpriteRenderer>().transform, -0.1f, 0.2f));
 
         enemyAttackMenu.SetActive(true);
-        enemyAttackMenu.GetComponent<EnemyAttack>().setWords();
+        enemyAttackMenu.GetComponent<EnemyAttack>().SetWords();
     }
 
     public void StartEnemyAttackImpact(float defence){
@@ -548,10 +550,21 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void PlayerAttack(string moveName, int selectEnemyTarget){
-        StartCoroutine(PlayerAttackCoroutine(moveName, selectEnemyTarget));
+    public void PlayerAttack(string moveName, int thisSelectEnemyTarget)
+    {
+        selectEnemyTarget = thisSelectEnemyTarget;
+        playerAttackMenu.SetActive(true);
+        playerAttackMenu.GetComponent<PlayerAttack>().SetWords();
+
     }
-    public IEnumerator PlayerAttackCoroutine(string moveName, int selectEnemyTarget) // on click on an enemy
+
+    public void StartPlayerAttackImpact()
+    {
+        playerAttackMenu.SetActive(false);
+        StartCoroutine(PlayerAttackCoroutine2("Lightning"));
+    }
+
+    public IEnumerator PlayerAttackCoroutine2(string moveName)
     {
         int movePower = 0;
 

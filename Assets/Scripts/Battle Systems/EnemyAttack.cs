@@ -16,7 +16,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] TextMeshProUGUI kanjiMeaning4;
     [SerializeField] BattleManager battleManager;
 
-    public void setWords()
+    public void SetWords()
     {
         // get random kanji
         trainingWord = GetRandomWord();

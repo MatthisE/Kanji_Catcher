@@ -13,6 +13,7 @@ public class DrawOnRawImage : MonoBehaviour
     private Texture2D canvasTexture;
     private Color32[] canvasColors;
     private Vector2 previousPosition;
+    private Texture2D originalTexture;
 
     [SerializeField] private float brushSize = 10f;
     [SerializeField] private Color brushColor = Color.black;
@@ -22,15 +23,19 @@ public class DrawOnRawImage : MonoBehaviour
         // Create a Texture2D that matches the RawImage size (568x568)
         int width = 568;
         int height = 568;
-        Texture2D originalTexture = new Texture2D(width, height);
+        originalTexture = new Texture2D(width, height);
 
         // Fill the texture with a white background
         Color[] pixels = new Color[width * height];
         for (int i = 0; i < pixels.Length; i++)
         {
-            if(i < 568*2 || i > 568*568-568*2 || i % 568 == 0 || (i - 567) % 568 == 0 || i % 284 == 0 || i > 568*284 && i < 568*285)
+            if(i < 568*10 || i > 568*568-568*10 || i % 568 > 0 && i % 568 < 10 || (i - 567) % 568 <= 10 || (i - 567) % 568 >= 568 - 10)
             {
-                pixels[i] = Color.gray; // Set the background color to grey
+                pixels[i] = Color.gray; // Set the background color to gray
+            }
+            else if(i % 284 > 0 && i % 284 < 5 || i > 568*282 && i < 568*287)
+            {
+                pixels[i] = new Color(0.8f, 0.8f, 0.8f); // Set the background color to light gray
             }
             else
             {
@@ -150,6 +155,30 @@ public class DrawOnRawImage : MonoBehaviour
         RectTransformUtility.ScreenPointToLocalPointInRectangle(drawImage.rectTransform, cursor, null, out Vector2 localCursor);
         localCursor += new Vector2(canvasTexture.width / 2f, canvasTexture.height / 2f);
         return localCursor;
+    }
+
+    public void Repaint()
+    {
+        // Reset the canvasColors array
+        for (int i = 0; i < canvasColors.Length; i++)
+        {
+            if(i < 568*10 || i > 568*568-568*10 || i % 568 > 0 && i % 568 < 10 || (i - 567) % 568 <= 10 || (i - 567) % 568 >= 568 - 10)
+            {
+                canvasColors[i] = Color.gray; // Set the background color to gray
+            }
+            else if(i % 284 > 0 && i % 284 < 5 || i > 568*282 && i < 568*287)
+            {
+                canvasColors[i] = new Color(0.8f, 0.8f, 0.8f); // Set the background color to light gray
+            }
+            else
+            {
+                canvasColors[i] = Color.white;; // Set the background color to white
+            }
+        }
+
+        // Apply the cleared colors to the canvas texture
+        canvasTexture.SetPixels32(canvasColors);
+        canvasTexture.Apply(); // Refresh the texture
     }
 
 }
