@@ -498,6 +498,7 @@ public class BattleManager : MonoBehaviour
             // set attack words on buttons
             magicButtons[i].spellName = randomWord.inKana;
             magicButtons[i].spellNameText.text = magicButtons[i].spellName;
+            magicButtons[i].trainingWord = randomWord;
         }
     }
 
@@ -518,7 +519,7 @@ public class BattleManager : MonoBehaviour
         return activeCharacters[currentTurn];
     }
 
-    public void OpenTargetMenu(string moveName) // on click on an attack
+    public void OpenTargetMenu(TrainingWord trainingWord) // on click on an attack
     {
         enemyTargetPanel.SetActive(true); // activate enemy target select panel
         actionsMenu.SetActive(false); // activate enemy target select panel
@@ -539,7 +540,7 @@ public class BattleManager : MonoBehaviour
             if(Enemies.Count > i && activeCharacters[Enemies[i]].currentHP > 0) // make sure you have (alive) enemies for the target buttons
             {
                 targetButtons[i].gameObject.SetActive(true);
-                targetButtons[i].moveName = moveName; // set move name for the player attack
+                targetButtons[i].trainingWord = trainingWord; // set trainingWord for the player attack
                 targetButtons[i].activeBattleTarget = Enemies[i];
                 targetButtons[i].targetName.text = activeCharacters[Enemies[i]].characterName;
             }
@@ -550,18 +551,18 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void PlayerAttack(string moveName, int thisSelectEnemyTarget)
+    public void PlayerAttack(TrainingWord trainingWord, int thisSelectEnemyTarget)
     {
         selectEnemyTarget = thisSelectEnemyTarget;
         playerAttackMenu.SetActive(true);
-        playerAttackMenu.GetComponent<PlayerAttack>().SetWords();
+        playerAttackMenu.GetComponent<PlayerAttack>().SetWords(trainingWord);
 
     }
 
     public void StartPlayerAttackImpact()
     {
         playerAttackMenu.SetActive(false);
-        StartCoroutine(PlayerAttackCoroutine2("Lightning"));
+        StartCoroutine(PlayerAttackCoroutine2("Laser"));
     }
 
     public IEnumerator PlayerAttackCoroutine2(string moveName)

@@ -16,14 +16,46 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] TextMeshProUGUI kanjiMeaning4;
     [SerializeField] BattleManager battleManager;
 
+    [SerializeField] GameObject helpButton;
+    [SerializeField] GameObject lessDefenceText;
+    [SerializeField] GameObject hintText;
+
+    private bool hintGiven = false;
+
+    private bool exerciseType; // true --> give kana to kanji, false --> give english meaning to kanji
+
     public void SetWords()
     {
         // get random kanji
         trainingWord = GetRandomWord();
         kanjiToRead.text = trainingWord.inKanji;
 
+        exerciseType = Random.value > 0.5f; // get random exercise type
+
+        List<string> meanings = new List<string>();
+
+        if(exerciseType)
+        {
+            SetKanaWords(meanings);
+        }
+        else{
+            SetEnglishWords(meanings);
+        }
+
+        // randomize list order
+        ShuffleList(meanings);
+
+        // put meanings in menu fields
+        kanjiMeaning1.text = meanings[0];
+        kanjiMeaning2.text = meanings[1];
+        kanjiMeaning3.text = meanings[2];
+        kanjiMeaning4.text = meanings[3];
+    }
+
+    private void SetKanaWords(List<string> meanings)
+    {
         // put meaning of kanji in list
-        List<string> meanings = new List<string> {trainingWord.inKana};
+        meanings.Add(trainingWord.inKana);
 
         // add 3 other random unique meanings
         for (int i = 0; i < 3; i++)
@@ -35,15 +67,23 @@ public class EnemyAttack : MonoBehaviour
             }
             meanings.Add(meaning);
         }
+    }
 
-        // randomize list order
-        ShuffleList(meanings);
+    private void SetEnglishWords(List<string> meanings)
+    {
+        // put meaning of kanji in list
+        meanings.Add(trainingWord.englishMeaning);
 
-        // put meanings in menu fields
-        kanjiMeaning1.text = meanings[0];
-        kanjiMeaning2.text = meanings[1];
-        kanjiMeaning3.text = meanings[2];
-        kanjiMeaning4.text = meanings[3];
+        // add 3 other random unique meanings
+        for (int i = 0; i < 3; i++)
+        {
+            string meaning = GetRandomWord().englishMeaning;
+            while(meanings.Contains(meaning))
+            {
+                meaning = GetRandomWord().englishMeaning;
+            }
+            meanings.Add(meaning);
+        }
     }
 
     public TrainingWord GetRandomWord()
@@ -72,25 +112,71 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
+    public void GiveHelp()
+    {
+        helpButton.SetActive(false);
+        lessDefenceText.SetActive(true);
+
+        showHint();
+        hintGiven = true;
+    }
+
+    public void showHint()
+    {
+        hintText.SetActive(true);
+
+        if(exerciseType)
+        {
+            hintText.GetComponent<TextMeshProUGUI>().text = trainingWord.englishMeaning;
+        }
+        else
+        {
+            hintText.GetComponent<TextMeshProUGUI>().text = trainingWord.inKana;
+        }
+    }
+
     public void CheckAnswer(TextMeshProUGUI pressedMeaning){
+        helpButton.SetActive(false);
+        lessDefenceText.SetActive(false);
+        showHint();
+
         StartCoroutine(CheckAnswerCoroutine(pressedMeaning));
     }
 
     public IEnumerator CheckAnswerCoroutine(TextMeshProUGUI pressedMeaning){
-        ChangeColor();
+        if(exerciseType)
+        {
+            ChangeColorKana();
+        }
+        else
+        {
+            ChangeColorEnglish();
+        }
+        
         yield return new WaitForSeconds(2f);
 
         if(pressedMeaning.text == trainingWord.inKana)
         {
-            battleManager.StartEnemyAttackImpact(0);
+            if(hintGiven)
+            {
+                battleManager.StartEnemyAttackImpact(0.5f);
+            }
+            else
+            {
+                battleManager.StartEnemyAttackImpact(0);
+            }
         }else
         {
             battleManager.StartEnemyAttackImpact(1);
         }
+
+        helpButton.SetActive(true);
+        hintText.SetActive(false);
+        hintGiven = false;
         ChangeColorToBlack();
     }
 
-    private void ChangeColor(){
+    private void ChangeColorKana(){
         if(kanjiMeaning1.text == trainingWord.inKana)
         {
             kanjiMeaning1.color = Color.green;
@@ -116,6 +202,40 @@ public class EnemyAttack : MonoBehaviour
         }
 
         if(kanjiMeaning4.text == trainingWord.inKana)
+        {
+            kanjiMeaning4.color = Color.green;
+        }else
+        {
+            kanjiMeaning4.color = Color.red;
+        }
+    }
+
+    private void ChangeColorEnglish(){
+        if(kanjiMeaning1.text == trainingWord.englishMeaning)
+        {
+            kanjiMeaning1.color = Color.green;
+        }else
+        {
+            kanjiMeaning1.color = Color.red;
+        }
+
+        if(kanjiMeaning2.text == trainingWord.englishMeaning)
+        {
+            kanjiMeaning2.color = Color.green;
+        }else
+        {
+            kanjiMeaning2.color = Color.red;
+        }
+
+        if(kanjiMeaning3.text == trainingWord.englishMeaning)
+        {
+            kanjiMeaning3.color = Color.green;
+        }else
+        {
+            kanjiMeaning3.color = Color.red;
+        }
+
+        if(kanjiMeaning4.text == trainingWord.englishMeaning)
         {
             kanjiMeaning4.color = Color.green;
         }else

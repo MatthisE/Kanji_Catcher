@@ -11,6 +11,8 @@ public class BattleMagicButtons : MonoBehaviour
 
     public TextMeshProUGUI spellNameText, spellCostText;
 
+    public TrainingWord trainingWord;
+
     // after pressing a spell button in battle
     public void Press()
     {
@@ -19,7 +21,7 @@ public class BattleMagicButtons : MonoBehaviour
         {
             // make enemy target selectable
             BattleManager.instance.magicChoicePanel.SetActive(false);
-            BattleManager.instance.OpenTargetMenu(spellName);
+            BattleManager.instance.OpenTargetMenu(trainingWord);
 
             // remove mana
             BattleManager.instance.GetCurrentActiveCharacter().currentMana -= spellCost;

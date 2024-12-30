@@ -6,7 +6,7 @@ using UnityEngine;
 // given to a button object that has the name of the target as child
 public class BattleTargetButtons : MonoBehaviour
 {
-    public string moveName;
+    public TrainingWord trainingWord;
     public int activeBattleTarget;
     public TextMeshProUGUI targetName; // referenced by BattleManager
 
@@ -17,6 +17,6 @@ public class BattleTargetButtons : MonoBehaviour
 
     public void Press()
     {
-        BattleManager.instance.PlayerAttack(moveName, activeBattleTarget); // activate set attack on set target
+        BattleManager.instance.PlayerAttack(trainingWord, activeBattleTarget); // activate set attack on set target
     }
 }
