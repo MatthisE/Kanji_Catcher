@@ -1,5 +1,9 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+
+// code heavily based on https://github.com/UnityNinja/drawable-Raw-Image-for-Unity
+// small adjustments were done to DrawLineTo() and DrawPixel() to erase gaps in lines
 
 public class DrawOnRawImage : MonoBehaviour
 {
@@ -24,7 +28,14 @@ public class DrawOnRawImage : MonoBehaviour
         Color[] pixels = new Color[width * height];
         for (int i = 0; i < pixels.Length; i++)
         {
-            pixels[i] = Color.white; // Set the background color to white
+            if(i < 568*2 || i > 568*568-568*2 || i % 568 == 0 || (i - 567) % 568 == 0 || i % 284 == 0 || i > 568*284 && i < 568*285)
+            {
+                pixels[i] = Color.gray; // Set the background color to grey
+            }
+            else
+            {
+                pixels[i] = Color.white; // Set the background color to white
+            }
         }
         originalTexture.SetPixels(pixels);
         originalTexture.Apply(); // Apply the background color
