@@ -16,6 +16,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] GameObject doneButton;
     [SerializeField] GameObject lessDamageText;
 
+    [SerializeField] GameObject similarityText;
+
     private int imageAmount;
     private GameObject overlayObject;
     private bool strokeOrderDisplayed = false;
@@ -77,6 +79,38 @@ public class PlayerAttack : MonoBehaviour
         StartCoroutine(CheckAnswerCoroutine());
     }
 
+    private double GetFinalAttackDamage(double attackDamage)
+    {
+        double decrement = 1;
+        if(strokeOrderDisplayed)
+        {
+            decrement = 2;
+        }
+
+        if(attackDamage <= 75)
+        {
+            if(attackDamage <= 50)
+            {
+                if(attackDamage <= 25)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 0.5/decrement;
+                }
+            }
+            else
+            {
+                return 0.75/decrement;
+            }
+        }
+        else
+        {
+            return 1/decrement;
+        }
+    }
+
     public IEnumerator CheckAnswerCoroutine()
     {
         if(!strokeOrderDisplayed){
@@ -87,9 +121,10 @@ public class PlayerAttack : MonoBehaviour
         doneButton.SetActive(false);
         lessDamageText.SetActive(false);
 
-        CompareImages();
+        double attackDamage = CompareImages();
+        double finalAttackDamage = GetFinalAttackDamage(attackDamage);
         
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         for(int i=0; i<imageAmount; i++)
         {
@@ -100,6 +135,7 @@ public class PlayerAttack : MonoBehaviour
         doneButton.SetActive(true);
 
         strokeOrderDisplayed = false;
+        similarityText.SetActive(false);
 
         // find all objects in the scene
         GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
@@ -117,11 +153,11 @@ public class PlayerAttack : MonoBehaviour
             rawImages[i].SetActive(false);
         }
 
-        battleManager.StartPlayerAttackImpact();
+        battleManager.StartPlayerAttackImpact(finalAttackDamage);
     }
 
     // compare RawImage and Sprite of correct Kanji
-    public void CompareImages()
+    public double CompareImages()
     {
         float totalSimmilarity = 0.0f;
 
@@ -133,7 +169,7 @@ public class PlayerAttack : MonoBehaviour
             if (rawTexture == null || spriteTexture == null)
             {
                 Debug.LogError("One or both textures are null!");
-                return;
+                return 0;
             }
 
             // Compare the textures
@@ -141,7 +177,13 @@ public class PlayerAttack : MonoBehaviour
             totalSimmilarity += similarity;
         }
 
-        Debug.Log($"Similarity: {Math.Round(totalSimmilarity / imageAmount * 100, 0)}%");
+        double finalValue = Math.Round(totalSimmilarity / imageAmount * 100, 0);
+
+        similarityText.GetComponent<TextMeshProUGUI>().text = finalValue + "%";
+        similarityText.SetActive(true);
+
+        return finalValue;
+
     }
 
     // convert Sprite to Texture2D

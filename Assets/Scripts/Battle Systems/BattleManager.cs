@@ -563,13 +563,13 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    public void StartPlayerAttackImpact()
+    public void StartPlayerAttackImpact(double offence)
     {
         playerAttackMenu.SetActive(false);
-        StartCoroutine(PlayerAttackCoroutine2("Laser"));
+        StartCoroutine(PlayerAttackCoroutine2("Lightning", offence));
     }
 
-    public IEnumerator PlayerAttackCoroutine2(string moveName)
+    public IEnumerator PlayerAttackCoroutine2(string moveName, double offence)
     {
         int movePower = 0;
 
@@ -588,6 +588,8 @@ public class BattleManager : MonoBehaviour
         }
 
         //InstantiateEffectOnAttackingCharacter(); // put attack effect on player
+
+        movePower = (int)(movePower * offence);
 
         DealDamageToCharacters(selectEnemyTarget, movePower); // calculate damage to player and attack him, show damage number
 
