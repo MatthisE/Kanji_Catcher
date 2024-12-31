@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -85,6 +86,8 @@ public class PlayerAttack : MonoBehaviour
         helpButton.SetActive(false);
         doneButton.SetActive(false);
         lessDamageText.SetActive(false);
+
+        CompareImages();
         
         yield return new WaitForSeconds(2f);
 
@@ -116,4 +119,144 @@ public class PlayerAttack : MonoBehaviour
 
         battleManager.StartPlayerAttackImpact();
     }
+
+    // compare RawImage and Sprite of correct Kanji
+    public void CompareImages()
+    {
+        float totalSimmilarity = 0.0f;
+
+        for(int i=0; i<imageAmount; i++)
+        {
+            Texture2D rawTexture = rawImages[i].GetComponent<RawImage>().texture as Texture2D;
+            Texture2D spriteTexture = SpriteToTexture(trainingWord.wordImage[i]); 
+
+            if (rawTexture == null || spriteTexture == null)
+            {
+                Debug.LogError("One or both textures are null!");
+                return;
+            }
+
+            // Compare the textures
+            float similarity = ComputeSimilarityForBlackPixels(rawTexture, spriteTexture);
+            totalSimmilarity += similarity;
+        }
+
+        Debug.Log($"Similarity: {Math.Round(totalSimmilarity / imageAmount * 100, 0)}%");
+    }
+
+    // convert Sprite to Texture2D
+    private Texture2D SpriteToTexture(Sprite sprite)
+    {
+        if (sprite == null) return null;
+
+        Texture2D texture = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
+        Color[] pixels = sprite.texture.GetPixels(
+            (int)sprite.rect.x,
+            (int)sprite.rect.y,
+            (int)sprite.rect.width,
+            (int)sprite.rect.height
+        );
+
+        // iterate through the pixels and replace transparency with white
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            if (pixels[i].a < 1f) // if pixel is transparent
+            {
+                pixels[i] = Color.white; // set it to white
+            }
+        }
+        texture.SetPixels(pixels);
+        texture.Apply();
+        return texture;
+    }
+
+    // compute similarity of black pixels
+    private float ComputeSimilarityForBlackPixels(Texture2D tex1, Texture2D tex2, float threshold = 0.0f, int toleranceRadius = 10)
+    {
+        Color[] pixels1 = tex1.GetPixels();
+        Color[] pixels2 = tex2.GetPixels();
+        int width = tex1.width;
+        int height = tex1.height;
+
+        if (pixels1.Length != pixels2.Length)
+        {
+            Debug.LogError("Textures must have the same dimensions for comparison!");
+            return 0f;
+        }
+
+        int totalBlackPixels1 = 0;
+        int totalBlackPixels2 = 0;
+        int matchingBlackPixels = 0;
+        int unmatchedBlackPixels1 = 0;
+
+        // Iterate through every pixel in both textures
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                int index = y * width + x;
+
+                // Count black pixels in tex2 and check if they are matched in tex1
+                if (IsBlack(pixels2[index], threshold))
+                {
+                    totalBlackPixels2++;
+                    if (IsBlackPixelInNeighborhood(tex1, x, y, threshold, toleranceRadius))
+                    {
+                        matchingBlackPixels++;
+                    }
+                }
+
+                // Count black pixels in tex1 and check if they are unmatched in tex2
+                if (IsBlack(pixels1[index], threshold))
+                {
+                    totalBlackPixels1++;
+                    if (!IsBlackPixelInNeighborhood(tex2, x, y, threshold, toleranceRadius))
+                    {
+                        unmatchedBlackPixels1++;
+                    }
+                }
+            }
+        }
+
+        if (totalBlackPixels1 == 0 && totalBlackPixels2 == 0) return 1f; // Both textures are completely empty of black pixels.
+
+        // Similarity calculation: penalize unmatched black pixels in tex1
+        float similarity = (float)matchingBlackPixels / (totalBlackPixels2 + unmatchedBlackPixels1);
+        return similarity;
+    }
+
+    // Check if there is a black pixel within the tolerance radius
+    private bool IsBlackPixelInNeighborhood(Texture2D tex, int centerX, int centerY, float threshold, int radius)
+    {
+        int width = tex.width;
+        int height = tex.height;
+
+        for (int offsetY = -radius; offsetY <= radius; offsetY++)
+        {
+            for (int offsetX = -radius; offsetX <= radius; offsetX++)
+            {
+                int neighborX = centerX + offsetX;
+                int neighborY = centerY + offsetY;
+
+                // Skip out-of-bounds pixels
+                if (neighborX < 0 || neighborX >= width || neighborY < 0 || neighborY >= height)
+                    continue;
+
+                // Check if this neighbor pixel is black
+                if (IsBlack(tex.GetPixel(neighborX, neighborY), threshold))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // Helper method to determine if a pixel is "black"
+    private bool IsBlack(Color color, float threshold)
+    {
+        return color.r <= threshold && color.g <= threshold && color.b <= threshold;
+    }
+
 }

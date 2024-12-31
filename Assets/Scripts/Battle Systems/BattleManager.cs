@@ -502,7 +502,11 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public TrainingWord GetRandomWord(){
+    private TrainingWord GetRandomWord(){
+        if (GameManager.instance == null)
+        {
+            Debug.LogError("GameManager.instance is null");
+        }
         PlayerStats[] playerStats = GameManager.instance.GetPlayerStats();
         KanjiManager[] collectedKanji = playerStats[0].collectedKanji;
 

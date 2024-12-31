@@ -798,6 +798,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1834023852057777914, guid: 038bfe99bc2882b41a0ac1400ebdfb93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8038084645460461162, guid: 038bfe99bc2882b41a0ac1400ebdfb93, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -1088,6 +1092,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c8b25f162fdd2942aaed4de4ad888c0, type: 3}
+--- !u!20 &1581880891 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 262981198749589511, guid: 3a913f5e01f0df34ea339ecf9667c3fe, type: 3}
+  m_PrefabInstance: {fileID: 1479863070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1701219942 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2309554355803179764, guid: 2795cf1e14584344ca51343a45a89687, type: 3}
@@ -4378,6 +4387,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2827220864980586312, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1581880891}
     - target: {fileID: 3922018130070570026, guid: aaed50b1ad3a50a42b73a6ac2fb29e15, type: 3}
       propertyPath: m_Name
       value: Battle Manager
