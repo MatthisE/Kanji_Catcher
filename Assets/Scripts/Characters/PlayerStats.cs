@@ -10,11 +10,9 @@ public class PlayerStats : MonoBehaviour
     public string playerName;
     public Sprite characterImage;
 
-    [SerializeField] int maxLevel = 50;
     public int playerLevel = 1;
     public int currentXP;
     public int[] xpForNextLevel;
-    [SerializeField] int baseLevelXP = 100;
 
     public int maxHP = 100;
     public int currentHP;
@@ -30,23 +28,11 @@ public class PlayerStats : MonoBehaviour
     void Start()
     {
         instance = this;
-
-        // fill the xpForEachLevel array
-        xpForNextLevel = new int[maxLevel];
-        xpForNextLevel[1] = baseLevelXP;
-
-        for(int i = 2; i < xpForNextLevel.Length; i++)
-        {
-            xpForNextLevel[i] = (int)(0.02f * i * i * i + 3.06f * i * i + 105.6f * i); // needed XP increases for each level (formula from dark souls)
-        }
     }
 
-    void Update()
+    void Awake()
     {
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            AddXP(100);
-        }
+        DontDestroyOnLoad(gameObject); // Keep this object across scenes
     }
 
     public void AddXP(int amountOfXp)

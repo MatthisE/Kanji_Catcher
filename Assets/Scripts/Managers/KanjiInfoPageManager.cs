@@ -14,8 +14,19 @@ public class KanjiInfoPageManager : MonoBehaviour
 
     [SerializeField] GameObject[] exampleWords;
 
-    public void SetPage(KanjiManager kanji)
+    public void SetPage(string buttonKanjiSymbol)
     {
+        KanjiManager[] collectedKanjiList = GameManager.instance.GetCollectedKanji();
+        KanjiManager kanji = null;
+
+        foreach(KanjiManager collectedKanji in collectedKanjiList)
+        {
+            if(collectedKanji.kanjiSymbol == buttonKanjiSymbol)
+            {
+                kanji = collectedKanji;
+            }
+        }
+
         kanjiSymbol.sprite = kanji.kanjiImage;
         onyomi.text = string.Join(", ", kanji.onyomi);
         kunyomi.text = string.Join(", ", kanji.kunyomi);

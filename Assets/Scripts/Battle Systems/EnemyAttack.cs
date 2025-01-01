@@ -88,8 +88,7 @@ public class EnemyAttack : MonoBehaviour
 
     public TrainingWord GetRandomWord()
     {
-        PlayerStats[] playerStats = GameManager.instance.GetPlayerStats();
-        KanjiManager[] collectedKanji = playerStats[0].collectedKanji;
+        KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
 
         // get random kanji
         int randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);

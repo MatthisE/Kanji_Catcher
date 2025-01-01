@@ -20,6 +20,7 @@ public class KanjiManager : MonoBehaviour
 
     public bool isCollected;
     public int currentXP;
+    public int xpReward = 0;
 
     private PlayerStats[] playerStats;
 

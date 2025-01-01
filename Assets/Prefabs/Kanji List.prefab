@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 258252041090365799}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.7349, y: 0.0351, z: -0.015653484}
+  m_LocalPosition: {x: 1.9, y: 0.53, z: -0.015653484}
   m_LocalScale: {x: 0.3279212, y: 0.3279212, z: 0.3279212}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -118,8 +118,11 @@ MonoBehaviour:
     inKanji: "\u5973"
     inKana: "\u304A\u3093\u306A"
     englishMeaning: woman
+    kanjiInWord:
+    - {fileID: 4942813038373060106}
   isCollected: 1
   currentXP: 0
+  xpReward: 0
 --- !u!1 &574862332774008303
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,8 +242,11 @@ MonoBehaviour:
     inKanji: "\u7530\u3093\u307C"
     inKana: "\u305F\u3093\u307C"
     englishMeaning: rice field
+    kanjiInWord:
+    - {fileID: 2309554355803179764}
   isCollected: 1
   currentXP: 0
+  xpReward: 0
 --- !u!1 &1577566791638958446
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,8 +363,11 @@ MonoBehaviour:
     inKanji: "\u7537"
     inKana: "\u304A\u3068\u3053"
     englishMeaning: man
+    kanjiInWord:
+    - {fileID: 6416909635510280892}
   isCollected: 0
   currentXP: 0
+  xpReward: 0
 --- !u!1 &2037093727276590788
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,8 +489,11 @@ MonoBehaviour:
     inKanji: "\u529B"
     inKana: "\u3061\u304B\u3089"
     englishMeaning: power
+    kanjiInWord:
+    - {fileID: 5220205487016785674}
   isCollected: 1
   currentXP: 0
+  xpReward: 0
 --- !u!1 &4829650238283013158
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,5 +660,23 @@ MonoBehaviour:
     inKanji: "\u4EBA"
     inKana: "\u3072\u3068"
     englishMeaning: person
+    kanjiInWord:
+    - {fileID: 3350441927506424603}
+  - wordImage:
+    - {fileID: 21300000, guid: 6270ef660d83fdb4fbbdb235ae3a5a4a, type: 3}
+    - {fileID: 21300000, guid: 46849927fb083c842a74eb2438825048, type: 3}
+    - {fileID: 21300000, guid: 3c7612f6c257e7f41a4110df63b0fec0, type: 3}
+    - {fileID: 21300000, guid: 0a82c35d68017714cafe87cbec47a933, type: 3}
+    strokeOrder:
+    - {fileID: 21300000, guid: bfbece16626869746bf6f54d8f8e8613, type: 3}
+    - {fileID: 21300000, guid: bd9dbe69bab1f914d8bf5e6449e756f2, type: 3}
+    - {fileID: 21300000, guid: cc86bae2244242f43bb8c25ce6a2aabf, type: 3}
+    - {fileID: 21300000, guid: c6acaf37f7d81ad4d9ecfd022027b664, type: 3}
+    inKanji: "\u30C9\u30A4\u30C4\u4EBA"
+    inKana: "\u30C9\u30A4\u30C4\u30B8\u30F3"
+    englishMeaning: German
+    kanjiInWord:
+    - {fileID: 3350441927506424603}
   isCollected: 1
   currentXP: 0
+  xpReward: 0

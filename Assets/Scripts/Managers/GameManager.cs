@@ -14,21 +14,21 @@ public class GameManager : MonoBehaviour
 
     public bool gameMenuOpened, dialogBoxOpened, battleIsActive, goThroughExit; // conditions for player to stop moving
 
-    void Start()
+    void Awake()
     {
-        //singelton pattern --> avoid duplicate GameManagers in new scenes
-        if(instance != null && instance != this)
+        // Singleton pattern
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
         }
         else
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
 
-        playerStats = FindObjectsOfType<PlayerStats>(); // add all objects that have a PlayerStats script to playerStats Array
-        Array.Reverse(playerStats); // revert array because it adds object in the wrong order
+        playerStats = FindObjectsOfType<PlayerStats>(); // Initialize player stats
+        Array.Reverse(playerStats); // Revert array
     }
 
     void Update()
@@ -61,6 +61,12 @@ public class GameManager : MonoBehaviour
     public PlayerStats[] GetPlayerStats()
     {
         return playerStats;
+    }
+
+    public KanjiManager[] GetCollectedKanji()
+    {
+        PlayerStats[] playerStats = GetPlayerStats();
+        return playerStats[0].collectedKanji;
     }
 
     // save data (scene, items, player position, player stats)

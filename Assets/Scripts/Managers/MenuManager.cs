@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
+//using UnityEngine.UIElements;
 
 // given to canvas object
 public class MenuManager : MonoBehaviour
@@ -16,12 +17,10 @@ public class MenuManager : MonoBehaviour
 
     public static MenuManager instance;
 
-    private PlayerStats[] playerStats;
-    private KanjiManager[] collectedKanji;
-
     [SerializeField] TextMeshProUGUI[] xpText;
     [SerializeField] Slider[] xpSlider;
-    [SerializeField] Sprite[] characterImage;
+    [SerializeField] Image[] characterImage;
+    [SerializeField] Button[] detailsButtons;
     [SerializeField] GameObject[] characterPanel;
 
     [SerializeField] TextMeshProUGUI statName, statHP, statMana;
@@ -73,9 +72,10 @@ public class MenuManager : MonoBehaviour
     // when opening menu, overview of stats should be displayed (different from stats menu)
     public void UpdateStats()
     {
-        playerStats = GameManager.instance.GetPlayerStats();
+        KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
 
-        collectedKanji = playerStats[0].collectedKanji;
+        Debug.Log(collectedKanji.Length);
+        Debug.Log(detailsButtons.Length);
 
         // go through all collected kanji
         for(int i = 0; i < collectedKanji.Length; i++)
@@ -84,7 +84,10 @@ public class MenuManager : MonoBehaviour
             characterPanel[i].SetActive(true);
 
             // fill panel with info of this character from their kanjiManager object
-            characterImage[i] = collectedKanji[i].kanjiImage;
+            characterImage[i].sprite = collectedKanji[i].kanjiImage;
+
+            int index = i;
+            detailsButtons[index].onClick.AddListener(() => kanjiInfoPage.GetComponent<KanjiInfoPageManager>().SetPage(collectedKanji[index].kanjiSymbol));
 
             xpText[i].text = collectedKanji[i].currentXP.ToString() + "/" + 100;
             xpSlider[i].maxValue = 100; // max value of XP slider --> needed XP

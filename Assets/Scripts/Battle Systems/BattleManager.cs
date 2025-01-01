@@ -508,8 +508,8 @@ public class BattleManager : MonoBehaviour
         {
             Debug.LogError("GameManager.instance is null");
         }
-        PlayerStats[] playerStats = GameManager.instance.GetPlayerStats();
-        KanjiManager[] collectedKanji = playerStats[0].collectedKanji;
+
+        KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
 
         // Get random kanji
         int randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
@@ -591,8 +591,6 @@ public class BattleManager : MonoBehaviour
         //InstantiateEffectOnAttackingCharacter(); // put attack effect on player
 
         movePower = (int)(movePower * offence);
-
-        movePower = 100;
 
         DealDamageToCharacters(selectEnemyTarget, movePower); // calculate damage to player and attack him, show damage number
 
@@ -714,15 +712,6 @@ public class BattleManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        // display notice
-        /*
-        if(!runningAway)
-        {
-            battleNotice.SetText("WE WON!!");
-            battleNotice.Activate();
-        }
-        */
-
         // put HP and mana of battle player in overworld player
         foreach(BattleCharacters playerInBattle in activeCharacters)
         {
@@ -755,21 +744,24 @@ public class BattleManager : MonoBehaviour
         else
         {
             // give rewards (and make player movable again)
+            xpSliders = FindObjectsOfType<KanjiXPSliderManager>(true);
             BattleRewardsHandler.instance.xpSliders = xpSliders;
             BattleRewardsHandler.instance.OpenRewardScreen(XPRewardAmount, itemsReward); 
         }
 
         currentTurn = 0;
+
+        // turn xp rewards for all kanji to 0
+        KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
+
+        foreach(KanjiManager kanji in collectedKanji)
+        {
+            kanji.xpReward = 0;
+        }
     }
 
     public IEnumerator GameOverCoroutine()
     {
-        // display notice
-        /*
-        battleNotice.SetText("WE LOST!");
-        battleNotice.Activate();
-        */
-
         // deactivate battle scene components
         isBattleActive = false;
         UIButtonHolder.SetActive(false);

@@ -153,6 +153,23 @@ public class PlayerAttack : MonoBehaviour
             rawImages[i].SetActive(false);
         }
 
+        // turn final damage into xp for kanji in the training word which you will get at end of battle
+        KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
+
+        Debug.Log((int)(finalAttackDamage*10));
+
+        foreach(KanjiManager kanjiInWord in trainingWord.kanjiInWord)
+        {
+            foreach(KanjiManager kanji in collectedKanji)
+            {
+                if(kanjiInWord.kanjiSymbol == kanji.kanjiSymbol)
+                {
+                    Debug.Log("Here");
+                    kanji.xpReward += (int)(finalAttackDamage*10);
+                }
+            }
+        }
+
         battleManager.StartPlayerAttackImpact(finalAttackDamage);
     }
 

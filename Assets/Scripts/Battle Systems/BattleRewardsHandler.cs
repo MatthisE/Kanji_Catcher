@@ -36,15 +36,12 @@ public class BattleRewardsHandler : MonoBehaviour
     public void OpenRewardScreen(int xpEarned, ItemsManager[] itemsEarned)
     {
         rewardItems = itemsEarned;
-
-        PlayerStats[] playerStats = GameManager.instance.GetPlayerStats();
-        KanjiManager[] collectedKanji = playerStats[0].collectedKanji;
+        KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
+        
 
         for(int i = 0; i < collectedKanji.Length; i++)
         {
-            xpReward = UnityEngine.Random.Range(0, 101);
-
-            Debug.Log(xpReward);
+            xpReward = collectedKanji[i].xpReward;
 
             // add XP to kanji of player
             KanjiManager kanji = collectedKanji[i];
