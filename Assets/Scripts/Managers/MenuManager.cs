@@ -31,7 +31,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Transform itemSlotContainerParent; // items display panel
 
     [SerializeField] GameObject itemsPanel;
-    [SerializeField] GameObject statusPanel;
+    [SerializeField] GameObject kanjiPanel;
+    [SerializeField] GameObject kanjiInfoPage;
+    //[SerializeField] GameObject statusPanel;
 
     public TextMeshProUGUI itemName, itemDescription;
     public ItemsManager activeItem;
@@ -58,7 +60,8 @@ public class MenuManager : MonoBehaviour
                 if(GameManager.instance.dialogBoxOpened != true && GameManager.instance.battleIsActive != true && GameManager.instance.goThroughExit != true){ // don't open if one of these are true
                     // open menu
                     itemsPanel.SetActive(false);
-                    statusPanel.SetActive(false);
+                    kanjiInfoPage.SetActive(false);
+                    kanjiPanel.SetActive(true);
 
                     UpdateStats(); // display all current characters with stats
                     menu.SetActive(true);
@@ -91,6 +94,7 @@ public class MenuManager : MonoBehaviour
 
     }
 
+    /*
     // when opening stats menu
     public void StatsMenu()
     {
@@ -116,6 +120,7 @@ public class MenuManager : MonoBehaviour
 
         characterSatImage.sprite = playerSelected.characterImage;
     }
+    */
 
     // on click on items button:
     public void UpdateItemsInventory()
