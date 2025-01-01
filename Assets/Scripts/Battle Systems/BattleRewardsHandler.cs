@@ -10,11 +10,10 @@ public class BattleRewardsHandler : MonoBehaviour
     public static BattleRewardsHandler instance;
 
     // display elements
-    [SerializeField] TextMeshProUGUI XPText, itemsText;
     [SerializeField] GameObject rewardScreen;
-
     [SerializeField] ItemsManager[] rewardItems;
     [SerializeField] int xpReward;
+    public KanjiXPSliderManager[] xpSliders;
 
     // optional quest completion
     public bool markQuestComplete;
@@ -36,16 +35,40 @@ public class BattleRewardsHandler : MonoBehaviour
     // open reward screen with given elements
     public void OpenRewardScreen(int xpEarned, ItemsManager[] itemsEarned)
     {
-        xpReward = xpEarned;
         rewardItems = itemsEarned;
 
-        XPText.text = xpEarned + " XP";
-        itemsText.text = "";
+        PlayerStats[] playerStats = GameManager.instance.GetPlayerStats();
+        KanjiManager[] collectedKanji = playerStats[0].collectedKanji;
 
-        itemsText.text += " * ";
-        foreach(ItemsManager rewardItemText in rewardItems)
+        for(int i = 0; i < collectedKanji.Length; i++)
         {
-            itemsText.text += rewardItemText.itemName + " * ";
+            xpReward = UnityEngine.Random.Range(0, 101);
+
+            Debug.Log(xpReward);
+
+            // add XP to kanji of player
+            KanjiManager kanji = collectedKanji[i];
+
+            if(kanji.currentXP < 100)
+            {
+                if(kanji.currentXP + xpReward > 100)
+                {
+                    xpReward = 100 - kanji.currentXP;
+                    kanji.currentXP = 100;
+                }
+                else
+                {
+                    kanji.currentXP += xpReward;
+                }
+            }
+            else
+            {
+                xpReward = -10; // to show kanji does not need xp anymore
+            }
+
+            // set slider of kanji on reward screen
+            xpSliders[i].gameObject.SetActive(true);
+            xpSliders[i].SetSlider(kanji, xpReward);
         }
 
         rewardScreen.SetActive(true);
@@ -53,13 +76,10 @@ public class BattleRewardsHandler : MonoBehaviour
 
     public void CloseRewardScreen()
     {
-        // give player his won XP
-        foreach(PlayerStats activePlayer in GameManager.instance.GetPlayerStats())
+        // deactivate all xp sliders of reward screen
+        foreach(KanjiXPSliderManager xpSlider in xpSliders)
         {
-            if(activePlayer.gameObject.activeInHierarchy)
-            {
-                activePlayer.AddXP(xpReward);
-            }
+            xpSlider.gameObject.SetActive(false);
         }
 
         // add won items to inventory

@@ -68,6 +68,7 @@ public class BattleManager : MonoBehaviour
     // rewards
     public int XPRewardAmount;
     public ItemsManager[] itemsReward;
+    [SerializeField] KanjiXPSliderManager[] xpSliders;
 
     // attack menus
     [SerializeField] GameObject enemyAttackMenu;
@@ -591,6 +592,8 @@ public class BattleManager : MonoBehaviour
 
         movePower = (int)(movePower * offence);
 
+        movePower = 100;
+
         DealDamageToCharacters(selectEnemyTarget, movePower); // calculate damage to player and attack him, show damage number
 
         NextTurn();
@@ -723,6 +726,7 @@ public class BattleManager : MonoBehaviour
         // put HP and mana of battle player in overworld player
         foreach(BattleCharacters playerInBattle in activeCharacters)
         {
+            /*
             if(playerInBattle.IsPlayer())
             {
                 foreach(PlayerStats playerWithStats in GameManager.instance.GetPlayerStats())
@@ -734,6 +738,7 @@ public class BattleManager : MonoBehaviour
                     }
                 }
             }
+            */
 
             Destroy(playerInBattle.gameObject); // destroy battle player
         }
@@ -750,6 +755,7 @@ public class BattleManager : MonoBehaviour
         else
         {
             // give rewards (and make player movable again)
+            BattleRewardsHandler.instance.xpSliders = xpSliders;
             BattleRewardsHandler.instance.OpenRewardScreen(XPRewardAmount, itemsReward); 
         }
 

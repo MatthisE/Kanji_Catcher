@@ -33,7 +33,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject itemsPanel;
     [SerializeField] GameObject kanjiPanel;
     [SerializeField] GameObject kanjiInfoPage;
-    //[SerializeField] GameObject statusPanel;
 
     public TextMeshProUGUI itemName, itemDescription;
     public ItemsManager activeItem;
@@ -93,34 +92,6 @@ public class MenuManager : MonoBehaviour
         }
 
     }
-
-    /*
-    // when opening stats menu
-    public void StatsMenu()
-    {
-        // go through all current players (aka their stats)
-        for(int i = 0; i < playerStats.Length; i++)
-        {
-            // make a button for each of them
-            statsButtons[i].SetActive(true);
-            statsButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = playerStats[i].playerName; // set text in buttons to player names
-        }
-
-        StatsMenuUpdate(0);
-    }
-
-    // set values of stats menu to those of selected player (referenced by index (playerSelectedNumber))
-    public void StatsMenuUpdate(int playerSelectedNumber)
-    {
-        PlayerStats playerSelected = playerStats[playerSelectedNumber];
-
-        statName.text = playerSelected.playerName;
-        statHP.text = playerSelected.currentHP.ToString() + "/" + playerSelected.maxHP.ToString();
-        statMana.text =  playerSelected.currentMana.ToString() + "/" + playerSelected.maxMana.ToString();
-
-        characterSatImage.sprite = playerSelected.characterImage;
-    }
-    */
 
     // on click on items button:
     public void UpdateItemsInventory()
