@@ -6,7 +6,7 @@ using UnityEngine;
 public class KanjiListManager : MonoBehaviour
 {
     public static KanjiListManager instance;
-    void Start()
+    void Awake()
     {
         //singelton pattern --> avoid duplicate Players in new scenes
         if(instance != null && instance != this)

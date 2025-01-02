@@ -513,6 +513,7 @@ public class BattleManager : MonoBehaviour
 
         // Get random kanji
         int randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
+
         TrainingWord[] randomTrainingWords = collectedKanji[randomIndex].trainingWords;
         // Get random training word
         int randomIndex2 = Mathf.FloorToInt(Random.value * randomTrainingWords.Length);

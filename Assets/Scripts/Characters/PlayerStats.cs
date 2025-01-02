@@ -23,11 +23,24 @@ public class PlayerStats : MonoBehaviour
     public int dexterity;
     public int defence;
 
+    public string[] collectedKanjiNames;
+
     public KanjiManager[] collectedKanji;
 
     void Start()
     {
         instance = this;
+
+        /*
+        collectedKanji = new KanjiManager[collectedKanjiNames.Length];
+
+        for(int i = 0; i < collectedKanjiNames.Length; i++)
+        {
+            Transform child = KanjiListManager.instance.transform.Find(collectedKanjiNames[i]);
+            KanjiManager kanji = child.GetComponent<KanjiManager>();
+            collectedKanji[i]=kanji;
+        }
+        */
     }
 
     void Awake()

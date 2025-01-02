@@ -6,11 +6,15 @@ using UnityEngine;
 
 public class KanjiObject : MonoBehaviour
 {
-    [SerializeField] KanjiManager kanji;
+    [SerializeField] string kanjiName;
+    private KanjiManager kanji;
 
     // when loading scene only display kanji objects that player has not collected already
     void Start()
     {
+        Transform child = KanjiListManager.instance.transform.Find(kanjiName);
+        kanji = child.GetComponent<KanjiManager>();
+
         KanjiManager[] collectedKanjiList = GameManager.instance.GetCollectedKanji();
 
         foreach(KanjiManager collectedKanji in collectedKanjiList)

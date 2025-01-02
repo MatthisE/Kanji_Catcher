@@ -74,9 +74,6 @@ public class MenuManager : MonoBehaviour
     {
         KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
 
-        Debug.Log(collectedKanji.Length);
-        Debug.Log(detailsButtons.Length);
-
         // go through all collected kanji
         for(int i = 0; i < collectedKanji.Length; i++)
         {

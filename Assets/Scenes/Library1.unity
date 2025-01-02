@@ -684,7 +684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b27ed434014784580f4429c587f8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kanji: {fileID: 2101449159}
+  kanjiName: "\u7537"
 --- !u!58 &1005596356
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -994,6 +994,26 @@ PrefabInstance:
       propertyPath: collectedKanji.Array.data[3]
       value: 
       objectReference: {fileID: 2030990824}
+    - target: {fileID: 5843296251898086296, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
+      propertyPath: collectedKanjiNames.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843296251898086296, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
+      propertyPath: collectedKanjiNames.Array.data[0]
+      value: "\u4EBA"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843296251898086296, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
+      propertyPath: collectedKanjiNames.Array.data[1]
+      value: "\u529B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843296251898086296, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
+      propertyPath: collectedKanjiNames.Array.data[2]
+      value: "\u7530"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5843296251898086296, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
+      propertyPath: collectedKanjiNames.Array.data[3]
+      value: "\u5973"
+      objectReference: {fileID: 0}
     - target: {fileID: 7170900143880797391, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1953,17 +1973,6 @@ Transform:
 --- !u!114 &2030990824 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4942813038373060106, guid: 2795cf1e14584344ca51343a45a89687, type: 3}
-  m_PrefabInstance: {fileID: 4098419278340065242}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1387af2059b880d49b4a3ad9565c08d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2101449159 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6416909635510280892, guid: 2795cf1e14584344ca51343a45a89687, type: 3}
   m_PrefabInstance: {fileID: 4098419278340065242}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
