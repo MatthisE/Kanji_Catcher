@@ -30,7 +30,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Transform itemSlotContainerParent; // items display panel
 
     [SerializeField] GameObject itemsPanel;
+    [SerializeField] GameObject itemsDescription;
     [SerializeField] GameObject kanjiPanel;
+    [SerializeField] Scrollbar scrollbar;
     [SerializeField] GameObject kanjiInfoPage;
 
     public TextMeshProUGUI itemName, itemDescription;
@@ -55,15 +57,22 @@ public class MenuManager : MonoBehaviour
             }
             else
             {
-                if(GameManager.instance.dialogBoxOpened != true && GameManager.instance.battleIsActive != true && GameManager.instance.goThroughExit != true){ // don't open if one of these are true
+                if(GameManager.instance.dialogBoxOpened != true && GameManager.instance.battleIsActive != true && GameManager.instance.goThroughExit != true) // don't open if one of these are texture
+                {
+                    AudioManager.instance.PlaySFX(3);
+
                     // open menu
+                    UpdateStats(); // display all current characters with stats
+                    menu.SetActive(true);
+                    GameManager.instance.gameMenuOpened = true; //set condition for player to stop moving
+
                     itemsPanel.SetActive(false);
                     kanjiInfoPage.SetActive(false);
                     kanjiPanel.SetActive(true);
 
-                    UpdateStats(); // display all current characters with stats
-                    menu.SetActive(true);
-                    GameManager.instance.gameMenuOpened = true; //set condition for player to stop moving
+                    // make sure scrollbar starts at top
+                    Canvas.ForceUpdateCanvases();
+                    scrollbar.value = 1f;
                 }
             }
         }
@@ -110,6 +119,9 @@ public class MenuManager : MonoBehaviour
             Image itemImage = itemSlot.Find("Items Image").GetComponent<Image>(); // get the image of the slot
             itemImage.sprite = item.itemsImage; // set the image of the slot to the image of item in inventory
 
+            Vector3 newScale = new Vector3(0.8f, 0.8f, 0.8f);
+            itemImage.transform.localScale = newScale;
+
             // set the amount text to a number if the amount is bigger than 1
             TextMeshProUGUI itemsAmountText = itemSlot.Find("Amount Text").GetComponent<TextMeshProUGUI>();
             if(item.amount > 1)
@@ -123,6 +135,7 @@ public class MenuManager : MonoBehaviour
 
             // set item of item button (script given to botton component of item slot object)
             itemSlot.GetComponent<ItemButton>().itemOnButton = item;
+            itemSlot.GetComponent<ItemButton>().itemsDescription = itemsDescription;
         }
     }
 
@@ -146,6 +159,7 @@ public class MenuManager : MonoBehaviour
 
     public void CloseMenu()
     {
+        AudioManager.instance.PlaySFX(3);
         menu.SetActive(false);
         GameManager.instance.gameMenuOpened = false; // make player movable
     }

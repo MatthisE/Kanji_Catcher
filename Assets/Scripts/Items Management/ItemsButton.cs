@@ -7,6 +7,7 @@ using UnityEngine.Assertions.Must;
 public class ItemButton : MonoBehaviour
 {
     public ItemsManager itemOnButton;
+    public GameObject itemsDescription;
 
     public void Press()
     {
@@ -16,6 +17,8 @@ public class ItemButton : MonoBehaviour
         }
         else // if(MenuManager.instance.menu.activeInHierarchy) --> pressed button on normal menu
         {
+            itemsDescription.SetActive(true); // show item description field
+
             MenuManager.instance.itemName.text = itemOnButton.itemName;
             MenuManager.instance.itemDescription.text = itemOnButton.itemDescription;
 

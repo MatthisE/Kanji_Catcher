@@ -9,9 +9,13 @@ public class KanjiObject : MonoBehaviour
     [SerializeField] string kanjiName;
     private KanjiManager kanji;
 
-    // when loading scene only display kanji objects that player has not collected already
+    public float amplitude = 0.5f;  // how far the sprite moves up and down
+    public float frequency = 1f;   // how fast the sprite moves up and down
+    private Vector3 startPosition;
+
     void Start()
     {
+        // when loading scene only display kanji objects that player has not collected already
         Transform child = KanjiListManager.instance.transform.Find(kanjiName);
         kanji = child.GetComponent<KanjiManager>();
 
@@ -24,6 +28,19 @@ public class KanjiObject : MonoBehaviour
                 SelfDestroy();
             }
         }
+
+        // save the starting position of the sprite
+        startPosition = transform.position;
+    }
+
+    // make sprite move a bit up and down
+     void Update()
+    {
+        // calculate the new Y position
+        float newY = startPosition.y + Mathf.Sin(Time.time * frequency) * amplitude;
+
+        // update the position
+        transform.position = new Vector3(startPosition.x, newY, startPosition.z);
     }
 
     // collecting a kanji on the map
@@ -31,7 +48,7 @@ public class KanjiObject : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            AudioManager.instance.PlaySFX(5);
+            AudioManager.instance.PlaySFX(8);
             
             // add kanji to collected kanji of player
             PlayerStats[] playerStats = GameManager.instance.GetPlayerStats();

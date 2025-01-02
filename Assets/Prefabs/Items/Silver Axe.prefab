@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2866183133245725912}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.20864269, w: 0.97799194}
+  m_LocalRotation: {x: 0, y: 0, z: 0.20864572, w: 0.97799134}
   m_LocalPosition: {x: -1.53, y: -3.6, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   itemName: Silver Axe
-  itemDescription: This will defend from monsters
+  itemDescription: This will kill monsters.
   valueInCoins: 10
   itemsImage: {fileID: 21300000, guid: 8d62a67119c7d0f47a44e69565986f60, type: 3}
   affectType: 0

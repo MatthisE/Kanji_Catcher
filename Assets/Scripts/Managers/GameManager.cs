@@ -31,6 +31,12 @@ public class GameManager : MonoBehaviour
         Array.Reverse(playerStats); // Revert array
     }
 
+    void Start()
+    {
+        ItemsManager itemToAdd = ItemsAssets.instance.GetItemAsset("Cursed Kanji Book");
+        Inventory.instance.AddItems(itemToAdd); // add item to loaded inventory
+    }
+
     void Update()
     {
         // save data (quest data is saved in quest manager)
@@ -72,7 +78,7 @@ public class GameManager : MonoBehaviour
     // save data (scene, items, player position, player stats)
     public void SaveData()
     {
-        Debug.Log("Data has been saved.");
+        AudioManager.instance.PlaySFX(5);
 
         // fill player stats again because this function is given to save button and it does not wait for Start()
         playerStats = FindObjectsOfType<PlayerStats>(); // add all objects that have a PlayerStats script to playerStats Array
