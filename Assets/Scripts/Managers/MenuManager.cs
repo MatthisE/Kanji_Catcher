@@ -65,6 +65,7 @@ public class MenuManager : MonoBehaviour
             if(GameManager.instance.dialogBoxOpened != true && GameManager.instance.battleIsActive != true && GameManager.instance.goThroughExit != true) // don't open if one of these are texture
             {
                 AudioManager.instance.PlaySFX(2);
+                MenuButton.instance.SetActiveState(false);
 
                 // open menu
                 UpdateStats(); // display all current characters with stats
@@ -164,6 +165,7 @@ public class MenuManager : MonoBehaviour
     public void CloseMenu()
     {
         AudioManager.instance.PlaySFX(3);
+        MenuButton.instance.SetActiveState(true);
         menu.SetActive(false);
         GameManager.instance.gameMenuOpened = false; // make player movable
     }

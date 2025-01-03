@@ -53,6 +53,7 @@ public class DialogController : MonoBehaviour
                         dialogBox.SetActive(false);
                         GameManager.instance.dialogBoxOpened = false;
                         nameText.text = "";
+                        MenuButton.instance.SetActiveState(true);
 
                         // activate quest after opening dialog for the first time
                         if(shouldMarkQuest)
@@ -113,6 +114,8 @@ public class DialogController : MonoBehaviour
         // set values for start of dialog
         dialogSentences = newSentencesToUse;
         currentSentence = 0;
+
+        MenuButton.instance.SetActiveState(false);
 
         CheckForName();
         //dialogText.text = dialogSentences[currentSentence];

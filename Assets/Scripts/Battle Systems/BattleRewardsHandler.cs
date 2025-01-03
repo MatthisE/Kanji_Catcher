@@ -89,6 +89,8 @@ public class BattleRewardsHandler : MonoBehaviour
         rewardScreen.SetActive(false);
         GameManager.instance.battleIsActive = false; // keep player still while showing rewards
 
+        MenuButton.instance.SetActiveState(true);
+
         // mark given quest as complete (optional)
         if(markQuestComplete)
         {

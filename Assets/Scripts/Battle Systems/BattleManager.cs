@@ -137,6 +137,8 @@ public class BattleManager : MonoBehaviour
     {
         if(!isBattleActive)
         {
+            MenuButton.instance.SetActiveState(false);
+
             canRun = canRunAway; // define if you can or cannot run away
             SettingUpBattle(); 
 

@@ -11,8 +11,6 @@ public class DialogHandler : MonoBehaviour
     public string[] sentences;
     private bool canActivateBox; 
 
-    [SerializeField] GameObject actionButton;
-
     [SerializeField] bool shouldActivateQuest;
     [SerializeField] string questToMark;
     [SerializeField] bool markAsComplete;
@@ -23,11 +21,11 @@ public class DialogHandler : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             canActivateBox = true;
-            actionButton.SetActive(true);
-            actionButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Talk";
+            ActionButton.instance.SetActiveState(true);
+            ActionButton.instance.SetActionText("Talk");
 
-            actionButton.GetComponent<Button>().onClick.RemoveAllListeners();
-            actionButton.GetComponent<Button>().onClick.AddListener(OpenDialogBox);
+            ActionButton.instance.GetComponent<Button>().onClick.RemoveAllListeners();
+            ActionButton.instance.GetComponent<Button>().onClick.AddListener(OpenDialogBox);
         }
     }
 
@@ -36,17 +34,17 @@ public class DialogHandler : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             canActivateBox = false;
-            if (actionButton != null)
+            if (ActionButton.instance != null)
             {
-                actionButton.SetActive(false);
-                actionButton.GetComponent<Button>().onClick.RemoveAllListeners();
+                ActionButton.instance.SetActiveState(false);
+                ActionButton.instance.GetComponent<Button>().onClick.RemoveAllListeners();
             }
         }
     }
 
     private void OpenDialogBox()
     {
-        actionButton.SetActive(false);
+        ActionButton.instance.SetActiveState(false);
 
         if(canActivateBox && !DialogController.instance.IsDialogBoxActive() && GameManager.instance.gameMenuOpened != true) // only call if the box is not already active and menu is not open
         {
