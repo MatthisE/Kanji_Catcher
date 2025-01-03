@@ -48,6 +48,8 @@ public class KanjiObject : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
+            string[] sentences = {"The cursed kanji has been sucked back into the kanji book.", "You can now use the kanji " +kanjiName+ " in battle."};
+
             AudioManager.instance.PlaySFX(8);
             
             // add kanji to collected kanji of player
@@ -56,6 +58,8 @@ public class KanjiObject : MonoBehaviour
             playerStats[0].collectedKanji[playerStats[0].collectedKanji.Length - 1] = kanji;
 
             SelfDestroy();
+
+            DialogController.instance.ActivateDialog(sentences); // open box with first sentence
         }
     }
 

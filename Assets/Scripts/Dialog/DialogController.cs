@@ -14,11 +14,13 @@ public class DialogController : MonoBehaviour
 
     public static DialogController instance;
 
-    private bool dialogJustStarted;
+    public bool dialogJustStarted = false;
 
     private bool shouldMarkQuest;
     private string questToMark;
     private bool markQuestComplete; // false --> mark as incomplete
+
+    private bool stillTyping = false;
 
     void Start()
     {
@@ -28,9 +30,18 @@ public class DialogController : MonoBehaviour
 
     void Update()
     {
+        if(nameText.text == "")
+        {
+            nameBox.SetActive(false);
+        }
+        else
+        {
+            nameBox.SetActive(true);
+        }
+
         if(dialogBox.activeInHierarchy) // box got activated by NPCs dialog handler
         {
-            if(Input.GetButtonUp("Jump")) // Jump --> space button (Project Settings --> Input Manager)
+            if(Input.GetButtonUp("Fire1") && !stillTyping) // Fire1 --> left click (Project Settings --> Input Manager)
             {
                 if(!dialogJustStarted)
                 {
@@ -41,6 +52,7 @@ public class DialogController : MonoBehaviour
                         // after end of dialog
                         dialogBox.SetActive(false);
                         GameManager.instance.dialogBoxOpened = false;
+                        nameText.text = "";
 
                         // activate quest after opening dialog for the first time
                         if(shouldMarkQuest)
@@ -60,7 +72,9 @@ public class DialogController : MonoBehaviour
                     else // not end of dialog
                     {
                         CheckForName(); // display current name
-                        dialogText.text = dialogSentences[currentSentence]; // display current sentence
+                        //dialogText.text = dialogSentences[currentSentence]; // display current sentence
+                        stillTyping = true;
+                        StartCoroutine(RevealText(dialogText, dialogSentences[currentSentence], 0.01f));
                     }
                 }
                 else
@@ -70,6 +84,19 @@ public class DialogController : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator RevealText(TextMeshProUGUI revealText, string fullText, float typingSpeed)
+    {
+        AudioManager.instance.PlaySFX(9);
+
+        revealText.text = ""; // clear existing text
+        foreach (char letter in fullText)
+        {
+            revealText.text += letter; // add one letter at a time
+            yield return new WaitForSeconds(0.01f); // wait before next letter
+        }
+        stillTyping = false;
     }
 
     // set values for marking quest after dialog (called by DialogHandler alongside ActivateDialog)
@@ -88,10 +115,11 @@ public class DialogController : MonoBehaviour
         currentSentence = 0;
 
         CheckForName();
-        dialogText.text = dialogSentences[currentSentence];
+        //dialogText.text = dialogSentences[currentSentence];
+        stillTyping = true;
+        StartCoroutine(RevealText(dialogText, dialogSentences[currentSentence], 0.01f));
         dialogBox.SetActive(true);
 
-        dialogJustStarted = true;
         GameManager.instance.dialogBoxOpened = true; //set condition for player to stop moving
     }
 

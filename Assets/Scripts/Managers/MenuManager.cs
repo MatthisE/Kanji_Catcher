@@ -49,31 +49,35 @@ public class MenuManager : MonoBehaviour
         // open and close menu with M key
         if(Input.GetKeyDown(KeyCode.M))
         {
-            if(menu.activeInHierarchy)
+            OpenMenu();
+        }
+    }
+
+    public void OpenMenu()
+    {
+        if(menu.activeInHierarchy)
+        {
+            // close menu
+            CloseMenu();
+        }
+        else
+        {
+            if(GameManager.instance.dialogBoxOpened != true && GameManager.instance.battleIsActive != true && GameManager.instance.goThroughExit != true) // don't open if one of these are texture
             {
-                // close menu
-                menu.SetActive(false);
-                GameManager.instance.gameMenuOpened = false;
-            }
-            else
-            {
-                if(GameManager.instance.dialogBoxOpened != true && GameManager.instance.battleIsActive != true && GameManager.instance.goThroughExit != true) // don't open if one of these are texture
-                {
-                    AudioManager.instance.PlaySFX(3);
+                AudioManager.instance.PlaySFX(2);
 
-                    // open menu
-                    UpdateStats(); // display all current characters with stats
-                    menu.SetActive(true);
-                    GameManager.instance.gameMenuOpened = true; //set condition for player to stop moving
+                // open menu
+                UpdateStats(); // display all current characters with stats
+                menu.SetActive(true);
+                GameManager.instance.gameMenuOpened = true; //set condition for player to stop moving
 
-                    itemsPanel.SetActive(false);
-                    kanjiInfoPage.SetActive(false);
-                    kanjiPanel.SetActive(true);
+                itemsPanel.SetActive(false);
+                kanjiInfoPage.SetActive(false);
+                kanjiPanel.SetActive(true);
 
-                    // make sure scrollbar starts at top
-                    Canvas.ForceUpdateCanvases();
-                    scrollbar.value = 1f;
-                }
+                // make sure scrollbar starts at top
+                Canvas.ForceUpdateCanvases();
+                scrollbar.value = 1f;
             }
         }
     }
