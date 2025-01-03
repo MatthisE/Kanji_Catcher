@@ -37,20 +37,12 @@ public class MenuManager : MonoBehaviour
 
     public TextMeshProUGUI itemName, itemDescription;
     public ItemsManager activeItem;
+    private bool actionButtonActive = false;
 
 
     private void Start()
     {
         instance = this; // no singelton pattern needed
-    }
-
-    private void Update()
-    {
-        // open and close menu with M key
-        if(Input.GetKeyDown(KeyCode.M))
-        {
-            OpenMenu();
-        }
     }
 
     public void OpenMenu()
@@ -66,6 +58,12 @@ public class MenuManager : MonoBehaviour
             {
                 AudioManager.instance.PlaySFX(2);
                 MenuButton.instance.SetActiveState(false);
+
+                if(ActionButton.instance.gameObject.activeInHierarchy)
+                {
+                    actionButtonActive = true;
+                }
+                ActionButton.instance.SetActiveState(false);
 
                 // open menu
                 UpdateStats(); // display all current characters with stats
@@ -167,6 +165,13 @@ public class MenuManager : MonoBehaviour
         AudioManager.instance.PlaySFX(3);
         MenuButton.instance.SetActiveState(true);
         menu.SetActive(false);
+
+        if(actionButtonActive)
+        {
+            ActionButton.instance.SetActiveState(true);
+            actionButtonActive = false;
+        }
+
         GameManager.instance.gameMenuOpened = false; // make player movable
     }
 

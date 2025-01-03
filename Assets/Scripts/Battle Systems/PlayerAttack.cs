@@ -13,6 +13,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] GameObject[] rawImages;
 
     [SerializeField] GameObject helpButton;
+    [SerializeField] GameObject clearButton;
     [SerializeField] GameObject doneButton;
     [SerializeField] GameObject lessDamageText;
 
@@ -22,8 +23,13 @@ public class PlayerAttack : MonoBehaviour
     private GameObject overlayObject;
     private bool strokeOrderDisplayed = false;
 
-    public void SetWords(TrainingWord thisTrainingWord)
+    private bool forHealing; // false --> for attack
+
+    public void SetWords(TrainingWord thisTrainingWord, bool healing)
     {
+        // define it move is for healing or attack
+        forHealing = healing;
+
         // get random kanji
         trainingWord = thisTrainingWord;
         wordInKana.text = trainingWord.inKana;
@@ -32,6 +38,14 @@ public class PlayerAttack : MonoBehaviour
         for(int i=0; i<imageAmount; i++)
         {
             rawImages[i].SetActive(true);
+        }
+    }
+
+    public void ClearImages()
+    {
+        for(int i=0; i<imageAmount; i++)
+        {
+            rawImages[i].GetComponent<DrawOnRawImage>().Repaint();
         }
     }
 
@@ -118,6 +132,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         helpButton.SetActive(false);
+        clearButton.SetActive(false);
         doneButton.SetActive(false);
         lessDamageText.SetActive(false);
 
@@ -132,6 +147,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         helpButton.SetActive(true);
+        clearButton.SetActive(true);
         doneButton.SetActive(true);
 
         strokeOrderDisplayed = false;
@@ -167,7 +183,14 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
-        battleManager.StartPlayerAttackImpact(finalAttackDamage);
+        if(forHealing)
+        {
+            battleManager.HealPlayer(finalAttackDamage);
+        }
+        else
+        {
+            battleManager.StartPlayerAttackImpact(finalAttackDamage);
+        }
     }
 
     // compare RawImage and Sprite of correct Kanji

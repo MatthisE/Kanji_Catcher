@@ -23,4 +23,9 @@ public class CharacterDamageGUI : MonoBehaviour
         float jitterAmount = Random.Range(-textVibration, +textVibration);
         transform.position += new Vector3(jitterAmount, jitterAmount, 0f); // add jitter to text position
     }
+
+    public void SetColor(Color color)
+    {
+        damageText.color = color;
+    }
 }

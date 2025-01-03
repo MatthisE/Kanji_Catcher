@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
 
 // given to battle manager object
 public class BattleManager : MonoBehaviour
@@ -128,6 +129,11 @@ public class BattleManager : MonoBehaviour
                     UIButtonHolder.SetActive(false);
                     StartCoroutine(EnemyMoveCoroutine()); // dactivate and make enemy move
                 }
+            }
+            else
+            {
+                UIButtonHolder.SetActive(false);
+                enemyTargetPanel.SetActive(false);
             }
         }
     }
@@ -364,6 +370,7 @@ public class BattleManager : MonoBehaviour
             activeCharacters[selectedCharacterToAttack].transform.position,
             activeCharacters[selectedCharacterToAttack].transform.rotation
         );
+        characterDamageText.SetColor(Color.red);
         characterDamageText.SetDamage(damageToGive);
     }
 
@@ -561,10 +568,18 @@ public class BattleManager : MonoBehaviour
 
     public void PlayerAttack(TrainingWord trainingWord, int thisSelectEnemyTarget)
     {
+        waitingForTurn = false; // false so Update() does sets UIButtonHolder to inactive
         selectEnemyTarget = thisSelectEnemyTarget;
         playerAttackMenu.SetActive(true);
-        playerAttackMenu.GetComponent<PlayerAttack>().SetWords(trainingWord);
+        playerAttackMenu.GetComponent<PlayerAttack>().SetWords(trainingWord, false);
 
+    }
+
+    public void PlayerHealing()
+    {
+        waitingForTurn = false; // false so Update() does sets UIButtonHolder to inactive
+        playerAttackMenu.SetActive(true);
+        playerAttackMenu.GetComponent<PlayerAttack>().SetWords(GetRandomWord(), true);
     }
 
     public void StartPlayerAttackImpact(double offence)
@@ -628,8 +643,7 @@ public class BattleManager : MonoBehaviour
                 battleNotice.SetText("You failed to run away.");
                 battleNotice.Activate();
                 
-                waitingForTurn = false; // false so Update() does not set UIButtonHolder to active
-                UIButtonHolder.SetActive(false);
+                waitingForTurn = false; // false so Update() does sets UIButtonHolder to inactive
                 
                 yield return new WaitUntil(() => !battleNotice.gameObject.activeSelf); // wait until the notice disappears
 
@@ -663,6 +677,35 @@ public class BattleManager : MonoBehaviour
         else{
             print("No item selected.");
         }
+    }
+
+    
+    public void HealPlayer(double amountOfAffect)
+    {
+        StartCoroutine(HealPlayerCoroutine(amountOfAffect));
+    }
+
+    public IEnumerator HealPlayerCoroutine(double amountOfAffect)
+    {
+        AudioManager.instance.PlaySFX(8);
+
+        int healingPower = (int)(50 * amountOfAffect);
+
+        // put damage number on chara
+        CharacterDamageGUI characterDamageText = Instantiate(
+            damageText,
+            activeCharacters[0].transform.position,
+            activeCharacters[0].transform.rotation
+        );
+        characterDamageText.SetColor(Color.green);
+        characterDamageText.SetDamage(healingPower);
+
+        playerAttackMenu.SetActive(false);
+        activeCharacters[0].AddHP(healingPower);
+        UpdatePlayerStats(); // update player stats UI
+
+        yield return new WaitForSeconds(1f);
+        NextTurn();
     }
 
     public void CloseItemsMenu()
