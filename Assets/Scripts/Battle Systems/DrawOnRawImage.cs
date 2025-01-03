@@ -20,20 +20,25 @@ public class DrawOnRawImage : MonoBehaviour
 
     void Start()
     {
+        Setup();
+    }
+
+    public void Setup()
+    {
         // Create a Texture2D that matches the RawImage size (568x568)
-        int width = 568;
-        int height = 568;
+        int width = (int)drawImage.GetComponent<RectTransform>().sizeDelta.x;
+        int height = (int)drawImage.GetComponent<RectTransform>().sizeDelta.y;
         originalTexture = new Texture2D(width, height);
 
         // Fill the texture with a white background
         Color[] pixels = new Color[width * height];
         for (int i = 0; i < pixels.Length; i++)
         {
-            if(i < 568*10 || i > 568*568-568*10 || i % 568 > 0 && i % 568 < 10 || (i - 567) % 568 <= 10 || (i - 567) % 568 >= 568 - 10)
+            if(i < width*10 || i > width*width-width*10 || i % width > 0 && i % width < 10 || (i - (width-1)) % width <= 10 || (i - (width-1)) % width >= width - 10)
             {
                 pixels[i] = Color.gray; // Set the background color to gray
             }
-            else if(i % 284 > 0 && i % 284 < 5 || i > 568*282 && i < 568*287)
+            else if(i % (width/2) > 0 && i % (width/2) < 5 || i > width*(width/2-2) && i < width*(width/2+3))
             {
                 pixels[i] = new Color(0.8f, 0.8f, 0.8f); // Set the background color to light gray
             }
@@ -159,23 +164,24 @@ public class DrawOnRawImage : MonoBehaviour
 
     public void Repaint()
     {
+        int width = (int)drawImage.GetComponent<RectTransform>().sizeDelta.x;
+
         // Reset the canvasColors array
         for (int i = 0; i < canvasColors.Length; i++)
         {
-            if(i < 568*10 || i > 568*568-568*10 || i % 568 > 0 && i % 568 < 10 || (i - 567) % 568 <= 10 || (i - 567) % 568 >= 568 - 10)
+            if(i < width*10 || i > width*width-width*10 || i % width > 0 && i % width < 10 || (i - (width-1)) % width <= 10 || (i - (width-1)) % width >= width - 10)
             {
                 canvasColors[i] = Color.gray; // Set the background color to gray
             }
-            else if(i % 284 > 0 && i % 284 < 5 || i > 568*282 && i < 568*287)
+            else if(i % (width/2) > 0 && i % (width/2) < 5 || i > width*(width/2-2) && i < width*(width/2+3))
             {
                 canvasColors[i] = new Color(0.8f, 0.8f, 0.8f); // Set the background color to light gray
             }
             else
             {
-                canvasColors[i] = Color.white;; // Set the background color to white
+                canvasColors[i] = Color.white; // Set the background color to white
             }
         }
-
         // Apply the cleared colors to the canvas texture
         canvasTexture.SetPixels32(canvasColors);
         canvasTexture.Apply(); // Refresh the texture

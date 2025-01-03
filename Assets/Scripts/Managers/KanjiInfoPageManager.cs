@@ -11,13 +11,16 @@ public class KanjiInfoPageManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI onyomi;
     [SerializeField] TextMeshProUGUI kunyomi;
     [SerializeField] TextMeshProUGUI meanings;
+    [SerializeField] GameObject practiceImage;
 
     [SerializeField] GameObject[] exampleWords;
+    private KanjiManager kanji;
+
+    private bool strokeOrderDisplayed;
 
     public void SetPage(string buttonKanjiSymbol)
     {
         KanjiManager[] collectedKanjiList = GameManager.instance.GetCollectedKanji();
-        KanjiManager kanji = null;
 
         foreach(KanjiManager collectedKanji in collectedKanjiList)
         {
@@ -45,6 +48,60 @@ public class KanjiInfoPageManager : MonoBehaviour
             else
             {
                 exampleWords[i].SetActive(false);
+            }
+        }
+
+        foreach (Transform child in practiceImage.transform)
+        {
+            Destroy(child.gameObject); // destroy the SpriteOverlay
+        }
+
+        practiceImage.GetComponent<DrawOnRawImage>().Setup();
+        practiceImage.GetComponent<DrawOnRawImage>().Repaint();
+
+        strokeOrderDisplayed = false;
+        ShowStrokeOrder();
+    }
+
+    public void ClearImage()
+    {
+        practiceImage.GetComponent<DrawOnRawImage>().Repaint();
+    }
+
+    public void ShowStrokeOrder()
+    {
+        if(!strokeOrderDisplayed)
+        {
+            strokeOrderDisplayed = true;
+
+            RawImage rawImage = practiceImage.GetComponent<RawImage>(); 
+            Sprite  overlaySprite = kanji.strokeOrder;
+            
+            // Create a new GameObject for the overlay
+            GameObject overlayObject = new GameObject("SpriteOverlay");
+            overlayObject.transform.SetParent(rawImage.transform, false); // Make it a child of the RawImage
+
+            // Add an Image component to the overlay GameObject
+            Image overlayImage = overlayObject.AddComponent<Image>();
+
+            // Set the sprite and transparency
+            overlayImage.sprite = overlaySprite;
+            overlayImage.color = new Color(1, 1, 1, 0.5f); // RGB stays the same; modify alpha for transparency
+
+            // Match the size and position of the RawImage
+            RectTransform overlayTransform = overlayObject.GetComponent<RectTransform>();
+            overlayTransform.anchorMin = new Vector2(0, 0);
+            overlayTransform.anchorMax = new Vector2(1, 1);
+            overlayTransform.offsetMin = Vector2.zero;
+            overlayTransform.offsetMax = Vector2.zero;
+        }
+        else
+        {
+            strokeOrderDisplayed = false;
+
+            foreach (Transform child in practiceImage.transform)
+            {
+                Destroy(child.gameObject); // destroy the SpriteOverlay
             }
         }
     }
