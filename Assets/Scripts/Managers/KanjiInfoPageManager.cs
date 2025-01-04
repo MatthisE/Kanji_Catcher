@@ -18,8 +18,12 @@ public class KanjiInfoPageManager : MonoBehaviour
 
     private bool strokeOrderDisplayed;
 
+    private string kanjiSymbolString;
+
     public void SetPage(string buttonKanjiSymbol)
     {
+        kanjiSymbolString = buttonKanjiSymbol;
+
         KanjiManager[] collectedKanjiList = GameManager.instance.GetCollectedKanji();
 
         foreach(KanjiManager collectedKanji in collectedKanjiList)
@@ -61,6 +65,60 @@ public class KanjiInfoPageManager : MonoBehaviour
 
         strokeOrderDisplayed = false;
         ShowStrokeOrder();
+    }
+
+    public void NextPage()
+    {
+        KanjiManager[] collectedKanjiList = GameManager.instance.GetCollectedKanji();
+
+        // find the index of the object with the matching Name
+        int index = 0;
+        for (int i = 0; i < collectedKanjiList.Length; i++)
+        {
+            if (collectedKanjiList[i].kanjiSymbol == kanjiSymbolString)
+            {
+                index = i;
+                break;
+            }
+        }
+
+        string nextSymbol = null;
+        if(index == collectedKanjiList.Length-1)
+        {
+            nextSymbol = collectedKanjiList[0].kanjiSymbol;
+        }
+        else
+        {
+            nextSymbol = collectedKanjiList[index+1].kanjiSymbol;
+        }
+        SetPage(nextSymbol);
+    }
+
+    public void PreviousPage()
+    {
+        KanjiManager[] collectedKanjiList = GameManager.instance.GetCollectedKanji();
+
+        // find the index of the object with the matching Name
+        int index = 0;
+        for (int i = 0; i < collectedKanjiList.Length; i++)
+        {
+            if (collectedKanjiList[i].kanjiSymbol == kanjiSymbolString)
+            {
+                index = i;
+                break;
+            }
+        }
+
+        string previousSymbol = null;
+        if(index == 0)
+        {
+            previousSymbol = collectedKanjiList[collectedKanjiList.Length-1].kanjiSymbol;
+        }
+        else
+        {
+            previousSymbol = collectedKanjiList[index-1].kanjiSymbol;
+        }
+        SetPage(previousSymbol);
     }
 
     public void ClearImage()
