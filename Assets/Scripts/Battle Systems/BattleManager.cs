@@ -501,9 +501,16 @@ public class BattleManager : MonoBehaviour
     }
 
     public void SetAttacks(){
+        int wordThatNeedsTraining = Mathf.FloorToInt(Random.value * magicButtons.Length); // set random index of button with word that definitely needs training (so you never just have options with fully trained kanji)
+
         for(int i = 0; i < magicButtons.Length; i++)
         {
-            TrainingWord randomWord = GetRandomWord();
+            bool needsTraining = false;
+            if(i == wordThatNeedsTraining)
+            {
+                needsTraining = true;
+            }
+            TrainingWord randomWord = GetRandomWord(needsTraining);
 
             // set attack words on buttons
             magicButtons[i].spellName = randomWord.inKana;
@@ -512,19 +519,31 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private TrainingWord GetRandomWord(){
-        if (GameManager.instance == null)
-        {
-            Debug.LogError("GameManager.instance is null");
-        }
-
+    private TrainingWord GetRandomWord(bool needsTraining){
         KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
 
-        // Get random kanji
-        int randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
+        int randomIndex = 0;
+        if(needsTraining)
+        {
+            // get random kanji until you have one that definitely needs training (aka has less than 100xp)
+            bool isFullyTrained = true;
+            while(isFullyTrained == true)
+            {
+                randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
+                if(collectedKanji[randomIndex].currentXP != 100)
+                {
+                    isFullyTrained = false;
+                }
+            }
+        }
+        else
+        {
+            // get random kanji
+            randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
+        }
 
         TrainingWord[] randomTrainingWords = collectedKanji[randomIndex].trainingWords;
-        // Get random training word
+        // get random training word for that kanji
         int randomIndex2 = Mathf.FloorToInt(Random.value * randomTrainingWords.Length);
         return randomTrainingWords[randomIndex2];
     }
@@ -579,7 +598,7 @@ public class BattleManager : MonoBehaviour
     {
         waitingForTurn = false; // false so Update() does sets UIButtonHolder to inactive
         playerAttackMenu.SetActive(true);
-        playerAttackMenu.GetComponent<PlayerAttack>().SetWords(GetRandomWord(), true);
+        playerAttackMenu.GetComponent<PlayerAttack>().SetWords(GetRandomWord(false), true);
     }
 
     public void StartPlayerAttackImpact(double offence)

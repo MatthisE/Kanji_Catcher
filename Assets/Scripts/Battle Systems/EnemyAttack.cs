@@ -154,19 +154,39 @@ public class EnemyAttack : MonoBehaviour
         
         yield return new WaitForSeconds(2f);
 
-        if(pressedMeaning.text == trainingWord.inKana)
+        if(exerciseType)
         {
-            if(hintGiven)
+            if(pressedMeaning.text == trainingWord.inKana)
             {
-                battleManager.StartEnemyAttackImpact(0.5f);
-            }
-            else
+                if(hintGiven)
+                {
+                    battleManager.StartEnemyAttackImpact(0.5f);
+                }
+                else
+                {
+                    battleManager.StartEnemyAttackImpact(0);
+                }
+            }else
             {
-                battleManager.StartEnemyAttackImpact(0);
+                battleManager.StartEnemyAttackImpact(1);
             }
-        }else
+        }
+        else
         {
-            battleManager.StartEnemyAttackImpact(1);
+            if(pressedMeaning.text == trainingWord.englishMeaning)
+            {
+                if(hintGiven)
+                {
+                    battleManager.StartEnemyAttackImpact(0.5f);
+                }
+                else
+                {
+                    battleManager.StartEnemyAttackImpact(0);
+                }
+            }else
+            {
+                battleManager.StartEnemyAttackImpact(1);
+            }
         }
 
         helpButton.SetActive(true);
