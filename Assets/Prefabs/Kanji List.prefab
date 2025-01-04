@@ -123,6 +123,89 @@ MonoBehaviour:
   isCollected: 1
   currentXP: 0
   xpReward: 0
+--- !u!1 &305154757122638586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7796919813805895646}
+  - component: {fileID: 2433912814256271135}
+  m_Layer: 0
+  m_Name: "\u5B57"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7796919813805895646
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305154757122638586}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2807371553263036126}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2433912814256271135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305154757122638586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1387af2059b880d49b4a3ad9565c08d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kanjiImage: {fileID: 21300000, guid: b6828fef07b5df8448bce1d95b6f6693, type: 3}
+  strokeOrder: {fileID: 21300000, guid: 448272a0c7a5a404fae14dbcf8d3b940, type: 3}
+  kanjiSymbol: "\u5B57"
+  kunyomi:
+  - "\u3042\u3056"
+  - "\u3042\u3056\u306A"
+  - "-\u306A"
+  onyomi:
+  - "\u30B8"
+  meanings:
+  - character
+  - letter
+  - word
+  - section of village
+  trainingWords:
+  - wordImage:
+    - {fileID: 21300000, guid: b6828fef07b5df8448bce1d95b6f6693, type: 3}
+    strokeOrder:
+    - {fileID: 21300000, guid: 448272a0c7a5a404fae14dbcf8d3b940, type: 3}
+    inKanji: "\u5B57"
+    inKana: "\u3058"
+    englishMeaning: character (any symbol)
+    kanjiInWord:
+    - {fileID: 2433912814256271135}
+  - wordImage:
+    - {fileID: 21300000, guid: 7f24699837cacf2498841c2b1ec69b9b, type: 3}
+    - {fileID: 21300000, guid: b6828fef07b5df8448bce1d95b6f6693, type: 3}
+    strokeOrder:
+    - {fileID: 21300000, guid: 9fa22e58339523a419795086825643a0, type: 3}
+    - {fileID: 21300000, guid: 448272a0c7a5a404fae14dbcf8d3b940, type: 3}
+    inKanji: "\u6587\u5B57"
+    inKana: "\u3082\u3058"
+    englishMeaning: letter (language symbol)
+    kanjiInWord:
+    - {fileID: 2021677125629146583}
+    - {fileID: 2433912814256271135}
+  isCollected: 0
+  currentXP: 0
+  xpReward: 0
 --- !u!1 &574862332774008303
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,6 +577,80 @@ MonoBehaviour:
   isCollected: 1
   currentXP: 0
   xpReward: 0
+--- !u!1 &2906877044072173347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6496085823675513174}
+  - component: {fileID: 2021677125629146583}
+  m_Layer: 0
+  m_Name: "\u6587"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6496085823675513174
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2906877044072173347}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2807371553263036126}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2021677125629146583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2906877044072173347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1387af2059b880d49b4a3ad9565c08d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kanjiImage: {fileID: 21300000, guid: 7f24699837cacf2498841c2b1ec69b9b, type: 3}
+  strokeOrder: {fileID: 21300000, guid: 9fa22e58339523a419795086825643a0, type: 3}
+  kanjiSymbol: "\u6587"
+  kunyomi:
+  - "\u3075\u307F"
+  - "\u3042\u3084"
+  onyomi:
+  - "\u30D6\u30F3"
+  - "\u30E2\u30F3"
+  meanings:
+  - sentence
+  - literature
+  - style
+  - art
+  - decoration
+  - figures
+  - plan
+  trainingWords:
+  - wordImage:
+    - {fileID: 21300000, guid: 7f24699837cacf2498841c2b1ec69b9b, type: 3}
+    strokeOrder:
+    - {fileID: 21300000, guid: 9fa22e58339523a419795086825643a0, type: 3}
+    inKanji: "\u6587"
+    inKana: "\u3076\u3093"
+    englishMeaning: sentence
+    kanjiInWord:
+    - {fileID: 2021677125629146583}
+  isCollected: 0
+  currentXP: 0
+  xpReward: 0
 --- !u!1 &4829650238283013158
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,6 +686,10 @@ Transform:
   - {fileID: 3792099735809808743}
   - {fileID: 4218226698785003034}
   - {fileID: 8394504113253431082}
+  - {fileID: 9166642410947503712}
+  - {fileID: 6496085823675513174}
+  - {fileID: 7796919813805895646}
+  - {fileID: 7847015554914161990}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8862633014724739872
@@ -678,5 +839,183 @@ MonoBehaviour:
     kanjiInWord:
     - {fileID: 3350441927506424603}
   isCollected: 1
+  currentXP: 0
+  xpReward: 0
+--- !u!1 &6767814098721582697
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9166642410947503712}
+  - component: {fileID: 1299249025498211669}
+  m_Layer: 0
+  m_Name: "\u672C"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &9166642410947503712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6767814098721582697}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2807371553263036126}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1299249025498211669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6767814098721582697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1387af2059b880d49b4a3ad9565c08d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kanjiImage: {fileID: 21300000, guid: a46a9159a875b7f4c875b85ddcec03ef, type: 3}
+  strokeOrder: {fileID: 21300000, guid: 60bb0f27940ff5042bb0b467cdf36c48, type: 3}
+  kanjiSymbol: "\u672C"
+  kunyomi:
+  - "\u3082\u3068"
+  onyomi:
+  - "\u30DB\u30F3"
+  meanings:
+  - book
+  - present
+  - main
+  - origin
+  - true
+  - real
+  - counter for long cylindrical things
+  trainingWords:
+  - wordImage:
+    - {fileID: 21300000, guid: a46a9159a875b7f4c875b85ddcec03ef, type: 3}
+    strokeOrder:
+    - {fileID: 21300000, guid: 60bb0f27940ff5042bb0b467cdf36c48, type: 3}
+    inKanji: "\u672C"
+    inKana: "\u307B\u3093"
+    englishMeaning: book
+    kanjiInWord:
+    - {fileID: 1299249025498211669}
+  - wordImage:
+    - {fileID: 21300000, guid: a46a9159a875b7f4c875b85ddcec03ef, type: 3}
+    - {fileID: 21300000, guid: 0a82c35d68017714cafe87cbec47a933, type: 3}
+    strokeOrder:
+    - {fileID: 21300000, guid: 60bb0f27940ff5042bb0b467cdf36c48, type: 3}
+    - {fileID: 21300000, guid: c6acaf37f7d81ad4d9ecfd022027b664, type: 3}
+    inKanji: "\u672C\u4EBA"
+    inKana: "\u307B\u3093\u306B\u3093"
+    englishMeaning: the person in question
+    kanjiInWord:
+    - {fileID: 1299249025498211669}
+    - {fileID: 3350441927506424603}
+  isCollected: 0
+  currentXP: 0
+  xpReward: 0
+--- !u!1 &7617835421682141699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7847015554914161990}
+  - component: {fileID: 4546828978970132911}
+  m_Layer: 0
+  m_Name: "\u5B66"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7847015554914161990
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7617835421682141699}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2807371553263036126}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4546828978970132911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7617835421682141699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1387af2059b880d49b4a3ad9565c08d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kanjiImage: {fileID: 21300000, guid: 9a2489839b1a8ab4cafaf66c30efdad5, type: 3}
+  strokeOrder: {fileID: 21300000, guid: 23fe926a526ce78449a70a1eb6f7cf3d, type: 3}
+  kanjiSymbol: "\u5B66"
+  kunyomi:
+  - "\u307E\u306A.\u3076"
+  onyomi:
+  - "\u30AC\u30AF"
+  meanings:
+  - study
+  - learning
+  - science
+  trainingWords:
+  - wordImage:
+    - {fileID: 21300000, guid: 9a2489839b1a8ab4cafaf66c30efdad5, type: 3}
+    - {fileID: 21300000, guid: 466c4d740b3d55843858ab3b8e7854a6, type: 3}
+    strokeOrder:
+    - {fileID: 21300000, guid: 23fe926a526ce78449a70a1eb6f7cf3d, type: 3}
+    - {fileID: 21300000, guid: 9e0c9bdc95605d144a647365cfdd8932, type: 3}
+    inKanji: "\u5B66\u3076"
+    inKana: "\u307E\u306A\u3076"
+    englishMeaning: learn
+    kanjiInWord:
+    - {fileID: 4546828978970132911}
+  - wordImage:
+    - {fileID: 21300000, guid: 7f24699837cacf2498841c2b1ec69b9b, type: 3}
+    - {fileID: 21300000, guid: 9a2489839b1a8ab4cafaf66c30efdad5, type: 3}
+    strokeOrder:
+    - {fileID: 21300000, guid: 9fa22e58339523a419795086825643a0, type: 3}
+    - {fileID: 21300000, guid: 23fe926a526ce78449a70a1eb6f7cf3d, type: 3}
+    inKanji: "\u6587\u5B66"
+    inKana: "\u3076\u3093\u304C\u304F"
+    englishMeaning: literature
+    kanjiInWord:
+    - {fileID: 2021677125629146583}
+    - {fileID: 4546828978970132911}
+  - wordImage:
+    - {fileID: 21300000, guid: 9a2489839b1a8ab4cafaf66c30efdad5, type: 3}
+    - {fileID: 21300000, guid: 5df7d308273552d47bfa39a38a342a83, type: 3}
+    strokeOrder:
+    - {fileID: 21300000, guid: 23fe926a526ce78449a70a1eb6f7cf3d, type: 3}
+    - {fileID: 21300000, guid: 03655ae5f9c790e4db09e5a845e39b73, type: 3}
+    inKanji: "\u5B66\u529B"
+    inKana: "\u304C\u304F\u308A\u3087\u304F"
+    englishMeaning: academic ability
+    kanjiInWord:
+    - {fileID: 4546828978970132911}
+    - {fileID: 5220205487016785674}
+  isCollected: 0
   currentXP: 0
   xpReward: 0
