@@ -21,6 +21,7 @@ public class DialogController : MonoBehaviour
     private bool markQuestComplete; // false --> mark as incomplete
 
     private bool stillTyping = false;
+    private string openKanjiInMenu = "";
 
     void Start()
     {
@@ -69,6 +70,19 @@ public class DialogController : MonoBehaviour
                                 QuestManager.instance.MarkQuestIncomplete(questToMark);
                             }
                         }
+
+                        if(openKanjiInMenu != "")
+                        {
+                            MenuManager.instance.OpenMenu();
+
+                            if(openKanjiInMenu != "start")
+                            {
+                                MenuManager.instance.CloseKanjiPanel();
+                                KanjiInfoPageManager.instance.SetActiveState(true);
+                                KanjiInfoPageManager.instance.SetPage(openKanjiInMenu);
+                            }
+                            openKanjiInMenu = "";
+                        }
                     }
                     else // not end of dialog
                     {
@@ -109,8 +123,10 @@ public class DialogController : MonoBehaviour
     }
 
     // gets activated by NPCs dialog handler
-    public void ActivateDialog(string[] newSentencesToUse)
+    public void ActivateDialog(string[] newSentencesToUse, string kanjiName)
     {
+        openKanjiInMenu = kanjiName;
+
         // set values for start of dialog
         dialogSentences = newSentencesToUse;
         currentSentence = 0;

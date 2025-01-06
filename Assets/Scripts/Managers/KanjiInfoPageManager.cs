@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class KanjiInfoPageManager : MonoBehaviour
 {
+    public static KanjiInfoPageManager instance;
+
     [SerializeField] Image kanjiSymbol;
     [SerializeField] TextMeshProUGUI onyomi;
     [SerializeField] TextMeshProUGUI kunyomi;
@@ -17,8 +19,17 @@ public class KanjiInfoPageManager : MonoBehaviour
     private KanjiManager kanji;
 
     private bool strokeOrderDisplayed;
-
     private string kanjiSymbolString;
+
+    private void Awake()
+    {
+        instance = this; // no singelton pattern needed
+    }
+
+    public void SetActiveState(bool isActive)
+    {
+        gameObject.SetActive(isActive);
+    }
 
     public void SetPage(string buttonKanjiSymbol)
     {

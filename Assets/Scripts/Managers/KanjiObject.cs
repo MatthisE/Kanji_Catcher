@@ -59,7 +59,7 @@ public class KanjiObject : MonoBehaviour
 
             SelfDestroy();
 
-            DialogController.instance.ActivateDialog(sentences); // open box with first sentence
+            DialogController.instance.ActivateDialog(sentences, kanjiName); // open box with first sentence
         }
     }
 

@@ -32,6 +32,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] BattleMoves[] battleMovesList;
     [SerializeField] ParticleSystem characterAttackEffect;
     [SerializeField] CharacterDamageGUI damageText;
+    private bool isCritical;
 
     // turn based system
     [SerializeField] int currentTurn; // does not need to be serialized field
@@ -206,13 +207,26 @@ public class BattleManager : MonoBehaviour
                 {
                     if(enemiesPrefabs[j].characterName == enemiesToSpawn[i]) // check if the names are the same
                     {
-                        BattleCharacters newEnemy = Instantiate( // make enemy a battle character
-                            enemiesPrefabs[j],
-                            enemiesPositions[i].position,
-                            enemiesPositions[i].rotation,
-                            enemiesPositions[i]
-                        );
+                        BattleCharacters newEnemy = null;
 
+                        if(enemiesToSpawn.Length == 1)
+                        {
+                            newEnemy = Instantiate( // make enemy a battle character
+                                enemiesPrefabs[j],
+                                enemiesPositions[1].position, // at position 1 (middle)
+                                enemiesPositions[1].rotation,
+                                enemiesPositions[1]
+                            );
+                        }
+                        else
+                        {
+                            newEnemy = Instantiate( // make enemy a battle character
+                                enemiesPrefabs[j],
+                                enemiesPositions[i].position,
+                                enemiesPositions[i].rotation,
+                                enemiesPositions[i]
+                            );
+                        }
                         activeCharacters.Add(newEnemy);
                     }
                 }
@@ -281,21 +295,19 @@ public class BattleManager : MonoBehaviour
         enemyAttackMenu.SetActive(false);
 
         int selectedAttack = Random.Range(0, activeCharacters[currentTurn].AttackMovesAvailable().Length); // select random move of enemy
-        int movePower = 0;
+
+        int movePower = (int)(20 * defence + 10);
+        DealDamageToCharacters(0, movePower); // calculate damage to player and attack him (at position 0 of activeCharacters), show damage number
 
         for(int i = 0; i < battleMovesList.Length; i++)
         {
             if(battleMovesList[i].moveName == activeCharacters[currentTurn].AttackMovesAvailable()[selectedAttack]) // if battle manager has move of active enemy
             {
-                movePower = GettingMovePowerAndEffectInstantiation(0, i); // get power of attack and put damage effect on player (0 --> player as target)
+                GettingMovePowerAndEffectInstantiation(0, i); // put damage effect on player (0 --> player as target)
             }
         }
 
         //InstantiateEffectOnAttackingCharacter(); // put attack effect on enemy
-
-        movePower = (int)(movePower * defence);
-
-        DealDamageToCharacters(0, movePower); // calculate damage to player and attack him (at position 0 of activeCharacters), show damage number
 
         UpdatePlayerStats(); // update player stats UI (might not need this here since it is also in NextTurn())
 
@@ -325,19 +337,19 @@ public class BattleManager : MonoBehaviour
         charTransform.position = originalPosition;
     }
 
-    private int GettingMovePowerAndEffectInstantiation(int selectedCharacterTarget, int i)
+    private void GettingMovePowerAndEffectInstantiation(int selectedCharacterTarget, int battleMove)
     {
-        int movePower;
+        if(isCritical)
+        {
+            battleMove = 2;
+        }
 
         // put damage effect of attack move on player
         Instantiate(
-            battleMovesList[i].effectToUse,
+            battleMovesList[battleMove].effectToUse,
             activeCharacters[selectedCharacterTarget].transform.position, // position of selected target
             activeCharacters[selectedCharacterTarget].transform.rotation
         );
-
-        movePower = battleMovesList[i].movePower; // set power of attack
-        return movePower;
     }
 
     private void InstantiateEffectOnAttackingCharacter()
@@ -379,7 +391,9 @@ public class BattleManager : MonoBehaviour
         // double damage on rare occasion
         if(Random.value <= 0.1f)
         {
-            Debug.Log("CRITICAL HIT!! instead of " + damageToGive + " points " + (damageToGive * 2) + " was dealt.");
+            isCritical = true;
+
+            Debug.Log("CRITICAL HIT!!!");
 
             return (damageToGive * 2);
         }
@@ -396,6 +410,7 @@ public class BattleManager : MonoBehaviour
             currentTurn = 0;
         }
 
+        isCritical = false;
         waitingForTurn = true;
         UpdateBattle(); // check who died and if battle is over
 
@@ -604,32 +619,30 @@ public class BattleManager : MonoBehaviour
     public void StartPlayerAttackImpact(double offence)
     {
         playerAttackMenu.SetActive(false);
-        StartCoroutine(PlayerAttackCoroutine2("Lightning", offence));
+
+        StartCoroutine(PlayerAttackCoroutine2("Slash", offence));
     }
 
     public IEnumerator PlayerAttackCoroutine2(string moveName, double offence)
     {
-        int movePower = 0;
-
         enemyTargetPanel.SetActive(false);
         waitingForTurn = false;
         UIButtonHolder.SetActive(false);
 
         yield return StartCoroutine(MoveCharacter(playerPosition, 0.1f, 0.2f));
 
+        int movePower = (int)(20 * offence);
+        DealDamageToCharacters(selectEnemyTarget, movePower); // calculate damage to player and attack him, show damage number
+
         for(int i = 0; i < battleMovesList.Length; i++)
         {
             if(battleMovesList[i].moveName == moveName) // if battle manager has selected move
             {
-                movePower = GettingMovePowerAndEffectInstantiation(selectEnemyTarget, i); // get power of attack and put damage effect on enemy
+                GettingMovePowerAndEffectInstantiation(selectEnemyTarget, i); // put damage effect on enemy
             }
         }
 
         //InstantiateEffectOnAttackingCharacter(); // put attack effect on player
-
-        movePower = (int)(movePower * offence);
-
-        DealDamageToCharacters(selectEnemyTarget, movePower); // calculate damage to player and attack him, show damage number
 
         NextTurn();
 

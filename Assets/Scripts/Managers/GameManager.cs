@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
         ActionButton.instance.SetActiveState(false);
         string[] sentences = {"All but four kanji flew out of the kanji book.", "Be sure to study the ones you have, it might come in handy."};
-        DialogController.instance.ActivateDialog(sentences); // open box with first sentence
+        DialogController.instance.ActivateDialog(sentences, "start"); // open box with first sentence
         DialogController.instance.ActivateQuestAtEnd("Start Game", true); // activate quest after dialog
     }
 

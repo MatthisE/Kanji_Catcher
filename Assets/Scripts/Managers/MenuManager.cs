@@ -68,6 +68,7 @@ public class MenuManager : MonoBehaviour
                 // open menu
                 UpdateStats(); // display all current characters with stats
                 menu.SetActive(true);
+                KanjiInfoPageManager.instance.SetActiveState(false);
                 GameManager.instance.gameMenuOpened = true; //set condition for player to stop moving
 
                 itemsPanel.SetActive(false);
@@ -79,6 +80,11 @@ public class MenuManager : MonoBehaviour
                 scrollbar.value = 1f;
             }
         }
+    }
+
+    public void CloseKanjiPanel()
+    {
+        kanjiPanel.SetActive(false);
     }
 
     // when opening menu, overview of stats should be displayed (different from stats menu)

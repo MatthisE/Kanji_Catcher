@@ -76,7 +76,7 @@ public class BossManager : MonoBehaviour
             }
 
             sentences = sentencesList.ToArray();
-            DialogController.instance.ActivateDialog(sentences); // open box with first sentence
+            DialogController.instance.ActivateDialog(sentences, ""); // open box with first sentence
         }
     }
 }
