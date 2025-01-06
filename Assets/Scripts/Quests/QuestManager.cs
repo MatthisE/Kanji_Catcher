@@ -7,7 +7,7 @@ using UnityEngine;
 public class QuestManager : MonoBehaviour
 {
     [SerializeField] string[] questNames;
-    [SerializeField] bool[] questMarkersCompleted; // set by code, each bool stands for one of the quests in questNames
+    public bool[] questMarkersCompleted; // set by code, each bool stands for one of the quests in questNames
 
     public static QuestManager instance;
 

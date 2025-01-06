@@ -136,6 +136,7 @@ public class MenuManager : MonoBehaviour
             if(item.amount > 1)
             {
                 itemsAmountText.text = item.amount.ToString();
+                itemsAmountText.color = Color.blue;
             }
             else
             {

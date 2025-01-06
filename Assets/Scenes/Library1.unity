@@ -1514,9 +1514,13 @@ MonoBehaviour:
   - What is this strange feeling?
   - Feels like the library has been covered by some sort of energy...
   - Please be carefull.
-  shouldActivateQuest: 1
-  questToMark: Steal Gem
-  markAsComplete: 1
+  shouldActivateQuest: 0
+  questToMark: 
+  markAsComplete: 0
+  upSprite: {fileID: 2000317678, guid: b89c40a5f569cee49bddcf9293c0891e, type: 3}
+  downSprite: {fileID: 459969611, guid: b89c40a5f569cee49bddcf9293c0891e, type: 3}
+  leftSprite: {fileID: 1070891757, guid: b89c40a5f569cee49bddcf9293c0891e, type: 3}
+  rightSprite: {fileID: -709355220, guid: b89c40a5f569cee49bddcf9293c0891e, type: 3}
 --- !u!61 &1505255693
 BoxCollider2D:
   m_ObjectHideFlags: 0

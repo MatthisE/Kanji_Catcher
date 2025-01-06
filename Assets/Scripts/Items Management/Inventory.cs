@@ -13,6 +13,20 @@ public class Inventory : MonoBehaviour
         instance = this;
 
         itemsList = new List<ItemsManager>();
+
+        /*
+        ItemsManager Book1 = new ItemsManager();
+        ItemsManager Book2 = new ItemsManager();
+        ItemsManager Book3 = new ItemsManager();
+
+        Book1.itemName = "Book";
+        Book2.itemName = "Book";
+        Book3.itemName = "Book";
+
+        AddItems(Book1);
+        AddItems(Book2);
+        AddItems(Book3);
+        */
     }
 
     public void AddItems(ItemsManager item)
@@ -71,6 +85,11 @@ public class Inventory : MonoBehaviour
         {
             itemsList.Remove(item);
         }
+    }
+
+    public void RemoveAllBooks()
+    {
+        itemsList.RemoveAll(item => item.itemName == "Book");
     }
 
     public List<ItemsManager> GetItemsList()

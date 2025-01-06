@@ -79,6 +79,7 @@ MonoBehaviour:
   questNames:
   - 
   - Start Game
+  - Return Stolen Books
   - Steal Gem
   - Defeat Big Dragon Boss
   questMarkersCompleted: 

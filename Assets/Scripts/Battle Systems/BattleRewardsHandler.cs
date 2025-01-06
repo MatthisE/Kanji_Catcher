@@ -24,14 +24,6 @@ public class BattleRewardsHandler : MonoBehaviour
         instance = this;
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            OpenRewardScreen(15000, rewardItems);
-        }
-    }
-
     // open reward screen with given elements
     public void OpenRewardScreen(int xpEarned, ItemsManager[] itemsEarned)
     {
@@ -79,17 +71,31 @@ public class BattleRewardsHandler : MonoBehaviour
             xpSlider.gameObject.SetActive(false);
         }
 
+        bool activateMenuButton = true;
+
         // add won items to inventory
         foreach(ItemsManager itemrewarded in rewardItems)
         {
-            Inventory.instance.AddItems(itemrewarded);
+            if(Inventory.instance.GetItemsList().Count < 4 && QuestManager.instance.questMarkersCompleted[2] != true)
+            {
+                ActionButton.instance.SetActiveState(false);
+                string[] sentences = {"The enemy dropped a book.", "You put in your inventory."};
+                DialogController.instance.ActivateDialog(sentences, ""); // open box with first sentence
+
+                Inventory.instance.AddItems(itemrewarded);
+
+                activateMenuButton = false;
+            }
         }
 
         // colse reward display
         rewardScreen.SetActive(false);
         GameManager.instance.battleIsActive = false; // keep player still while showing rewards
 
-        MenuButton.instance.SetActiveState(true);
+        if(activateMenuButton)
+        {
+            MenuButton.instance.SetActiveState(true);
+        }
 
         // mark given quest as complete (optional)
         if(markQuestComplete)
