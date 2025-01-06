@@ -21,7 +21,7 @@ public class BattleInstantiator : MonoBehaviour
 
     private void Start()
     {
-        battleCounter = Random.Range(timeBetweenBattles * 0.5f, timeBetweenBattles * 1.5f); // define a random time around timeBetweenBattles
+        battleCounter = Random.Range(timeBetweenBattles * 1.0f, timeBetweenBattles * 4.0f); // define a random time around timeBetweenBattles
     
         inArea = false; // when entering a new scene, you are not automatically in a battle zone
     }

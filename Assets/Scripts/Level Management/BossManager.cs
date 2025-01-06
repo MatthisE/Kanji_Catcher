@@ -76,8 +76,6 @@ public class BossManager : MonoBehaviour
             }
 
             sentences = sentencesList.ToArray();
-
-            AudioManager.instance.PlaySFX(8);
             DialogController.instance.ActivateDialog(sentences); // open box with first sentence
         }
     }

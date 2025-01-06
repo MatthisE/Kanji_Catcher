@@ -860,7 +860,7 @@ Transform:
   m_GameObject: {fileID: 937420975734030828}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.03, z: 0}
+  m_LocalPosition: {x: -5.42, y: 2.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3825,7 +3825,7 @@ Transform:
   m_GameObject: {fileID: 2580330409313595433}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.42, y: 2.03, z: 0}
+  m_LocalPosition: {x: 5.13, y: 2.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5518,6 +5518,9 @@ MonoBehaviour:
   - {fileID: 8609917575726481370, guid: ece75922372f05547bfee78ecd53b5a3, type: 3}
   - {fileID: 1459637201668392875, guid: 4a26e9fadd88b3341afdcf0f4d838d01, type: 3}
   - {fileID: 4223708421095260246, guid: 6a31b282a338f3348abb7f8351ca0f7c, type: 3}
+  - {fileID: 1459637201668392875, guid: 11f9862e3563e0d4d908e508e76dd67c, type: 3}
+  - {fileID: 1459637201668392875, guid: 4cb38371e43e7e647832827ab9cac67d, type: 3}
+  - {fileID: 1459637201668392875, guid: 7963acc5989c61040942e5b14755a4a6, type: 3}
   playersBattleStats:
   - {fileID: 1178986676602592589}
   playersNameText:
@@ -10199,7 +10202,7 @@ Transform:
   m_GameObject: {fileID: 7067185971383400153}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.13, y: 2.03, z: 0}
+  m_LocalPosition: {x: 0, y: 2.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

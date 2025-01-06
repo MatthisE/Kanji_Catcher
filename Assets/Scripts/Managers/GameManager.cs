@@ -35,6 +35,18 @@ public class GameManager : MonoBehaviour
     {
         ItemsManager itemToAdd = ItemsAssets.instance.GetItemAsset("Cursed Kanji Book");
         Inventory.instance.AddItems(itemToAdd); // add item to loaded inventory
+
+        StartCoroutine(StartText());
+    }
+
+    IEnumerator StartText()
+    {
+        yield return new WaitForSeconds(1.0f); // wait before next letter
+
+        ActionButton.instance.SetActiveState(false);
+        string[] sentences = {"All but four kanji flew out of the kanji book.", "Be sure to study the ones you have, it might come in handy."};
+        DialogController.instance.ActivateDialog(sentences); // open box with first sentence
+        DialogController.instance.ActivateQuestAtEnd("Start Game", true); // activate quest after dialog
     }
 
     void Update()
