@@ -174,7 +174,7 @@ public class DialogController : MonoBehaviour
         BattleRewardsHandler.instance.markQuestComplete = true;
         BattleRewardsHandler.instance.questToComplete = "Defeat Boss";
 
-        string[] boss = {"Book"};
+        string[] boss = {"Darkness"};
 
         yield return new WaitForSeconds(1.5f); // wait 1.5sec
         BattleManager.instance.StartBattle(boss, false); // activate battle scene
