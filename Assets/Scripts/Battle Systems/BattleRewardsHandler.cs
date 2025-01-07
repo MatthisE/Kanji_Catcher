@@ -27,6 +27,12 @@ public class BattleRewardsHandler : MonoBehaviour
     // open reward screen with given elements
     public void OpenRewardScreen(int xpEarned, ItemsManager[] itemsEarned)
     {
+        // mark given quest as complete (optional)
+        if(markQuestComplete)
+        {
+            QuestManager.instance.MarkQuestComplete(questToComplete);
+        }
+
         rewardItems = itemsEarned;
         KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
         
@@ -95,12 +101,6 @@ public class BattleRewardsHandler : MonoBehaviour
         if(activateMenuButton)
         {
             MenuButton.instance.SetActiveState(true);
-        }
-
-        // mark given quest as complete (optional)
-        if(markQuestComplete)
-        {
-            QuestManager.instance.MarkQuestComplete(questToComplete);
         }
     }
 }

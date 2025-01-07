@@ -80,8 +80,7 @@ MonoBehaviour:
   - 
   - Start Game
   - Return Stolen Books
-  - Steal Gem
-  - Defeat Big Dragon Boss
+  - Defeat Boss
   questMarkersCompleted: 
 --- !u!114 &6492657526942526961
 MonoBehaviour:

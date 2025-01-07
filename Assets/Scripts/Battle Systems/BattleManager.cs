@@ -42,6 +42,8 @@ public class BattleManager : MonoBehaviour
     [SerializeField] GameObject UIButtonHolder;
     [SerializeField] GameObject actionsMenu;
 
+    [SerializeField] GameObject runningButton;
+
     // which enemy to target
     [SerializeField] GameObject enemyTargetPanel;
     [SerializeField] BattleTargetButtons[] targetButtons;
@@ -147,6 +149,16 @@ public class BattleManager : MonoBehaviour
             MenuButton.instance.SetActiveState(false);
 
             canRun = canRunAway; // define if you can or cannot run away
+
+            if(canRun)
+            {
+                runningButton.SetActive(true);
+            }
+            else
+            {
+                runningButton.SetActive(false);
+            }
+            
             SettingUpBattle(); 
 
             BattleCharacters newPlayer = Instantiate(
@@ -541,13 +553,21 @@ public class BattleManager : MonoBehaviour
         if(needsTraining)
         {
             // get random kanji until you have one that definitely needs training (aka has less than 100xp)
-            bool isFullyTrained = true;
-            while(isFullyTrained == true)
+
+            if(GameManager.instance.AllKanjiAreTrained())
             {
                 randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
-                if(collectedKanji[randomIndex].currentXP != 100)
+            }
+            else
+            {
+                bool isFullyTrained = true;
+                while(isFullyTrained == true)
                 {
-                    isFullyTrained = false;
+                    randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
+                    if(collectedKanji[randomIndex].currentXP != 100)
+                    {
+                        isFullyTrained = false;
+                    }
                 }
             }
         }

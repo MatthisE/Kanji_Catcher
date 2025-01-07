@@ -7,6 +7,7 @@ public class BossManager : MonoBehaviour
 {
     public string[] sentences;
     private bool canActivateBox; 
+    [SerializeField] string[] bossName;
 
 
     // box can only be activated when player is inside object's trigger collider
@@ -40,6 +41,8 @@ public class BossManager : MonoBehaviour
     {
         ActionButton.instance.SetActiveState(false);
 
+        string battleBoss = "";
+
         if(canActivateBox && !DialogController.instance.IsDialogBoxActive() && GameManager.instance.gameMenuOpened != true) // only call if the box is not already active and menu is not open
         {
             List<string> sentencesList = new List<string> { "#Darkness", "I am an amalgamation of the cursed energy in this place...", "If you want to cleanse this place you must find and train all the cursed kanji and then defeat me..." };
@@ -68,6 +71,7 @@ public class BossManager : MonoBehaviour
                 if(allKanjiAreFullyTrained)
                 {
                     sentencesList.Add("Now let us battle...");
+                    battleBoss = "Boss";
                 }
                 else
                 {
@@ -76,7 +80,7 @@ public class BossManager : MonoBehaviour
             }
 
             sentences = sentencesList.ToArray();
-            DialogController.instance.ActivateDialog(sentences, ""); // open box with first sentence
+            DialogController.instance.ActivateDialog(sentences, battleBoss); // open box with first sentence
         }
     }
 }

@@ -73,15 +73,22 @@ public class DialogController : MonoBehaviour
 
                         if(openKanjiInMenu != "")
                         {
-                            MenuManager.instance.OpenMenu();
-
-                            if(openKanjiInMenu != "start")
+                            if(openKanjiInMenu == "Boss")
                             {
-                                MenuManager.instance.CloseKanjiPanel();
-                                KanjiInfoPageManager.instance.SetActiveState(true);
-                                KanjiInfoPageManager.instance.SetPage(openKanjiInMenu);
+                                StartCoroutine(StartBattleCoroutine());
                             }
-                            openKanjiInMenu = "";
+                            else
+                            {
+                                MenuManager.instance.OpenMenu();
+
+                                if(openKanjiInMenu != "start")
+                                {
+                                    MenuManager.instance.CloseKanjiPanel();
+                                    KanjiInfoPageManager.instance.SetActiveState(true);
+                                    KanjiInfoPageManager.instance.SetPage(openKanjiInMenu);
+                                }
+                                openKanjiInMenu = "";
+                            }
                         }
                     }
                     else // not end of dialog
@@ -156,5 +163,21 @@ public class DialogController : MonoBehaviour
     public bool IsDialogBoxActive()
     {
         return dialogBox.activeInHierarchy;
+    }
+
+    private IEnumerator StartBattleCoroutine()
+    {
+        MenuManager.instance.FadeImage(); // fade to black
+        GameManager.instance.battleIsActive = true; // make player unable to move
+
+        // tell RewardsHandler to mark a quest as complete if the battle is won (optional)
+        BattleRewardsHandler.instance.markQuestComplete = true;
+        BattleRewardsHandler.instance.questToComplete = "Defeat Boss";
+
+        string[] boss = {"Book"};
+
+        yield return new WaitForSeconds(1.5f); // wait 1.5sec
+        BattleManager.instance.StartBattle(boss, false); // activate battle scene
+        MenuManager.instance.FadeOut(); // fade out to reveal battle scene
     }
 }

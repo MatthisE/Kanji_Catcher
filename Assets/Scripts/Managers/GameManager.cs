@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     public bool gameMenuOpened, dialogBoxOpened, battleIsActive, goThroughExit; // conditions for player to stop moving
 
+    [SerializeField] GameObject endOfGameImage;
+
     void Awake()
     {
         // Singleton pattern
@@ -81,6 +83,11 @@ public class GameManager : MonoBehaviour
             Player.instance.deactivateMovement = false;
             Joystick.ActivateJoystick(true);
         }
+
+        if(QuestManager.instance.questMarkersCompleted[3] == true)
+        {
+            endOfGameImage.SetActive(true);
+        }
     }
 
     public PlayerStats[] GetPlayerStats()
@@ -92,6 +99,21 @@ public class GameManager : MonoBehaviour
     {
         PlayerStats[] playerStats = GetPlayerStats();
         return playerStats[0].collectedKanji;
+    }
+
+    public bool AllKanjiAreTrained()
+    {
+        KanjiManager[] collectedKanji = GetCollectedKanji();
+
+        foreach(KanjiManager kanji in collectedKanji)
+        {
+            if(kanji.currentXP < 100)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     // save data (scene, items, player position, player stats)
