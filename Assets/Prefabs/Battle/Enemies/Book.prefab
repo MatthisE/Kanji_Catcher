@@ -101,10 +101,10 @@ MonoBehaviour:
   attacksAvailable:
   - Slash
   characterName: Book
-  currentHP: 50
-  maxHP: 50
+  currentHP: 40
+  maxHP: 40
   currentMana: 500
   maxMana: 500
-  dexterity: 5
-  defence: 6
+  dexterity: 10
+  defence: 0
   isDead: 0

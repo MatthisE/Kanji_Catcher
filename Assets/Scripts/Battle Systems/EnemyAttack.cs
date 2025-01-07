@@ -160,7 +160,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 if(hintGiven)
                 {
-                    battleManager.StartEnemyAttackImpact(0.5f);
+                    battleManager.StartEnemyAttackImpact(0.66f);
                 }
                 else
                 {
@@ -177,11 +177,11 @@ public class EnemyAttack : MonoBehaviour
             {
                 if(hintGiven)
                 {
-                    battleManager.StartEnemyAttackImpact(0.5f);
+                    battleManager.StartEnemyAttackImpact(0.66f);
                 }
                 else
                 {
-                    battleManager.StartEnemyAttackImpact(0);
+                    battleManager.StartEnemyAttackImpact(0.33f);
                 }
             }else
             {

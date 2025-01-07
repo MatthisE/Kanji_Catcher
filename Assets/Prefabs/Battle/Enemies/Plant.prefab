@@ -101,10 +101,10 @@ MonoBehaviour:
   attacksAvailable:
   - Purple Acid
   characterName: Plant
-  currentHP: 65
+  currentHP: 50
   maxHP: 50
   currentMana: 500
   maxMana: 500
-  dexterity: 5
-  defence: 5
+  dexterity: 15
+  defence: 0
   isDead: 0

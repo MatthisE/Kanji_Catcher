@@ -296,7 +296,7 @@ public class BattleManager : MonoBehaviour
 
         int selectedAttack = Random.Range(0, activeCharacters[currentTurn].AttackMovesAvailable().Length); // select random move of enemy
 
-        int movePower = (int)(20 * defence + 10);
+        int movePower = (int)(activeCharacters[currentTurn].dexterity * defence);
         DealDamageToCharacters(0, movePower); // calculate damage to player and attack him (at position 0 of activeCharacters), show damage number
 
         for(int i = 0; i < battleMovesList.Length; i++)
@@ -364,13 +364,13 @@ public class BattleManager : MonoBehaviour
 
     private void DealDamageToCharacters(int selectedCharacterToAttack, int movePower)
     {
-        float attackPower = activeCharacters[currentTurn].dexterity; // power of current chara
-        float defenceAmount = activeCharacters[selectedCharacterToAttack].dexterity; // defence of chara to be attacked
+        //float attackPower = activeCharacters[currentTurn].dexterity; // power of current chara
+        //float defenceAmount = activeCharacters[selectedCharacterToAttack].dexterity; // defence of chara to be attacked
 
-        float damageAmount = (attackPower / defenceAmount) * movePower * Random.Range(0.9f, 1.1f);
-        int damageToGive = (int)damageAmount;
+        //float damageAmount = (attackPower / defenceAmount) * movePower * Random.Range(0.9f, 1.1f);
+        //int damageToGive = (int)damageAmount;
 
-        damageToGive = CalculateCritical(damageToGive);
+        int damageToGive = CalculateCritical(movePower);
 
         //Debug.Log(activeCharacters[currentTurn].characterName + " just dealt " + damageAmount + "(" + damageToGive + ") to " + activeCharacters[selectedCharacterToAttack]);
 
@@ -661,6 +661,8 @@ public class BattleManager : MonoBehaviour
         {
             SetAttacks();
 
+            /*
+
             if(Random.value > chanceToRunAway)
             {
                 // run and end battle
@@ -682,6 +684,15 @@ public class BattleManager : MonoBehaviour
                 waitingForTurn = true;
                 NextTurn();
             }
+
+            */
+
+            // run and end battle
+            runningAway = true;
+            battleNotice.SetText("You managed to run away.");
+            battleNotice.Activate();
+            yield return new WaitForSeconds(0.0f);
+            StartCoroutine(EndBattleCoroutine());
         }
     }
 

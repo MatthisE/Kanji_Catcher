@@ -36,7 +36,14 @@ public class GameManager : MonoBehaviour
         ItemsManager itemToAdd = ItemsAssets.instance.GetItemAsset("Cursed Kanji Book");
         Inventory.instance.AddItems(itemToAdd); // add item to loaded inventory
 
-        StartCoroutine(StartText());
+        if(QuestManager.instance.questMarkersCompleted[1] == false)
+        {
+            dialogBoxOpened = true;
+
+            MenuButton.instance.SetActiveState(false);
+
+            StartCoroutine(StartText());
+        }
     }
 
     IEnumerator StartText()

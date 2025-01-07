@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 // given to main menu canvas object of main menu scene
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] Image imageToFade;
     [SerializeField] string newGameScene;
     [SerializeField] GameObject continueButton;
 
@@ -39,6 +41,9 @@ public class MainMenu : MonoBehaviour
     // functions for the menu buttons
     public void NewGameButton()
     {
+        AudioManager.instance.PlaySFX(8);
+        imageToFade.GetComponent<Animator>().SetTrigger("Start Fading"); // --> trigger in animator for image
+
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
         SceneManager.LoadScene(newGameScene);
@@ -53,6 +58,7 @@ public class MainMenu : MonoBehaviour
 
     public void ContinueButton()
     {
+        AudioManager.instance.PlaySFX(8);
         SceneManager.LoadScene("LoadingScene"); // LoadingScene then loads saved data
     }
 }

@@ -20,9 +20,8 @@ public class BattleInstantiator : MonoBehaviour
     public string questToComplete;
 
     private void Start()
-    {
-        battleCounter = Random.Range(timeBetweenBattles * 1.0f, timeBetweenBattles * 4.0f); // define a random time around timeBetweenBattles
-    
+    {    
+        battleCounter = Random.Range(timeBetweenBattles * 0.5f, timeBetweenBattles * 1.5f); // define a random time around timeBetweenBattles
         inArea = false; // when entering a new scene, you are not automatically in a battle zone
     }
 
@@ -34,6 +33,7 @@ public class BattleInstantiator : MonoBehaviour
             if(Joystick.instance.Horizontal != 0 || Joystick.instance.Vertical != 0) // when player moves, reduce battle counter
             {
                 battleCounter -= Time.deltaTime; // this could go below 0
+                Debug.Log(battleCounter);
             }
         }
 
@@ -82,6 +82,7 @@ public class BattleInstantiator : MonoBehaviour
             else
             {
                 inArea = true; // starts counter in Update()
+                battleCounter = Random.Range(timeBetweenBattles * 0.5f, timeBetweenBattles * 1.5f); // define a random time around timeBetweenBattles
             }
         }
     }
