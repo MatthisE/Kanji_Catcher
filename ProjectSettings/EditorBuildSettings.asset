@@ -18,6 +18,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Library2.unity
     guid: 8408f65bd7177564184ae524d574a243
   - enabled: 1
+    path: Assets/Scenes/Library3.unity
+    guid: 1ae74a16e43ef5b4e8491b5ab09ec2a4
+  - enabled: 1
+    path: Assets/Scenes/Library4.unity
+    guid: 934c485b8bc54ec4c82d99049aeb31a4
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 39cf14d2c70ee8b4781cebcced6e40eb
   - enabled: 1
