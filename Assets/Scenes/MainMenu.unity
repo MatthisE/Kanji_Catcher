@@ -1451,7 +1451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageToFade: {fileID: 1256577018}
-  newGameScene: Library1
+  newGameScene: Cutscene
   continueButton: {fileID: 2068939206}
   musicToPlay: 6
 --- !u!1 &2068939206

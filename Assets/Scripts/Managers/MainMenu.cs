@@ -41,8 +41,14 @@ public class MainMenu : MonoBehaviour
     // functions for the menu buttons
     public void NewGameButton()
     {
+        StartCoroutine(StartNewGame());
+    }
+
+    public IEnumerator StartNewGame()
+    {
         AudioManager.instance.PlaySFX(8);
         imageToFade.GetComponent<Animator>().SetTrigger("Start Fading"); // --> trigger in animator for image
+        yield return new WaitForSeconds(0.4f);
 
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
