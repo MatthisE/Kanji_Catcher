@@ -636,11 +636,10 @@ public class BattleManager : MonoBehaviour
     public void StartPlayerAttackImpact(double offence)
     {
         playerAttackMenu.SetActive(false);
-
-        StartCoroutine(PlayerAttackCoroutine2("Slash", offence));
+        StartCoroutine(PlayerAttackCoroutine("Slash", offence));
     }
 
-    public IEnumerator PlayerAttackCoroutine2(string moveName, double offence)
+    public IEnumerator PlayerAttackCoroutine(string moveName, double offence)
     {
         enemyTargetPanel.SetActive(false);
         waitingForTurn = false;

@@ -28,35 +28,35 @@ public class MoviePlayer : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         MenuManager.instance.FadeImage();
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
         image1.SetActive(false);
         MenuManager.instance.FadeOut();
 
         yield return new WaitForSeconds(3f);
 
         MenuManager.instance.FadeImage();
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
         image2.SetActive(false);
         MenuManager.instance.FadeOut();
 
         yield return new WaitForSeconds(3f);
 
         MenuManager.instance.FadeImage();
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
         image3.SetActive(false);
         MenuManager.instance.FadeOut();
 
         yield return new WaitForSeconds(3f);
 
         MenuManager.instance.FadeImage();
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
         image4.SetActive(false);
         MenuManager.instance.FadeOut();
 
         yield return new WaitForSeconds(3f);
 
         MenuManager.instance.FadeImage();
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
 
         SceneManager.LoadScene("Library1");
     }

@@ -93,7 +93,7 @@ public class PlayerAttack : MonoBehaviour
         StartCoroutine(CheckAnswerCoroutine());
     }
 
-    private double GetFinalAttackDamage(double attackDamage)
+    private double GetOffence(double similarity)
     {
         double decrement = 1;
         if(strokeOrderDisplayed)
@@ -101,11 +101,11 @@ public class PlayerAttack : MonoBehaviour
             decrement = 2;
         }
 
-        if(attackDamage <= 75)
+        if(similarity <= 75)
         {
-            if(attackDamage <= 50)
+            if(similarity <= 50)
             {
-                if(attackDamage <= 25)
+                if(similarity <= 25)
                 {
                     return 0;
                 }
@@ -136,11 +136,19 @@ public class PlayerAttack : MonoBehaviour
         doneButton.SetActive(false);
         lessDamageText.SetActive(false);
 
-        double attackDamage = CompareImages();
-        double finalAttackDamage = GetFinalAttackDamage(attackDamage);
+        double similarity = CompareImages();
+        double offence = GetOffence(similarity);
         
-        yield return new WaitForSeconds(3f);
+        if(imageAmount == 1)
+        {
+            yield return new WaitForSeconds(3f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(4f);
+        }
 
+        // reset elements
         for(int i=0; i<imageAmount; i++)
         {
             rawImages[i].GetComponent<DrawOnRawImage>().Repaint();
@@ -178,18 +186,18 @@ public class PlayerAttack : MonoBehaviour
             {
                 if(kanjiInWord.kanjiSymbol == kanji.kanjiSymbol)
                 {
-                    kanji.xpReward += (int)(finalAttackDamage*15);
+                    kanji.xpReward += (int)(offence*20);
                 }
             }
         }
 
         if(forHealing)
         {
-            battleManager.HealPlayer(finalAttackDamage);
+            battleManager.HealPlayer(offence);
         }
         else
         {
-            battleManager.StartPlayerAttackImpact(finalAttackDamage);
+            battleManager.StartPlayerAttackImpact(offence);
         }
     }
 
@@ -213,17 +221,21 @@ public class PlayerAttack : MonoBehaviour
 
             // compare the textures
             float similarity = ComputeSimilarityForBlackPixels(rawTexture, spriteTexture);
+            if(similarity > 1f)
+            {
+                similarity = 1f;
+            }
             totalSimilarity += similarity;
         }
 
         // get average similarity
-        double finalValue = Math.Round(totalSimilarity / imageAmount * 100, 0);
+        double finalSimilarity = Math.Round(totalSimilarity / imageAmount * 100, 0);
 
         // display similarity text
-        similarityText.GetComponent<TextMeshProUGUI>().text = finalValue + "%";
+        similarityText.GetComponent<TextMeshProUGUI>().text = finalSimilarity + "%";
         similarityText.SetActive(true);
 
-        return finalValue;
+        return finalSimilarity;
 
     }
 

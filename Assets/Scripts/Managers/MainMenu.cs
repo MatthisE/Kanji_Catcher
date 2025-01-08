@@ -48,7 +48,7 @@ public class MainMenu : MonoBehaviour
     {
         AudioManager.instance.PlaySFX(8);
         imageToFade.GetComponent<Animator>().SetTrigger("Start Fading"); // --> trigger in animator for image
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
 
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();

@@ -163,7 +163,7 @@ public class EnemyAttack : MonoBehaviour
                 }
                 else
                 {
-                    battleManager.StartEnemyAttackImpact(0);
+                    battleManager.StartEnemyAttackImpact(0.33f);
                 }
             }else
             {

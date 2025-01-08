@@ -12248,7 +12248,8 @@ MonoBehaviour:
   - enemies:
     - Plant
     rewardXP: 100
-    rewardItems: []
+    rewardItems:
+    - {fileID: 5821625689969973814, guid: 48c0a01015a47b549aa8b70e8855dc51, type: 3}
   activateOnEnter: 0
   timeBetweenBattles: 2
   deactivateAfterStarting: 0
@@ -25660,11 +25661,11 @@ PrefabInstance:
       objectReference: {fileID: 455581957}
     - target: {fileID: 7170900143880797391, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.1
+      value: -30.4
       objectReference: {fileID: 0}
     - target: {fileID: 7170900143880797391, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1
+      value: 22.8
       objectReference: {fileID: 0}
     - target: {fileID: 7170900143880797391, guid: 69d8e752833cab54183aa1d32d21dbbd, type: 3}
       propertyPath: m_LocalPosition.z
