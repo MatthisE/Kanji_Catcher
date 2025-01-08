@@ -60,18 +60,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // save data (quest data is saved in quest manager)
-        if(Input.GetKeyDown(KeyCode.I))
-        {
-            SaveData();
-        }
-
-        // load data (quest data is loaded in quest manager)
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            LoadData();
-        }
-
         // check if Player should stay still
         if(gameMenuOpened || dialogBoxOpened || battleIsActive || goThroughExit)
         {

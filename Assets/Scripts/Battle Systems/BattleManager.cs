@@ -97,18 +97,6 @@ public class BattleManager : MonoBehaviour
     // when battle is active, always check if it is player's turn (show UI) or enemies' turn (make enemy move)
     void Update()
     {
-        /*
-        if(Input.GetKeyDown(KeyCode.B))
-        {
-            StartBattle(new string[] {"Mage", "Warlock"}, true);
-        }
-
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            NextTurn();
-        }
-        */
-
         CheckPlayerButtonHolder();
     }
 

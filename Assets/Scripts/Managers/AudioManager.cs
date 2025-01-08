@@ -26,15 +26,6 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void Update()
-    {
-        // just for testing
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            PlayBackgroundMusic(5);
-        }
-    }
-
     // reference sound to play by its index in the AudioSorce array
     public void PlaySFX(int soundToPlay)
     {

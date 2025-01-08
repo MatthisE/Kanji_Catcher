@@ -17,31 +17,6 @@ public class QuestManager : MonoBehaviour
         questMarkersCompleted = new bool[questNames.Length]; // set length of questMarkersCompleted
     }
 
-    void Update()
-    {
-        // save quest data
-        if(Input.GetKeyDown(KeyCode.I))
-        {
-            Debug.Log("Data has been saved.");
-            SaveQuestData();
-        }
-
-        // load quest data
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            Debug.Log("Data has been loaded.");
-            LoadQuestData();
-        }
-
-        // mark certain quests as complete
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            print(CheckIfComplete("Defeat Dragon"));
-            MarkQuestComplete("Steal Gem");
-            MarkQuestIncomplete("Take Monster Soul");
-        }
-    }
-
     // get index of quest in questNames
     public int GetQuestNumber(string questToFind)
     {
