@@ -33,7 +33,6 @@ public class BattleInstantiator : MonoBehaviour
             if(Joystick.instance.Horizontal != 0 || Joystick.instance.Vertical != 0) // when player moves, reduce battle counter
             {
                 battleCounter -= Time.deltaTime; // this could go below 0
-                Debug.Log(battleCounter);
             }
         }
 

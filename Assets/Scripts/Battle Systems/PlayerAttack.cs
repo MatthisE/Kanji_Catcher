@@ -196,10 +196,12 @@ public class PlayerAttack : MonoBehaviour
     // compare RawImage and Sprite of correct Kanji
     public double CompareImages()
     {
-        float totalSimmilarity = 0.0f;
+        float totalSimilarity = 0.0f;
 
+        // for every rawimage
         for(int i=0; i<imageAmount; i++)
         {
+            // get their content (texture)
             Texture2D rawTexture = rawImages[i].GetComponent<RawImage>().texture as Texture2D;
             Texture2D spriteTexture = SpriteToTexture(trainingWord.wordImage[i]); 
 
@@ -209,13 +211,15 @@ public class PlayerAttack : MonoBehaviour
                 return 0;
             }
 
-            // Compare the textures
+            // compare the textures
             float similarity = ComputeSimilarityForBlackPixels(rawTexture, spriteTexture);
-            totalSimmilarity += similarity;
+            totalSimilarity += similarity;
         }
 
-        double finalValue = Math.Round(totalSimmilarity / imageAmount * 100, 0);
+        // get average similarity
+        double finalValue = Math.Round(totalSimilarity / imageAmount * 100, 0);
 
+        // display similarity text
         similarityText.GetComponent<TextMeshProUGUI>().text = finalValue + "%";
         similarityText.SetActive(true);
 
@@ -250,10 +254,13 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // compute similarity of black pixels
-    private float ComputeSimilarityForBlackPixels(Texture2D tex1, Texture2D tex2, float threshold = 0.0f, int toleranceRadius = 10)
+    private float ComputeSimilarityForBlackPixels(Texture2D tex1, Texture2D tex2, float threshold = 0.0f, int toleranceRadius = 10)  // threshold --> how black pixel has to be, toleranceRadius --> how close black pixel of rawimage has to be to kanji sprite
     {
+        // get oixels of the two textures
         Color[] pixels1 = tex1.GetPixels();
         Color[] pixels2 = tex2.GetPixels();
+
+        // get size of the images
         int width = tex1.width;
         int height = tex1.height;
 
@@ -263,19 +270,20 @@ public class PlayerAttack : MonoBehaviour
             return 0f;
         }
 
+        // vars for the two textures to be set
         int totalBlackPixels1 = 0;
         int totalBlackPixels2 = 0;
         int matchingBlackPixels = 0;
         int unmatchedBlackPixels1 = 0;
 
-        // Iterate through every pixel in both textures
+        // iterate through every pixel in both textures
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
                 int index = y * width + x;
 
-                // Count black pixels in tex2 and check if they are matched in tex1
+                // count black pixels in tex2 and check if they are matched in tex1
                 if (IsBlack(pixels2[index], threshold))
                 {
                     totalBlackPixels2++;
@@ -285,26 +293,25 @@ public class PlayerAttack : MonoBehaviour
                     }
                 }
 
-                // Count black pixels in tex1 and check if they are unmatched in tex2
+                // count black pixels in tex1
                 if (IsBlack(pixels1[index], threshold))
                 {
                     totalBlackPixels1++;
-                    if (!IsBlackPixelInNeighborhood(tex2, x, y, threshold, toleranceRadius))
-                    {
-                        unmatchedBlackPixels1++;
-                    }
+                    
                 }
+                
+                unmatchedBlackPixels1 = totalBlackPixels1 - matchingBlackPixels; 
             }
         }
 
-        if (totalBlackPixels1 == 0 && totalBlackPixels2 == 0) return 1f; // Both textures are completely empty of black pixels.
+        if (totalBlackPixels1 == 0 && totalBlackPixels2 == 0) return 1f; // both textures are completely empty of black pixels.
 
-        // Similarity calculation: penalize unmatched black pixels in tex1
+        // similarity calculation: penalize unmatched black pixels in tex1
         float similarity = (float)matchingBlackPixels / (totalBlackPixels2 + unmatchedBlackPixels1);
         return similarity;
     }
 
-    // Check if there is a black pixel within the tolerance radius
+    // check if there is a black pixel within the tolerance radius
     private bool IsBlackPixelInNeighborhood(Texture2D tex, int centerX, int centerY, float threshold, int radius)
     {
         int width = tex.width;
@@ -317,11 +324,11 @@ public class PlayerAttack : MonoBehaviour
                 int neighborX = centerX + offsetX;
                 int neighborY = centerY + offsetY;
 
-                // Skip out-of-bounds pixels
+                // skip out-of-bounds pixels
                 if (neighborX < 0 || neighborX >= width || neighborY < 0 || neighborY >= height)
                     continue;
 
-                // Check if this neighbor pixel is black
+                // check if this neighbor pixel is black
                 if (IsBlack(tex.GetPixel(neighborX, neighborY), threshold))
                 {
                     return true;
@@ -332,7 +339,7 @@ public class PlayerAttack : MonoBehaviour
         return false;
     }
 
-    // Helper method to determine if a pixel is "black"
+    // helper method to determine if a pixel is "black"
     private bool IsBlack(Color color, float threshold)
     {
         return color.r <= threshold && color.g <= threshold && color.b <= threshold;

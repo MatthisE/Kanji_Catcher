@@ -33,12 +33,23 @@ public class GameOverManager : MonoBehaviour
     // functions for the menu buttons
     public void QuitToMainMenu()
     {
+        StartCoroutine(Transition());
+    }
+
+    public IEnumerator Transition()
+    {
+        AudioManager.instance.PlaySFX(8);
+        MenuManager.instance.FadeImage();
+        yield return new WaitForSeconds(0.4f);
+
         DestroyGameSession();
         SceneManager.LoadScene("MainMenu");
+
     }
 
     public void LoadLastSave()
     {
+        AudioManager.instance.PlaySFX(8);
         DestroyGameSession();
         SceneManager.LoadScene("LoadingScene");
     }
@@ -55,7 +66,6 @@ public class GameOverManager : MonoBehaviour
     public void QuitGame()
     {
         // turn off app
-        Debug.Log("We have quit the game.");
         Application.Quit();
     }
 }

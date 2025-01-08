@@ -404,9 +404,6 @@ public class BattleManager : MonoBehaviour
         if(Random.value <= 0.1f)
         {
             isCritical = true;
-
-            Debug.Log("CRITICAL HIT!!!");
-
             return (damageToGive * 2);
         }
 
@@ -681,8 +678,6 @@ public class BattleManager : MonoBehaviour
         {
             SetAttacks();
 
-            /*
-
             if(Random.value > chanceToRunAway)
             {
                 // run and end battle
@@ -704,15 +699,6 @@ public class BattleManager : MonoBehaviour
                 waitingForTurn = true;
                 NextTurn();
             }
-
-            */
-
-            // run and end battle
-            runningAway = true;
-            battleNotice.SetText("You managed to run away.");
-            battleNotice.Activate();
-            yield return new WaitForSeconds(0.0f);
-            StartCoroutine(EndBattleCoroutine());
         }
     }
 

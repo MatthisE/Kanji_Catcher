@@ -58,7 +58,6 @@ public class MainMenu : MonoBehaviour
     public void ExitButton()
     {
         // turn off app
-        Debug.Log("We have quit the game.");
         Application.Quit();
     }
 
