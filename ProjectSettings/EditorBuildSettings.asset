@@ -5,12 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Forest.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Town.unity
     guid: e869c72b36f22994c8cad59aa288ff7b
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 39cf14d2c70ee8b4781cebcced6e40eb
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 69470dea3d7f96f448b92d0c9d95a572
   - enabled: 1
     path: Assets/Scenes/Cutscene.unity
     guid: fedcc377acba73745bc1c0f70b232696
@@ -26,12 +32,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Library4.unity
     guid: 934c485b8bc54ec4c82d99049aeb31a4
-  - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: 39cf14d2c70ee8b4781cebcced6e40eb
-  - enabled: 1
-    path: Assets/Scenes/LoadingScene.unity
-    guid: 69470dea3d7f96f448b92d0c9d95a572
   - enabled: 1
     path: Assets/Scenes/GameOverScene.unity
     guid: 2a6f5909abed27c45affc61458dba369

@@ -101,8 +101,8 @@ MonoBehaviour:
   attacksAvailable:
   - Blue Fireball
   characterName: Tome
-  currentHP: 45
-  maxHP: 45
+  currentHP: 10
+  maxHP: 10
   currentMana: 500
   maxMana: 500
   dexterity: 20

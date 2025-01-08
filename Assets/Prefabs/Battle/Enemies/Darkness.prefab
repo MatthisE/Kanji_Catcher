@@ -101,8 +101,8 @@ MonoBehaviour:
   attacksAvailable:
   - Tentacles
   characterName: Darkness
-  currentHP: 70
-  maxHP: 70
+  currentHP: 15
+  maxHP: 15
   currentMana: 500
   maxMana: 500
   dexterity: 20
