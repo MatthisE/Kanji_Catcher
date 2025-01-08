@@ -10,9 +10,16 @@ public class MoviePlayer : MonoBehaviour
     [SerializeField] GameObject image3;
     [SerializeField] GameObject image4;
     [SerializeField] GameObject image5;
+
+    [SerializeField] int musicToPlay;
+
+    
     void Start()
     {
         StartCoroutine(Slideshow());
+
+        AudioManager.instance.PlayBackgroundMusic(musicToPlay);
+        AudioManager.instance.prevMusic = musicToPlay; // set prevMusic
     }
 
     public IEnumerator Slideshow()

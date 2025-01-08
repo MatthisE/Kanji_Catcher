@@ -31,6 +31,10 @@ public class Player : MonoBehaviour
             instance = this;
         }
         DontDestroyOnLoad(gameObject); //gameObject = player --> does not get destroyed when entering new scene 
+
+         // initialize the player's default look direction to "down"
+        playerAnimator.SetFloat("lastX", 0);
+        playerAnimator.SetFloat("lastY", -1);
     }
 
     void Update()
