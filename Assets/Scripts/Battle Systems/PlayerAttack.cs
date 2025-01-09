@@ -101,11 +101,11 @@ public class PlayerAttack : MonoBehaviour
             decrement = 2;
         }
 
-        if(similarity <= 75)
+        if(similarity < 75)
         {
-            if(similarity <= 50)
+            if(similarity < 50)
             {
-                if(similarity <= 25)
+                if(similarity < 25)
                 {
                     return 0;
                 }
@@ -186,7 +186,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 if(kanjiInWord.kanjiSymbol == kanji.kanjiSymbol)
                 {
-                    kanji.xpReward += (int)(offence*20);
+                    kanji.xpReward += (int)(offence*40);
                 }
             }
         }
@@ -233,6 +233,24 @@ public class PlayerAttack : MonoBehaviour
 
         // display similarity text
         similarityText.GetComponent<TextMeshProUGUI>().text = finalSimilarity + "%";
+
+        if(finalSimilarity >= 75)
+        {
+            similarityText.GetComponent<TextMeshProUGUI>().color = new Color(70f / 255f, 60f / 255f, 103f / 255f); // dark blue
+        }
+        else if(finalSimilarity >= 50)
+        {
+            similarityText.GetComponent<TextMeshProUGUI>().color = new Color(60f / 255f, 103f / 255f, 72f / 255f); // dark green
+        }
+        else if(finalSimilarity >= 25)
+        {
+            similarityText.GetComponent<TextMeshProUGUI>().color = new Color(103f / 255f, 95f / 255f, 60f / 255f); // dark yellow
+        }
+        else
+        {
+            similarityText.GetComponent<TextMeshProUGUI>().color = new Color(100f / 255f, 60f / 255f, 60f / 255f); // dark red
+        }
+
         similarityText.SetActive(true);
 
         return finalSimilarity;

@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f); // wait before next letter
 
         ActionButton.instance.SetActiveState(false);
-        string[] sentences = {"All but four kanji flew out of the kanji book.", "Be sure to study the ones you have, it might come in handy."};
+        string[] sentences = {"All but four kanji flew out of the cursed kanji book.", "Be sure to study the ones you have, it might come in handy."};
         DialogController.instance.ActivateDialog(sentences, "start"); // open box with first sentence
         DialogController.instance.ActivateQuestAtEnd("Start Game", true); // activate quest after dialog
     }

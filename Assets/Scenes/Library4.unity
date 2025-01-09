@@ -56535,7 +56535,7 @@ MonoBehaviour:
   sentences:
   - '#Visitor'
   - Am I crazy or do I hear monster noises comming from this room?
-  - If this were a video game, I'd definitely save before going in there.
+  - Sounds pretty dangerous... Are you sure you want to go in there?
   shouldActivateQuest: 0
   questToMark: 
   markAsComplete: 0
