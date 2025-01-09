@@ -5444,8 +5444,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sentences:
   - '#Librarian'
-  - "\u5B66 is the symbol of learning. A library is a place of knowledge."
-  - ...I don't know where I was going with this sentence.
+  - "\u5B66 is the symbol of learning."
+  - Originally, it depicted 'a child learning under a tree', capturing the essence
+    of the act of learning.
+  - ...Personally I don't see it but I guess it turned more abstract over time.
   shouldActivateQuest: 0
   questToMark: 
   markAsComplete: 0

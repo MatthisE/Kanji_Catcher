@@ -74,8 +74,18 @@ public class GameManager : MonoBehaviour
 
         if(QuestManager.instance.questMarkersCompleted[3] == true)
         {
-            endOfGameImage.SetActive(true);
+            StartCoroutine(Transition());
         }
+    }
+
+    public IEnumerator Transition()
+    {
+        AudioManager.instance.PlayBackgroundMusic(6);
+        AudioManager.instance.prevMusic = 4;
+
+        endOfGameImage.SetActive(true);
+        MenuManager.instance.FadeOut();
+        yield return new WaitForSeconds(0.5f);
     }
 
     public PlayerStats[] GetPlayerStats()

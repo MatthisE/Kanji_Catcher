@@ -5521,6 +5521,7 @@ MonoBehaviour:
   - {fileID: 1459637201668392875, guid: 11f9862e3563e0d4d908e508e76dd67c, type: 3}
   - {fileID: 1459637201668392875, guid: 4cb38371e43e7e647832827ab9cac67d, type: 3}
   - {fileID: 1459637201668392875, guid: 7963acc5989c61040942e5b14755a4a6, type: 3}
+  - {fileID: 1459637201668392875, guid: 86cb45313a3a3864f8805f0f5c836a20, type: 3}
   playersBattleStats:
   - {fileID: 1178986676602592589}
   playersNameText:

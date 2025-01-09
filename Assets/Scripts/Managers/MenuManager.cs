@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 //using UnityEngine.UIElements;
 
 // given to canvas object
@@ -198,5 +199,30 @@ public class MenuManager : MonoBehaviour
     public void FadeOut()
     {
         imageToFade.GetComponent<Animator>().SetTrigger("End Fading"); // --> trigger in animator for image
+    }
+
+    public void QuitToMainMenu()
+    {
+        StartCoroutine(Transition());
+    }
+
+    public IEnumerator Transition()
+    {
+        AudioManager.instance.PlaySFX(8);
+        FadeImage();
+        yield return new WaitForSeconds(0.5f);
+
+        DestroyGameSession();
+        SceneManager.LoadScene("MainMenu");
+
+    }
+
+    private static void DestroyGameSession()
+    {
+        // destroy managers
+        Destroy(GameManager.instance.gameObject);
+        Destroy(Player.instance.gameObject);
+        Destroy(MenuManager.instance.gameObject);
+        Destroy(BattleManager.instance.gameObject);
     }
 }

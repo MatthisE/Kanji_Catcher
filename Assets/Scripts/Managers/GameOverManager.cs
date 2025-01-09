@@ -22,7 +22,7 @@ public class GameOverManager : MonoBehaviour
         // check any key in player prefs to see if continue button should be displayed
         if(PlayerPrefs.HasKey("Player_Pos_X"))
         {
-            continueButton.SetActive(true);
+            //continueButton.SetActive(true);
         }
         else
         {
