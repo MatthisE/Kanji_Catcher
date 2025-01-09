@@ -754,7 +754,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -8.7684, y: 59.729}
-  m_SizeDelta: {x: 641.2561, y: 217.2221}
+  m_SizeDelta: {x: 560.4995, y: 217.2221}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &919421898
 MonoBehaviour:
@@ -907,7 +907,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit game
+  m_text: Exit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a2722db8b76986f45914307e9cf6a967, type: 2}
   m_sharedMaterial: {fileID: -4893023391906846706, guid: a2722db8b76986f45914307e9cf6a967, type: 2}
@@ -1155,7 +1155,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -8.7684, y: -164.966}
-  m_SizeDelta: {x: 641.2561, y: 217.2221}
+  m_SizeDelta: {x: 560.4995, y: 217.2221}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1213381352
 MonoBehaviour:
@@ -1686,7 +1686,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -8.7684, y: -390.0012}
-  m_SizeDelta: {x: 641.2561, y: 217.2221}
+  m_SizeDelta: {x: 560.4995, y: 217.2221}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1977299118
 MonoBehaviour:
