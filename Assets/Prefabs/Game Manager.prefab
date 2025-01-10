@@ -52,6 +52,7 @@ MonoBehaviour:
   dialogBoxOpened: 0
   battleIsActive: 0
   goThroughExit: 0
+  endOfGameImage: {fileID: 0}
 --- !u!114 &4227534879324725388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,7 +81,7 @@ MonoBehaviour:
   - 
   - Start Game
   - Return Stolen Books
-  - Defeat Boss
+  - Battle Boss
   questMarkersCompleted: 
 --- !u!114 &6492657526942526961
 MonoBehaviour:

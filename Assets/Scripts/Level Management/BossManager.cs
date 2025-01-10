@@ -71,7 +71,8 @@ public class BossManager : MonoBehaviour
                 if(allKanjiAreFullyTrained)
                 {
                     sentencesList.Add("Now let us battle...");
-                    battleBoss = "Boss";
+                    battleBoss = "boss";
+                    QuestManager.instance.MarkQuestComplete("Battle Boss");
                 }
                 else
                 {

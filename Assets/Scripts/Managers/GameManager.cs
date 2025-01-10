@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
 
         if(QuestManager.instance.questMarkersCompleted[3] == true)
         {
-            StartCoroutine(Transition());
+            //StartCoroutine(Transition());
         }
     }
 

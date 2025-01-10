@@ -133,7 +133,7 @@ public class BattleManager : MonoBehaviour
     public void StartBattle(string[] enemiesToSpawn, bool canRunAway)
     {
         SetAttacks(); 
-        
+
         if(!isBattleActive)
         {
             MenuButton.instance.SetActiveState(false);
@@ -462,7 +462,14 @@ public class BattleManager : MonoBehaviour
         {
             if(allEnemiesAreDead)
             {
-                StartCoroutine(EndBattleCoroutine());
+                if(QuestManager.instance.questMarkersCompleted[3] == true)
+                {
+                    StartCoroutine(EndGame());
+                }
+                else
+                {
+                    StartCoroutine(EndBattleCoroutine());
+                }
             }
             else if(playerIsDead)
             {
@@ -481,6 +488,20 @@ public class BattleManager : MonoBehaviour
                 }
             }
         }
+    }
+    private IEnumerator EndGame()
+    {
+        isBattleActive = false;
+        UIButtonHolder.SetActive(false);
+        enemyTargetPanel.SetActive(false);
+        magicChoicePanel.SetActive(false);
+
+        yield return new WaitForSeconds(1.5f); // wait 1.5sec
+        MenuManager.instance.FadeImage();
+        yield return new WaitForSeconds(1.0f); // wait 1.5sec
+        string[] sentences = {"You have rid the library of its cursed energy.", "All monsters have returned to normal and peoples' minds are clear again.", "The library is free but the rest of the word is still filled with cursed kanji.", "Can you catch them all?"};
+        DialogController.instance.ActivateDialog(sentences, "end"); // open box with first sentence
+
     }
 
     // pick an attack, pick an enemy, make player attack

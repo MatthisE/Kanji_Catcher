@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 // controls dialog boxes and their text, can mark a quest, used by DialogHandler
 public class DialogController : MonoBehaviour
@@ -73,9 +74,13 @@ public class DialogController : MonoBehaviour
 
                         if(openKanjiInMenu != "")
                         {
-                            if(openKanjiInMenu == "Boss")
+                            if(openKanjiInMenu == "boss")
                             {
                                 StartCoroutine(StartBattleCoroutine());
+                            }
+                            else if(openKanjiInMenu == "end")
+                            {
+                                SceneManager.LoadScene("FinalImage");
                             }
                             else
                             {
