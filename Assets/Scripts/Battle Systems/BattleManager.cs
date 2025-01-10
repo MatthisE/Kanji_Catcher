@@ -499,7 +499,7 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f); // wait 1.5sec
         MenuManager.instance.FadeImage();
         yield return new WaitForSeconds(1.0f); // wait 1.5sec
-        string[] sentences = {"You have rid the library of its cursed energy.", "All monsters have returned to normal and peoples' minds are clear again.", "The library is free but the rest of the word is still filled with cursed kanji.", "Can you catch them all?"};
+        string[] sentences = {"You have rid the library of its cursed energy.", "All monsters have turned back to normal and peoples' minds are clear again.", "The library is free but the rest of the word is still filled with cursed kanji.", "Can you catch them all?"};
         DialogController.instance.ActivateDialog(sentences, "end"); // open box with first sentence
 
     }

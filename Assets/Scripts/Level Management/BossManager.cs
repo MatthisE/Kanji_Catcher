@@ -52,7 +52,14 @@ public class BossManager : MonoBehaviour
 
             if(kanjiLeft > 0)
             {
-                sentencesList.Add("There are still " + kanjiLeft + " cursed kanji you need to find...");
+                if(kanjiLeft == 1)
+                {
+                    sentencesList.Add("There is still " + kanjiLeft + " cursed kanji you need to find...");
+                }
+                else
+                {
+                    sentencesList.Add("There are still " + kanjiLeft + " cursed kanji you need to find...");
+                }
             }
             else
             {
