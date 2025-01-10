@@ -5183,8 +5183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sentences:
   - '#Librarian'
-  - What are we doing here? We are librarians. We can do whatever we want in a library.
-  - You're welcome to stay here and enjoy the spectacle.
+  - What we are doing here? We are librarians. We can do whatever we want in a library.
   shouldActivateQuest: 0
   questToMark: 
   markAsComplete: 0
@@ -5707,7 +5706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sentences:
   - '#Librarian'
-  - I can't look away from it... I feel like a bug being attracted by a lantern.
+  - I am so mesmerised by kanji... I can't think of anything else!
   shouldActivateQuest: 0
   questToMark: 
   markAsComplete: 0
@@ -56191,7 +56190,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sentences:
   - '#Librarian'
-  - Why is it just floating there? What is it trying to tell us..?
+  - Why are so many objects just randomly turning into monsters?
+  - I'm sure these kanji are to blame for it... But they are just so pretty!
   shouldActivateQuest: 0
   questToMark: 
   markAsComplete: 0

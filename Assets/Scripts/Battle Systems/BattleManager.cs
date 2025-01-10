@@ -132,6 +132,8 @@ public class BattleManager : MonoBehaviour
     // battle started by battle zone, display scene with player, his stats, enemies and UI
     public void StartBattle(string[] enemiesToSpawn, bool canRunAway)
     {
+        SetAttacks(); 
+        
         if(!isBattleActive)
         {
             MenuButton.instance.SetActiveState(false);
@@ -246,7 +248,7 @@ public class BattleManager : MonoBehaviour
                     BattleCharacters playerData = activeCharacters[i]; // get player chara (for his stats that were set by ImportPlayerStats())
 
                     // put player info in stats UI
-                    playersNameText[i].text = playerData.characterName;
+                    playersNameText[i].text = "HP";
 
                     playerHealthSlider[i].maxValue = playerData.maxHP;
                     playerHealthSlider[i].value = playerData.currentHP;

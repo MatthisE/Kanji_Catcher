@@ -186,7 +186,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 if(kanjiInWord.kanjiSymbol == kanji.kanjiSymbol)
                 {
-                    kanji.xpReward += (int)(offence*40);
+                    kanji.xpReward += (int)(offence*35);
                 }
             }
         }

@@ -18,6 +18,11 @@ public class LostBookMan : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
+    void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
 
     // box can only be activated when player is inside object's trigger collider
     private void OnTriggerEnter2D(Collider2D collision)
@@ -30,6 +35,7 @@ public class LostBookMan : MonoBehaviour
 
             ActionButton.instance.GetComponent<Button>().onClick.RemoveAllListeners();
             ActionButton.instance.GetComponent<Button>().onClick.AddListener(OpenDialogBox);
+            ActionButton.instance.GetComponent<Button>().onClick.AddListener(FacePlayer);
         }
     }
 
@@ -56,11 +62,11 @@ public class LostBookMan : MonoBehaviour
 
             if(QuestManager.instance.questMarkersCompleted[2] == true)
             {
-                sentencesList = new List<string> { "#Visitor", "It is the kanji for 'male'(男), which combines the symbol of 'field' and 'strength', reflecting the role of men in agricultural society." };
+                sentencesList = new List<string> { "#Visitor", "It is the kanji for 'male'(男), which combines the symbol of 'field' and 'strength'.", "It's supposed to reflect the role of men in agricultural society." };
             }
             else if(Inventory.instance.GetItemsList().Count == 4)
             {
-                sentencesList = new List<string> { "#Visitor", "Some potted plant monsters tackled me and stole the books I was about to borrow!", "Wait what? You fought them and got my books back?!", "Amazing! Here have this kanji I found as a reward.", "It is the kanji for 'male'(男), which combines the symbol of 'field' and 'strength', reflecting the role of men in agricultural society." };
+                sentencesList = new List<string> { "#Visitor", "Some potted plant monsters tackled me and stole the books I was about to borrow!", "Wait what? You fought them and got my books back?!", "Amazing! Here have this kanji I found as a reward.", "It is the kanji for 'male'(男), which combines the symbol of 'field' and 'strength'.", "It's supposed to reflect the role of men in agricultural society." };
                 DialogController.instance.ActivateQuestAtEnd("Return Stolen Books", true); // activate quest after dialog
                 Inventory.instance.RemoveAllBooks();
             }
