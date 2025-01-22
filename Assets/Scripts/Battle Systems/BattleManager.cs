@@ -846,6 +846,7 @@ public class BattleManager : MonoBehaviour
         {
             GameManager.instance.battleIsActive = false; // make player movable again
             runningAway = false;
+            MenuButton.instance.SetActiveState(true);
         }
         else
         {

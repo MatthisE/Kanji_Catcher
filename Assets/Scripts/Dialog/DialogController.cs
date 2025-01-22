@@ -27,7 +27,6 @@ public class DialogController : MonoBehaviour
     void Start()
     {
         instance = this;
-        //dialogText.text = dialogSentences[currentSentence]; I dont think I need this
     }
 
     void Update()

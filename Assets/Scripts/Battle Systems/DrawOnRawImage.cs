@@ -30,25 +30,27 @@ public class DrawOnRawImage : MonoBehaviour
         int height = (int)drawImage.GetComponent<RectTransform>().sizeDelta.y;
         originalTexture = new Texture2D(width, height);
 
-        // Fill the texture with a white background
+        // fill the texture with a certain  background
         Color[] pixels = new Color[width * height];
+
         for (int i = 0; i < pixels.Length; i++)
         {
             if(i < width*10 || i > width*width-width*10 || i % width > 0 && i % width < 10 || (i - (width-1)) % width <= 10 || (i - (width-1)) % width >= width - 10)
             {
-                pixels[i] = Color.gray; // Set the background color to gray
+                pixels[i] = Color.gray; // set the pixel color to gray
             }
             else if(i % (width/2) > 0 && i % (width/2) < 5 || i > width*(width/2-2) && i < width*(width/2+3))
             {
-                pixels[i] = new Color(0.8f, 0.8f, 0.8f); // Set the background color to light gray
+                pixels[i] = new Color(0.8f, 0.8f, 0.8f); // set the pixel color to light gray
             }
             else
             {
-                pixels[i] = Color.white; // Set the background color to white
+                pixels[i] = Color.white; // set the pixel color to white
             }
         }
+
         originalTexture.SetPixels(pixels);
-        originalTexture.Apply(); // Apply the background color
+        originalTexture.Apply(); // apply the background color
 
         // Assign the texture to the RawImage
         drawImage.texture = originalTexture;

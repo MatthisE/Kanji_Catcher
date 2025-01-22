@@ -1509,7 +1509,7 @@ MonoBehaviour:
   - '#Librarian'
   - What is this strange feeling?
   - Feels like the library has suddenly been covered by some sort of energy...
-  - Please be carefull.
+  - Please be careful.
   shouldActivateQuest: 0
   questToMark: 
   markAsComplete: 0

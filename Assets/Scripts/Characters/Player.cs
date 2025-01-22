@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            // Player moves depending on keys pressed an move speed
+            // Player moves depending on joystick and move speed
             playerRigidBody.velocity = new Vector2(horizontalMovement, verticalMovement) * moveSpeed;
         }
 
@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
         playerAnimator.SetFloat("movementY", playerRigidBody.velocity.y);
 
         // set Animator values of last X and Y movements to make player look in that direction when he stops moving
-        if(horizontalMovement != 0 || horizontalMovement != 0 || verticalMovement != 0 || verticalMovement != 0)
+        if(horizontalMovement != 0 || verticalMovement != 0)
         {
             if(!deactivateMovement) // player should not be able to look around when still
             {

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class KanjiManager : MonoBehaviour
 {
-    public static KanjiManager instance; //constant across all projects, makes player functions and vars usable in other scripts
+    public static KanjiManager instance; //constant across all projects, makes functions and vars usable in other scripts
 
     public Sprite kanjiImage;
     public Sprite strokeOrder;
