@@ -37,9 +37,9 @@ public class KanjiInfoPageManager : MonoBehaviour
 
         KanjiManager[] collectedKanjiList = GameManager.instance.GetCollectedKanji();
 
-        foreach(KanjiManager collectedKanji in collectedKanjiList)
+        foreach (KanjiManager collectedKanji in collectedKanjiList)
         {
-            if(collectedKanji.kanjiSymbol == buttonKanjiSymbol)
+            if (collectedKanji.kanjiSymbol == buttonKanjiSymbol)
             {
                 kanji = collectedKanji;
             }
@@ -50,11 +50,12 @@ public class KanjiInfoPageManager : MonoBehaviour
         kunyomi.text = string.Join(", ", kanji.kunyomi);
         meanings.text = string.Join(", ", kanji.meanings);
 
-        for(int i = 0; i < exampleWords.Length; i++){
-            if(i < kanji.trainingWords.Length)
+        for (int i = 0; i < exampleWords.Length; i++)
+        {
+            if (i < kanji.trainingWords.Length)
             {
                 exampleWords[i].SetActive(true);
-                
+
                 Transform childTransform = exampleWords[i].transform.GetChild(0);
                 GameObject childObject = childTransform.gameObject;
 
@@ -94,13 +95,13 @@ public class KanjiInfoPageManager : MonoBehaviour
         }
 
         string nextSymbol = null;
-        if(index == collectedKanjiList.Length-1)
+        if (index == collectedKanjiList.Length - 1)
         {
             nextSymbol = collectedKanjiList[0].kanjiSymbol;
         }
         else
         {
-            nextSymbol = collectedKanjiList[index+1].kanjiSymbol;
+            nextSymbol = collectedKanjiList[index + 1].kanjiSymbol;
         }
         SetPage(nextSymbol);
     }
@@ -121,13 +122,13 @@ public class KanjiInfoPageManager : MonoBehaviour
         }
 
         string previousSymbol = null;
-        if(index == 0)
+        if (index == 0)
         {
-            previousSymbol = collectedKanjiList[collectedKanjiList.Length-1].kanjiSymbol;
+            previousSymbol = collectedKanjiList[collectedKanjiList.Length - 1].kanjiSymbol;
         }
         else
         {
-            previousSymbol = collectedKanjiList[index-1].kanjiSymbol;
+            previousSymbol = collectedKanjiList[index - 1].kanjiSymbol;
         }
         SetPage(previousSymbol);
     }
@@ -139,13 +140,13 @@ public class KanjiInfoPageManager : MonoBehaviour
 
     public void ShowStrokeOrder()
     {
-        if(!strokeOrderDisplayed)
+        if (!strokeOrderDisplayed)
         {
             strokeOrderDisplayed = true;
 
-            RawImage rawImage = practiceImage.GetComponent<RawImage>(); 
-            Sprite  overlaySprite = kanji.strokeOrder;
-            
+            RawImage rawImage = practiceImage.GetComponent<RawImage>();
+            Sprite overlaySprite = kanji.strokeOrder;
+
             // Create a new GameObject for the overlay
             GameObject overlayObject = new GameObject("SpriteOverlay");
             overlayObject.transform.SetParent(rawImage.transform, false); // Make it a child of the RawImage

@@ -13,7 +13,7 @@ public class MoviePlayer : MonoBehaviour
 
     [SerializeField] int musicToPlay;
 
-    
+
     void Start()
     {
         StartCoroutine(Slideshow());
@@ -24,7 +24,7 @@ public class MoviePlayer : MonoBehaviour
 
     public IEnumerator Slideshow()
     {
-        
+
         yield return new WaitForSeconds(3f);
 
         MenuManager.instance.FadeImage();

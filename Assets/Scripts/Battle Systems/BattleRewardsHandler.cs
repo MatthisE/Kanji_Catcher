@@ -28,25 +28,25 @@ public class BattleRewardsHandler : MonoBehaviour
     public void OpenRewardScreen(int xpEarned, ItemsManager[] itemsEarned)
     {
         // mark given quest as complete (optional)
-        if(markQuestComplete)
+        if (markQuestComplete)
         {
             QuestManager.instance.MarkQuestComplete(questToComplete);
         }
 
         rewardItems = itemsEarned;
         KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
-        
 
-        for(int i = 0; i < collectedKanji.Length; i++)
+
+        for (int i = 0; i < collectedKanji.Length; i++)
         {
             xpReward = collectedKanji[i].xpReward;
 
             // add XP to kanji of player
             KanjiManager kanji = collectedKanji[i];
 
-            if(kanji.currentXP < 100)
+            if (kanji.currentXP < 100)
             {
-                if(kanji.currentXP + xpReward > 100)
+                if (kanji.currentXP + xpReward > 100)
                 {
                     xpReward = 100 - kanji.currentXP;
                     kanji.currentXP = 100;
@@ -72,7 +72,7 @@ public class BattleRewardsHandler : MonoBehaviour
     public void CloseRewardScreen()
     {
         // deactivate all xp sliders of reward screen
-        foreach(KanjiXPSliderManager xpSlider in xpSliders)
+        foreach (KanjiXPSliderManager xpSlider in xpSliders)
         {
             xpSlider.gameObject.SetActive(false);
         }
@@ -80,12 +80,12 @@ public class BattleRewardsHandler : MonoBehaviour
         bool activateMenuButton = true;
 
         // add won items to inventory
-        foreach(ItemsManager itemrewarded in rewardItems)
+        foreach (ItemsManager itemrewarded in rewardItems)
         {
-            if(Inventory.instance.GetItemsList().Count < 4 && QuestManager.instance.questMarkersCompleted[2] != true)
+            if (Inventory.instance.GetItemsList().Count < 4 && QuestManager.instance.questMarkersCompleted[2] != true)
             {
                 ActionButton.instance.SetActiveState(false);
-                string[] sentences = {"The enemy dropped a book.", "You put in your inventory."};
+                string[] sentences = { "The enemy dropped a book.", "You put in your inventory." };
                 DialogController.instance.ActivateDialog(sentences, ""); // open box with first sentence
 
                 Inventory.instance.AddItems(itemrewarded);
@@ -98,7 +98,7 @@ public class BattleRewardsHandler : MonoBehaviour
         rewardScreen.SetActive(false);
         GameManager.instance.battleIsActive = false; // keep player still while showing rewards
 
-        if(activateMenuButton)
+        if (activateMenuButton)
         {
             MenuButton.instance.SetActiveState(true);
         }

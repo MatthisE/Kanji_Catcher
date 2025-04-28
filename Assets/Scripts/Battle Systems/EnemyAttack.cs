@@ -33,11 +33,12 @@ public class EnemyAttack : MonoBehaviour
 
         List<string> meanings = new List<string>();
 
-        if(exerciseType)
+        if (exerciseType)
         {
             SetKanaWords(meanings);
         }
-        else{
+        else
+        {
             SetEnglishWords(meanings);
         }
 
@@ -60,7 +61,7 @@ public class EnemyAttack : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             string meaning = GetRandomWord().inKana;
-            while(meanings.Contains(meaning))
+            while (meanings.Contains(meaning))
             {
                 meaning = GetRandomWord().inKana;
             }
@@ -77,7 +78,7 @@ public class EnemyAttack : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             string meaning = GetRandomWord().englishMeaning;
-            while(meanings.Contains(meaning))
+            while (meanings.Contains(meaning))
             {
                 meaning = GetRandomWord().englishMeaning;
             }
@@ -123,7 +124,7 @@ public class EnemyAttack : MonoBehaviour
     {
         hintText.SetActive(true);
 
-        if(exerciseType)
+        if (exerciseType)
         {
             hintText.GetComponent<TextMeshProUGUI>().text = trainingWord.englishMeaning;
         }
@@ -133,7 +134,8 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    public void CheckAnswer(TextMeshProUGUI pressedMeaning){
+    public void CheckAnswer(TextMeshProUGUI pressedMeaning)
+    {
         helpButton.SetActive(false);
         lessDefenceText.SetActive(false);
         ShowHint();
@@ -141,8 +143,9 @@ public class EnemyAttack : MonoBehaviour
         StartCoroutine(CheckAnswerCoroutine(pressedMeaning));
     }
 
-    public IEnumerator CheckAnswerCoroutine(TextMeshProUGUI pressedMeaning){
-        if(exerciseType)
+    public IEnumerator CheckAnswerCoroutine(TextMeshProUGUI pressedMeaning)
+    {
+        if (exerciseType)
         {
             ChangeColorKana();
         }
@@ -150,14 +153,14 @@ public class EnemyAttack : MonoBehaviour
         {
             ChangeColorEnglish();
         }
-        
+
         yield return new WaitForSeconds(2f);
 
-        if(exerciseType)
+        if (exerciseType)
         {
-            if(pressedMeaning.text == trainingWord.inKana)
+            if (pressedMeaning.text == trainingWord.inKana)
             {
-                if(hintGiven)
+                if (hintGiven)
                 {
                     battleManager.StartEnemyAttackImpact(0.66f);
                 }
@@ -165,16 +168,17 @@ public class EnemyAttack : MonoBehaviour
                 {
                     battleManager.StartEnemyAttackImpact(0.33f);
                 }
-            }else
+            }
+            else
             {
                 battleManager.StartEnemyAttackImpact(1);
             }
         }
         else
         {
-            if(pressedMeaning.text == trainingWord.englishMeaning)
+            if (pressedMeaning.text == trainingWord.englishMeaning)
             {
-                if(hintGiven)
+                if (hintGiven)
                 {
                     battleManager.StartEnemyAttackImpact(0.66f);
                 }
@@ -182,7 +186,8 @@ public class EnemyAttack : MonoBehaviour
                 {
                     battleManager.StartEnemyAttackImpact(0.33f);
                 }
-            }else
+            }
+            else
             {
                 battleManager.StartEnemyAttackImpact(1);
             }
@@ -194,75 +199,86 @@ public class EnemyAttack : MonoBehaviour
         ChangeColorToBlack();
     }
 
-    private void ChangeColorKana(){
-        if(kanjiMeaning1.text == trainingWord.inKana)
+    private void ChangeColorKana()
+    {
+        if (kanjiMeaning1.text == trainingWord.inKana)
         {
             kanjiMeaning1.color = Color.green;
-        }else
+        }
+        else
         {
             kanjiMeaning1.color = Color.red;
         }
 
-        if(kanjiMeaning2.text == trainingWord.inKana)
+        if (kanjiMeaning2.text == trainingWord.inKana)
         {
             kanjiMeaning2.color = Color.green;
-        }else
+        }
+        else
         {
             kanjiMeaning2.color = Color.red;
         }
 
-        if(kanjiMeaning3.text == trainingWord.inKana)
+        if (kanjiMeaning3.text == trainingWord.inKana)
         {
             kanjiMeaning3.color = Color.green;
-        }else
+        }
+        else
         {
             kanjiMeaning3.color = Color.red;
         }
 
-        if(kanjiMeaning4.text == trainingWord.inKana)
+        if (kanjiMeaning4.text == trainingWord.inKana)
         {
             kanjiMeaning4.color = Color.green;
-        }else
+        }
+        else
         {
             kanjiMeaning4.color = Color.red;
         }
     }
 
-    private void ChangeColorEnglish(){
-        if(kanjiMeaning1.text == trainingWord.englishMeaning)
+    private void ChangeColorEnglish()
+    {
+        if (kanjiMeaning1.text == trainingWord.englishMeaning)
         {
             kanjiMeaning1.color = Color.green;
-        }else
+        }
+        else
         {
             kanjiMeaning1.color = Color.red;
         }
 
-        if(kanjiMeaning2.text == trainingWord.englishMeaning)
+        if (kanjiMeaning2.text == trainingWord.englishMeaning)
         {
             kanjiMeaning2.color = Color.green;
-        }else
+        }
+        else
         {
             kanjiMeaning2.color = Color.red;
         }
 
-        if(kanjiMeaning3.text == trainingWord.englishMeaning)
+        if (kanjiMeaning3.text == trainingWord.englishMeaning)
         {
             kanjiMeaning3.color = Color.green;
-        }else
+        }
+        else
         {
             kanjiMeaning3.color = Color.red;
         }
 
-        if(kanjiMeaning4.text == trainingWord.englishMeaning)
+        if (kanjiMeaning4.text == trainingWord.englishMeaning)
         {
             kanjiMeaning4.color = Color.green;
-        }else
+        }
+        else
         {
             kanjiMeaning4.color = Color.red;
         }
     }
 
-    private void ChangeColorToBlack(){
+    private void ChangeColorToBlack()
+    {
         kanjiMeaning1.color = Color.black;
         kanjiMeaning2.color = Color.black;
         kanjiMeaning3.color = Color.black;

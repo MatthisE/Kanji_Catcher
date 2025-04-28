@@ -81,7 +81,7 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         //singelton pattern --> avoid duplicates in new scenes
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
         }
@@ -102,16 +102,17 @@ public class BattleManager : MonoBehaviour
 
     private void CheckPlayerButtonHolder()
     {
-        if(isBattleActive)
+        if (isBattleActive)
         {
             // de-/activate UI button holder depending on whos turn it is
-            if(waitingForTurn)
+            if (waitingForTurn)
             {
-                if(activeCharacters[currentTurn].IsPlayer())
+                if (activeCharacters[currentTurn].IsPlayer())
                 {
                     UIButtonHolder.SetActive(true); // activate
 
-                    if(enemyTargetPanel.activeInHierarchy != true){
+                    if (enemyTargetPanel.activeInHierarchy != true)
+                    {
                         actionsMenu.SetActive(true);
                     }
                 }
@@ -132,16 +133,16 @@ public class BattleManager : MonoBehaviour
     // battle started by battle zone, display scene with player, his stats, enemies and UI
     public void StartBattle(string[] enemiesToSpawn, bool canRunAway)
     {
-        SetAttacks(); 
+        SetAttacks();
 
-        if(!isBattleActive)
+        if (!isBattleActive)
         {
             MenuButton.instance.SetActiveState(false);
             ActionButton.instance.SetActiveState(false);
 
             canRun = canRunAway; // define if you can or cannot run away
 
-            if(canRun)
+            if (canRun)
             {
                 runningButton.SetActive(true);
             }
@@ -149,8 +150,8 @@ public class BattleManager : MonoBehaviour
             {
                 runningButton.SetActive(false);
             }
-            
-            SettingUpBattle(); 
+
+            SettingUpBattle();
 
             BattleCharacters newPlayer = Instantiate(
                 player, // original object
@@ -202,17 +203,17 @@ public class BattleManager : MonoBehaviour
 
     private void AddingEnemies(string[] enemiesToSpawn)
     {
-        for(int i = 0; i < enemiesToSpawn.Length; i++) // go through all enemies to spawn
+        for (int i = 0; i < enemiesToSpawn.Length; i++) // go through all enemies to spawn
         {
-            if(enemiesToSpawn[i] != "") // if there is an enemy
+            if (enemiesToSpawn[i] != "") // if there is an enemy
             {
-                for(int j = 0; j < enemiesPrefabs.Length; j++) // go through all enemy prefabs given to battle manager
+                for (int j = 0; j < enemiesPrefabs.Length; j++) // go through all enemy prefabs given to battle manager
                 {
-                    if(enemiesPrefabs[j].characterName == enemiesToSpawn[i]) // check if the names are the same
+                    if (enemiesPrefabs[j].characterName == enemiesToSpawn[i]) // check if the names are the same
                     {
                         BattleCharacters newEnemy = null;
 
-                        if(enemiesToSpawn.Length == 1)
+                        if (enemiesToSpawn.Length == 1)
                         {
                             newEnemy = Instantiate( // make enemy a battle character
                                 enemiesPrefabs[j],
@@ -239,11 +240,11 @@ public class BattleManager : MonoBehaviour
 
     public void UpdatePlayerStats()
     {
-        for(int i = 0; i < playersNameText.Length; i++) // we just have 1 player
+        for (int i = 0; i < playersNameText.Length; i++) // we just have 1 player
         {
-            if(activeCharacters.Count > i)
+            if (activeCharacters.Count > i)
             {
-                if(activeCharacters[i].IsPlayer())
+                if (activeCharacters[i].IsPlayer())
                 {
                     BattleCharacters playerData = activeCharacters[i]; // get player chara (for his stats that were set by ImportPlayerStats())
 
@@ -289,7 +290,8 @@ public class BattleManager : MonoBehaviour
         enemyAttackMenu.GetComponent<EnemyAttack>().SetWords();
     }
 
-    public void StartEnemyAttackImpact(float defence){
+    public void StartEnemyAttackImpact(float defence)
+    {
         StartCoroutine(EnemyAttackImpact(defence));
     }
 
@@ -302,9 +304,9 @@ public class BattleManager : MonoBehaviour
         int movePower = (int)(activeCharacters[currentTurn].dexterity * defence);
         DealDamageToCharacters(0, movePower); // calculate damage to player and attack him (at position 0 of activeCharacters), show damage number
 
-        for(int i = 0; i < battleMovesList.Length; i++)
+        for (int i = 0; i < battleMovesList.Length; i++)
         {
-            if(battleMovesList[i].moveName == activeCharacters[currentTurn].AttackMovesAvailable()[selectedAttack]) // if battle manager has move of active enemy
+            if (battleMovesList[i].moveName == activeCharacters[currentTurn].AttackMovesAvailable()[selectedAttack]) // if battle manager has move of active enemy
             {
                 GettingMovePowerAndEffectInstantiation(0, i); // put damage effect on player (0 --> player as target)
             }
@@ -342,7 +344,7 @@ public class BattleManager : MonoBehaviour
 
     private void GettingMovePowerAndEffectInstantiation(int selectedCharacterTarget, int battleMove)
     {
-        if(isCritical)
+        if (isCritical)
         {
             battleMove = 2;
         }
@@ -392,7 +394,7 @@ public class BattleManager : MonoBehaviour
     private int CalculateCritical(int damageToGive)
     {
         // double damage on rare occasion
-        if(Random.value <= 0.1f)
+        if (Random.value <= 0.1f)
         {
             isCritical = true;
             return (damageToGive * 2);
@@ -405,7 +407,7 @@ public class BattleManager : MonoBehaviour
     {
         // loop through turn counter
         currentTurn++;
-        if(currentTurn >= activeCharacters.Count)
+        if (currentTurn >= activeCharacters.Count)
         {
             currentTurn = 0;
         }
@@ -423,30 +425,30 @@ public class BattleManager : MonoBehaviour
         bool playerIsDead = true;
 
         // check HP of all active characters
-        for(int i = 0; i < activeCharacters.Count; i++)
+        for (int i = 0; i < activeCharacters.Count; i++)
         {
-            if(activeCharacters[i].currentHP < 0)
+            if (activeCharacters[i].currentHP < 0)
             {
                 activeCharacters[i].currentHP = 0; // min HP
             }
 
-            if(activeCharacters[i].currentHP == 0)
+            if (activeCharacters[i].currentHP == 0)
             {
                 // kill player
-                if(activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead)
+                if (activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead)
                 {
                     activeCharacters[i].KillPlayer();
                 }
 
                 // kill enemy
-                if(!activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead)
+                if (!activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead)
                 {
                     activeCharacters[i].KillEnemy(); // so far same as kill player because I don't have death particles
                 }
             }
             else
             {
-                if(activeCharacters[i].IsPlayer())
+                if (activeCharacters[i].IsPlayer())
                 {
                     playerIsDead = false;
                 }
@@ -458,11 +460,11 @@ public class BattleManager : MonoBehaviour
         }
 
         // end battle
-        if(allEnemiesAreDead || playerIsDead)
+        if (allEnemiesAreDead || playerIsDead)
         {
-            if(allEnemiesAreDead)
+            if (allEnemiesAreDead)
             {
-                if(QuestManager.instance.questMarkersCompleted[3] == true)
+                if (QuestManager.instance.questMarkersCompleted[3] == true)
                 {
                     StartCoroutine(EndGame());
                 }
@@ -471,7 +473,7 @@ public class BattleManager : MonoBehaviour
                     StartCoroutine(EndBattleCoroutine());
                 }
             }
-            else if(playerIsDead)
+            else if (playerIsDead)
             {
                 StartCoroutine(GameOverCoroutine());
             }
@@ -479,10 +481,10 @@ public class BattleManager : MonoBehaviour
         else
         {
             // if a character is dead, skip his turn
-            while(activeCharacters[currentTurn].currentHP == 0)
+            while (activeCharacters[currentTurn].currentHP == 0)
             {
                 currentTurn++;
-                if(currentTurn >= activeCharacters.Count)
+                if (currentTurn >= activeCharacters.Count)
                 {
                     currentTurn = 0;
                 }
@@ -499,7 +501,7 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f); // wait 1.5sec
         MenuManager.instance.FadeImage();
         yield return new WaitForSeconds(1.0f); // wait 1.5sec
-        string[] sentences = {"You have rid the library of its cursed energy.", "All monsters have turned back to normal and peoples' minds are clear again.", "The library is free but the rest of the word is still filled with cursed kanji.", "Can you catch them all?"};
+        string[] sentences = { "You have rid the library of its cursed energy.", "All monsters have turned back to normal and peoples' minds are clear again.", "The library is free but the rest of the word is still filled with cursed kanji.", "Can you catch them all?" };
         DialogController.instance.ActivateDialog(sentences, "end"); // open box with first sentence
 
     }
@@ -509,18 +511,18 @@ public class BattleManager : MonoBehaviour
     {
         magicChoicePanel.SetActive(true);
 
-        for(int i = 0; i < magicButtons.Length; i++)
+        for (int i = 0; i < magicButtons.Length; i++)
         {
-            if(activeCharacters[currentTurn].AttackMovesAvailable().Length > i)
+            if (activeCharacters[currentTurn].AttackMovesAvailable().Length > i)
             {
                 // set spell names on buttons
                 magicButtons[i].gameObject.SetActive(true);
                 magicButtons[i].spellName = GetCurrentActiveCharacter().AttackMovesAvailable()[i];
                 magicButtons[i].spellNameText.text = magicButtons[i].spellName;
 
-                for(int j = 0; j < battleMovesList.Length; j++)
+                for (int j = 0; j < battleMovesList.Length; j++)
                 {
-                    if(battleMovesList[j].moveName == magicButtons[i].spellName)
+                    if (battleMovesList[j].moveName == magicButtons[i].spellName)
                     {
                         // set stats of moves
                         magicButtons[i].spellCost = battleMovesList[j].manaCost;
@@ -536,13 +538,14 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void SetAttacks(){
+    public void SetAttacks()
+    {
         int wordThatNeedsTraining = Mathf.FloorToInt(Random.value * magicButtons.Length); // set random index of button with word that definitely needs training (so you never just have options with fully trained kanji)
 
-        for(int i = 0; i < magicButtons.Length; i++)
+        for (int i = 0; i < magicButtons.Length; i++)
         {
             bool needsTraining = false;
-            if(i == wordThatNeedsTraining)
+            if (i == wordThatNeedsTraining)
             {
                 needsTraining = true;
             }
@@ -555,25 +558,26 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private TrainingWord GetRandomWord(bool needsTraining){
+    private TrainingWord GetRandomWord(bool needsTraining)
+    {
         KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
 
         int randomIndex = 0;
-        if(needsTraining)
+        if (needsTraining)
         {
             // get random kanji until you have one that definitely needs training (aka has less than 100xp)
 
-            if(GameManager.instance.AllKanjiAreTrained())
+            if (GameManager.instance.AllKanjiAreTrained())
             {
                 randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
             }
             else
             {
                 bool isFullyTrained = true;
-                while(isFullyTrained == true)
+                while (isFullyTrained == true)
                 {
                     randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
-                    if(collectedKanji[randomIndex].currentXP != 100)
+                    if (collectedKanji[randomIndex].currentXP != 100)
                     {
                         isFullyTrained = false;
                     }
@@ -605,17 +609,17 @@ public class BattleManager : MonoBehaviour
         // create list of all the enemies 
         List<int> Enemies = new List<int>();
 
-        for(int i = 0; i < activeCharacters.Count; i++)
+        for (int i = 0; i < activeCharacters.Count; i++)
         {
-            if(!activeCharacters[i].IsPlayer())
+            if (!activeCharacters[i].IsPlayer())
             {
                 Enemies.Add(i);
             }
         }
 
-        for(int i = 0; i < targetButtons.Length; i++)
+        for (int i = 0; i < targetButtons.Length; i++)
         {
-            if(Enemies.Count > i && activeCharacters[Enemies[i]].currentHP > 0) // make sure you have (alive) enemies for the target buttons
+            if (Enemies.Count > i && activeCharacters[Enemies[i]].currentHP > 0) // make sure you have (alive) enemies for the target buttons
             {
                 targetButtons[i].gameObject.SetActive(true);
                 targetButtons[i].trainingWord = trainingWord; // set trainingWord for the player attack
@@ -662,9 +666,9 @@ public class BattleManager : MonoBehaviour
         int movePower = (int)(20 * offence);
         DealDamageToCharacters(selectEnemyTarget, movePower); // calculate damage to player and attack him, show damage number
 
-        for(int i = 0; i < battleMovesList.Length; i++)
+        for (int i = 0; i < battleMovesList.Length; i++)
         {
-            if(battleMovesList[i].moveName == moveName) // if battle manager has selected move
+            if (battleMovesList[i].moveName == moveName) // if battle manager has selected move
             {
                 GettingMovePowerAndEffectInstantiation(selectEnemyTarget, i); // put damage effect on enemy
             }
@@ -685,11 +689,11 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator RunAwayCoroutine()
     {
-        if(canRun) // if the battle allows you to run
+        if (canRun) // if the battle allows you to run
         {
             SetAttacks();
 
-            if(Random.value > chanceToRunAway)
+            if (Random.value > chanceToRunAway)
             {
                 // run and end battle
                 runningAway = true;
@@ -702,9 +706,9 @@ public class BattleManager : MonoBehaviour
                 // you wasted your turn
                 battleNotice.SetText("You failed to run away.");
                 battleNotice.Activate();
-                
+
                 waitingForTurn = false; // false so Update() does sets UIButtonHolder to inactive
-                
+
                 yield return new WaitUntil(() => !battleNotice.gameObject.activeSelf); // wait until the notice disappears
 
                 waitingForTurn = true;
@@ -723,7 +727,7 @@ public class BattleManager : MonoBehaviour
 
     public void UseItemButton() // on click on use item
     {
-        if(selectedItem)
+        if (selectedItem)
         {
             activeCharacters[0].UseItemInBattle(selectedItem); // make player use item
             Inventory.instance.RemoveItem(selectedItem); // remove item from inventory
@@ -734,12 +738,13 @@ public class BattleManager : MonoBehaviour
             UpdateItemsInInventory();
 
         }
-        else{
+        else
+        {
             print("No item selected.");
         }
     }
 
-    
+
     public void HealPlayer(double amountOfAffect)
     {
         StartCoroutine(HealPlayerCoroutine(amountOfAffect));
@@ -778,12 +783,12 @@ public class BattleManager : MonoBehaviour
         itemsToUseMenu.SetActive(true);
 
         // same as in Menu Manager
-        foreach(Transform itemSlot in itemSlotContainerParent)
+        foreach (Transform itemSlot in itemSlotContainerParent)
         {
             Destroy(itemSlot.gameObject); //destroy all previous item slots to not have doubles
         }
 
-        foreach(ItemsManager item in Inventory.instance.GetItemsList())
+        foreach (ItemsManager item in Inventory.instance.GetItemsList())
         {
             // make each item in inventory a slot in items menu
             RectTransform itemSlot = Instantiate(itemSlotContainer, itemSlotContainerParent).GetComponent<RectTransform>(); // Instantiate --> makes first value a child of the second value, then get that slot as a value
@@ -793,7 +798,7 @@ public class BattleManager : MonoBehaviour
 
             // set the amount text to a number if the amount is bigger than 1
             TextMeshProUGUI itemsAmountText = itemSlot.Find("Amount Text").GetComponent<TextMeshProUGUI>();
-            if(item.amount > 1)
+            if (item.amount > 1)
             {
                 itemsAmountText.text = item.amount.ToString();
             }
@@ -819,7 +824,7 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         // put HP and mana of battle player in overworld player
-        foreach(BattleCharacters playerInBattle in activeCharacters)
+        foreach (BattleCharacters playerInBattle in activeCharacters)
         {
             /*
             if(playerInBattle.IsPlayer())
@@ -842,7 +847,7 @@ public class BattleManager : MonoBehaviour
         battleScene.SetActive(false);
         activeCharacters.Clear();
 
-        if(runningAway)
+        if (runningAway)
         {
             GameManager.instance.battleIsActive = false; // make player movable again
             runningAway = false;
@@ -853,7 +858,7 @@ public class BattleManager : MonoBehaviour
             // give rewards (and make player movable again)
             xpSliders = FindObjectsOfType<KanjiXPSliderManager>(true);
             BattleRewardsHandler.instance.xpSliders = xpSliders;
-            BattleRewardsHandler.instance.OpenRewardScreen(XPRewardAmount, itemsReward); 
+            BattleRewardsHandler.instance.OpenRewardScreen(XPRewardAmount, itemsReward);
         }
 
         currentTurn = 0;
@@ -861,7 +866,7 @@ public class BattleManager : MonoBehaviour
         // turn xp rewards for all kanji to 0
         KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
 
-        foreach(KanjiManager kanji in collectedKanji)
+        foreach (KanjiManager kanji in collectedKanji)
         {
             kanji.xpReward = 0;
         }

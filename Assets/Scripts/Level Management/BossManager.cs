@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class BossManager : MonoBehaviour
 {
     public string[] sentences;
-    private bool canActivateBox; 
+    private bool canActivateBox;
     [SerializeField] string[] bossName;
 
 
     // box can only be activated when player is inside object's trigger collider
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             canActivateBox = true;
             ActionButton.instance.SetActiveState(true);
@@ -26,7 +26,7 @@ public class BossManager : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             canActivateBox = false;
             if (ActionButton.instance != null)
@@ -43,16 +43,16 @@ public class BossManager : MonoBehaviour
 
         string battleBoss = "";
 
-        if(canActivateBox && !DialogController.instance.IsDialogBoxActive() && GameManager.instance.gameMenuOpened != true) // only call if the box is not already active and menu is not open
+        if (canActivateBox && !DialogController.instance.IsDialogBoxActive() && GameManager.instance.gameMenuOpened != true) // only call if the box is not already active and menu is not open
         {
             List<string> sentencesList = new List<string> { "#Darkness", "I am an amalgamation of the cursed energy in this place...", "If you want to cleanse this place you must find and train all the cursed kanji and then defeat me..." };
 
             KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
             int kanjiLeft = 9 - collectedKanji.Length;
 
-            if(kanjiLeft > 0)
+            if (kanjiLeft > 0)
             {
-                if(kanjiLeft == 1)
+                if (kanjiLeft == 1)
                 {
                     sentencesList.Add("There is still " + kanjiLeft + " cursed kanji you need to find...");
                 }
@@ -66,16 +66,16 @@ public class BossManager : MonoBehaviour
                 sentencesList.Add("You found all the cursed kanji in this place...");
 
                 bool allKanjiAreFullyTrained = true;
-                foreach(KanjiManager kanji in collectedKanji)
+                foreach (KanjiManager kanji in collectedKanji)
                 {
-                    if(kanji.currentXP != 100)
+                    if (kanji.currentXP != 100)
                     {
                         allKanjiAreFullyTrained = false;
                         break;
                     }
                 }
 
-                if(allKanjiAreFullyTrained)
+                if (allKanjiAreFullyTrained)
                 {
                     sentencesList.Add("Now let us battle...");
                     battleBoss = "boss";

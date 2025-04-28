@@ -21,9 +21,9 @@ public class KanjiObject : MonoBehaviour
 
         KanjiManager[] collectedKanjiList = GameManager.instance.GetCollectedKanji();
 
-        foreach(KanjiManager collectedKanji in collectedKanjiList)
+        foreach (KanjiManager collectedKanji in collectedKanjiList)
         {
-            if(collectedKanji.kanjiSymbol == kanji.kanjiSymbol)
+            if (collectedKanji.kanjiSymbol == kanji.kanjiSymbol)
             {
                 SelfDestroy();
             }
@@ -34,7 +34,7 @@ public class KanjiObject : MonoBehaviour
     }
 
     // make sprite move a bit up and down
-     void Update()
+    void Update()
     {
         // calculate the new Y position
         float newY = startPosition.y + Mathf.Sin(Time.time * frequency) * amplitude;
@@ -46,12 +46,12 @@ public class KanjiObject : MonoBehaviour
     // collecting a kanji on the map
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            string[] sentences = {"The cursed kanji has been sucked back into the kanji book.", "You can now use the kanji " +kanjiName+ " in battle."};
+            string[] sentences = { "The cursed kanji has been sucked back into the kanji book.", "You can now use the kanji " + kanjiName + " in battle." };
 
             AudioManager.instance.PlaySFX(8);
-            
+
             // add kanji to collected kanji of player
             PlayerStats[] playerStats = GameManager.instance.GetPlayerStats();
             Array.Resize(ref playerStats[0].collectedKanji, playerStats[0].collectedKanji.Length + 1);

@@ -11,7 +11,7 @@ public class ItemButton : MonoBehaviour
 
     public void Press()
     {
-        if(BattleManager.instance.itemsToUseMenu.activeInHierarchy) // --> pressed button on battle menu
+        if (BattleManager.instance.itemsToUseMenu.activeInHierarchy) // --> pressed button on battle menu
         {
             BattleManager.instance.SelectedItemToUse(itemOnButton); // mark item as selected (so you can use it)
         }

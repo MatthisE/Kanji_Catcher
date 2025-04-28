@@ -18,7 +18,7 @@ public class QuestZone : MonoBehaviour
     private void Update()
     {
         // check for second mark condition (after hitting collider)
-        if(canMark && Input.GetButtonDown("Jump"))
+        if (canMark && Input.GetButtonDown("Jump"))
         {
             canMark = false;
             MarkTheQuest();
@@ -28,7 +28,7 @@ public class QuestZone : MonoBehaviour
     // mark either as complete or incomplete
     public void MarkTheQuest()
     {
-        if(markAsComplete)
+        if (markAsComplete)
         {
             QuestManager.instance.MarkQuestComplete(questToMark);
         }
@@ -43,9 +43,9 @@ public class QuestZone : MonoBehaviour
     // either immediately mark quest or just set canMark to true
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            if(markOnEnter)
+            if (markOnEnter)
             {
                 MarkTheQuest();
             }

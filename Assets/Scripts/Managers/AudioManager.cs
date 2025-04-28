@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         //singelton pattern --> avoid duplicate Audio Managers in new scenes
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
         }
@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour
     // reference sound to play by its index in the AudioSorce array
     public void PlaySFX(int soundToPlay)
     {
-        if(soundToPlay < SFX.Length)
+        if (soundToPlay < SFX.Length)
         {
             SFX[soundToPlay].Play();
         }
@@ -39,7 +39,7 @@ public class AudioManager : MonoBehaviour
     {
         StopMusic();
 
-        if(musicToPlay < backgroundMusic.Length)
+        if (musicToPlay < backgroundMusic.Length)
         {
             backgroundMusic[musicToPlay].Play();
         }
@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
     // stop every background music (before activating a new one)
     private void StopMusic()
     {
-        foreach(AudioSource song in backgroundMusic)
+        foreach (AudioSource song in backgroundMusic)
         {
             song.Stop();
         }

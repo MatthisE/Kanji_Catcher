@@ -7,7 +7,7 @@ public class FinalImage : MonoBehaviour
 {
     [SerializeField] int musicToPlay;
 
-    
+
     void Start()
     {
         AudioManager.instance.PlayBackgroundMusic(musicToPlay);

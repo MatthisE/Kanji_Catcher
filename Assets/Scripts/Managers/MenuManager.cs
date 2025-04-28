@@ -48,19 +48,19 @@ public class MenuManager : MonoBehaviour
 
     public void OpenMenu()
     {
-        if(menu.activeInHierarchy)
+        if (menu.activeInHierarchy)
         {
             // close menu
             CloseMenu();
         }
         else
         {
-            if(GameManager.instance.dialogBoxOpened != true && GameManager.instance.battleIsActive != true && GameManager.instance.goThroughExit != true) // don't open if one of these are texture
+            if (GameManager.instance.dialogBoxOpened != true && GameManager.instance.battleIsActive != true && GameManager.instance.goThroughExit != true) // don't open if one of these are texture
             {
                 AudioManager.instance.PlaySFX(2);
                 MenuButton.instance.SetActiveState(false);
 
-                if(ActionButton.instance.gameObject.activeInHierarchy)
+                if (ActionButton.instance.gameObject.activeInHierarchy)
                 {
                     actionButtonActive = true;
                 }
@@ -94,7 +94,7 @@ public class MenuManager : MonoBehaviour
         KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
 
         // go through all collected kanji
-        for(int i = 0; i < collectedKanji.Length; i++)
+        for (int i = 0; i < collectedKanji.Length; i++)
         {
             // make panel for this character visible in menu
             characterPanel[i].SetActive(true);
@@ -116,12 +116,12 @@ public class MenuManager : MonoBehaviour
     public void UpdateItemsInventory()
     {
         //destroy all previous item slots to not have doubles
-        foreach(Transform itemSlot in itemSlotContainerParent)
+        foreach (Transform itemSlot in itemSlotContainerParent)
         {
             Destroy(itemSlot.gameObject);
         }
 
-        foreach(ItemsManager item in Inventory.instance.GetItemsList())
+        foreach (ItemsManager item in Inventory.instance.GetItemsList())
         {
             // make each item in inventory a slot in items menu
             RectTransform itemSlot = Instantiate(itemSlotContainer, itemSlotContainerParent).GetComponent<RectTransform>(); // Instantiate --> makes first value a child of the second value, then get that slot as a value
@@ -134,7 +134,7 @@ public class MenuManager : MonoBehaviour
 
             // set the amount text to a number if the amount is bigger than 1
             TextMeshProUGUI itemsAmountText = itemSlot.Find("Amount Text").GetComponent<TextMeshProUGUI>();
-            if(item.amount > 1)
+            if (item.amount > 1)
             {
                 itemsAmountText.text = item.amount.ToString();
                 itemsAmountText.color = Color.blue;
@@ -162,7 +162,7 @@ public class MenuManager : MonoBehaviour
     public void UseItem()
     {
         activeItem.UseItem();
-        
+
         Inventory.instance.RemoveItem(activeItem);
         UpdateItemsInventory();
         AudioManager.instance.PlaySFX(8);
@@ -174,7 +174,7 @@ public class MenuManager : MonoBehaviour
         MenuButton.instance.SetActiveState(true);
         menu.SetActive(false);
 
-        if(actionButtonActive)
+        if (actionButtonActive)
         {
             ActionButton.instance.SetActiveState(true);
             actionButtonActive = false;

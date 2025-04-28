@@ -32,14 +32,14 @@ public class Inventory : MonoBehaviour
     public void AddItems(ItemsManager item)
     {
         // for stackable items, just increase the counter
-        if(item.isStackable)
+        if (item.isStackable)
         {
             bool itemAlreadyInInventory = false;
 
             // look for item in inventory
-            foreach(ItemsManager itemInInventory in itemsList)
+            foreach (ItemsManager itemInInventory in itemsList)
             {
-                if(itemInInventory.itemName == item.itemName)
+                if (itemInInventory.itemName == item.itemName)
                 {
                     itemInInventory.amount += item.amount;
                     itemAlreadyInInventory = true;
@@ -47,7 +47,7 @@ public class Inventory : MonoBehaviour
             }
 
             // only add item if its not already in inventory
-            if(!itemAlreadyInInventory)
+            if (!itemAlreadyInInventory)
             {
                 itemsList.Add(item);
             }
@@ -61,14 +61,14 @@ public class Inventory : MonoBehaviour
     // gets called by MenuManager
     public void RemoveItem(ItemsManager item)
     {
-        if(item.isStackable)
+        if (item.isStackable)
         {
             ItemsManager inventoryItem = null; // later: set it to item to be removed
 
             // look for item to be removed
-            foreach(ItemsManager itemInInventory in itemsList)
+            foreach (ItemsManager itemInInventory in itemsList)
             {
-                if(itemInInventory.itemName == item.itemName)
+                if (itemInInventory.itemName == item.itemName)
                 {
                     itemInInventory.amount--; // decrease counter
                     inventoryItem = itemInInventory;
@@ -76,7 +76,7 @@ public class Inventory : MonoBehaviour
             }
 
             // only remove stackable items if their amount is below 1
-            if(inventoryItem != null && inventoryItem.amount <= 0)
+            if (inventoryItem != null && inventoryItem.amount <= 0)
             {
                 itemsList.Remove(inventoryItem);
             }

@@ -24,14 +24,14 @@ public class ItemsManager : MonoBehaviour
 
     public void UseItem()
     {
-        if(itemType == ItemType.Item) // if item is of type item (not weapon or armor)
+        if (itemType == ItemType.Item) // if item is of type item (not weapon or armor)
         {
-            if(affectType == AffectType.HP)
+            if (affectType == AffectType.HP)
             {
                 // heal HP
                 PlayerStats.instance.AddHP(amountOfAffect);
             }
-            else if(affectType == AffectType.Mana)
+            else if (affectType == AffectType.Mana)
             {
                 // heal Mana
                 PlayerStats.instance.AddMana(amountOfAffect);
@@ -42,7 +42,7 @@ public class ItemsManager : MonoBehaviour
     // collecting an item on the map
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             AudioManager.instance.PlaySFX(5);
             Inventory.instance.AddItems(this);

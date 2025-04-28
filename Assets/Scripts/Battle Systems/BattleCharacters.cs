@@ -15,7 +15,7 @@ public class BattleCharacters : MonoBehaviour
     private void Update()
     {
         // make enemies disappear after they die
-        if(!isPlayer && isDead)
+        if (!isPlayer && isDead)
         {
             FadeOutEnemy();
         }
@@ -32,7 +32,7 @@ public class BattleCharacters : MonoBehaviour
         );
 
         // once fully transparent deactivate object
-        if(GetComponent<SpriteRenderer>().color.a == 0)
+        if (GetComponent<SpriteRenderer>().color.a == 0)
         {
             gameObject.SetActive(false);
         }
@@ -43,7 +43,7 @@ public class BattleCharacters : MonoBehaviour
     {
         currentHP -= damageToReceive;
 
-        if(currentHP < 0)
+        if (currentHP < 0)
         {
             currentHP = 0;
         }
@@ -63,13 +63,13 @@ public class BattleCharacters : MonoBehaviour
     // use item to either heal hp or mana depending on its affect type
     public void UseItemInBattle(ItemsManager itemToUse)
     {
-        if(itemToUse.itemType == ItemsManager.ItemType.Item)
+        if (itemToUse.itemType == ItemsManager.ItemType.Item)
         {
-            if(itemToUse.affectType == ItemsManager.AffectType.HP)
+            if (itemToUse.affectType == ItemsManager.AffectType.HP)
             {
                 AddHP(itemToUse.amountOfAffect);
             }
-            else if(itemToUse.affectType == ItemsManager.AffectType.Mana)
+            else if (itemToUse.affectType == ItemsManager.AffectType.Mana)
             {
                 AddMana(itemToUse.amountOfAffect);
             }
@@ -77,8 +77,8 @@ public class BattleCharacters : MonoBehaviour
     }
 
     public void AddHP(int amountOfAffect)
-    {   
-        if(currentHP + amountOfAffect > 100)
+    {
+        if (currentHP + amountOfAffect > 100)
         {
             amountOfAffect = 100 - currentHP;
         }
