@@ -35,11 +35,11 @@ public class DrawOnRawImage : MonoBehaviour
 
         for (int i = 0; i < pixels.Length; i++)
         {
-            if(i < width*10 || i > width*width-width*10 || i % width > 0 && i % width < 10 || (i - (width-1)) % width <= 10 || (i - (width-1)) % width >= width - 10)
+            if (i < width * 10 || i > width * width - width * 10 || i % width > 0 && i % width < 10 || (i - (width - 1)) % width <= 10 || (i - (width - 1)) % width >= width - 10)
             {
                 pixels[i] = Color.gray; // set the pixel color to gray
             }
-            else if(i % (width/2) > 0 && i % (width/2) < 5 || i > width*(width/2-2) && i < width*(width/2+3))
+            else if (i % (width / 2) > 0 && i % (width / 2) < 5 || i > width * (width / 2 - 2) && i < width * (width / 2 + 3))
             {
                 pixels[i] = new Color(0.8f, 0.8f, 0.8f); // set the pixel color to light gray
             }
@@ -171,11 +171,11 @@ public class DrawOnRawImage : MonoBehaviour
         // Reset the canvasColors array
         for (int i = 0; i < canvasColors.Length; i++)
         {
-            if(i < width*10 || i > width*width-width*10 || i % width > 0 && i % width < 10 || (i - (width-1)) % width <= 10 || (i - (width-1)) % width >= width - 10)
+            if (i < width * 10 || i > width * width - width * 10 || i % width > 0 && i % width < 10 || (i - (width - 1)) % width <= 10 || (i - (width - 1)) % width >= width - 10)
             {
                 canvasColors[i] = Color.gray; // Set the background color to gray
             }
-            else if(i % (width/2) > 0 && i % (width/2) < 5 || i > width*(width/2-2) && i < width*(width/2+3))
+            else if (i % (width / 2) > 0 && i % (width / 2) < 5 || i > width * (width / 2 - 2) && i < width * (width / 2 + 3))
             {
                 canvasColors[i] = new Color(0.8f, 0.8f, 0.8f); // Set the background color to light gray
             }

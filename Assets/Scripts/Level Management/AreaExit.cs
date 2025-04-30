@@ -12,7 +12,7 @@ public class AreaExit : MonoBehaviour
     // load new scene when player enters exit's collider
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             GameManager.instance.goThroughExit = true; //set condition for player to stop moving
             Player.instance.transitionAreaName = transitionAreaName; // make player's transition name to this area exit's transition name

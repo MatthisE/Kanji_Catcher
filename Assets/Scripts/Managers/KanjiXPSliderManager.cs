@@ -18,9 +18,9 @@ public class KanjiXPSliderManager : MonoBehaviour
         kanjiImage.sprite = kanji.kanjiImage;
         XPSlider.maxValue = 100;
         XPSlider.value = kanji.currentXP;
-        XPSliderText.text = kanji.currentXP + "/ 100"; 
+        XPSliderText.text = kanji.currentXP + "/ 100";
 
-        if(newXP == -10)
+        if (newXP == -10)
         {
             newXPText.text = "";
         }

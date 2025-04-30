@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         ItemsManager itemToAdd = ItemsAssets.instance.GetItemAsset("Cursed Kanji Book");
         Inventory.instance.AddItems(itemToAdd); // add item to loaded inventory
 
-        if(QuestManager.instance.questMarkersCompleted[1] == false)
+        if (QuestManager.instance.questMarkersCompleted[1] == false)
         {
             dialogBoxOpened = true;
 
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f); // wait before next letter
 
         ActionButton.instance.SetActiveState(false);
-        string[] sentences = {"All but four kanji flew out of the cursed kanji book.", "Be sure to study the ones you have, it might come in handy."};
+        string[] sentences = { "All but four kanji flew out of the cursed kanji book.", "Be sure to study the ones you have, it might come in handy." };
         DialogController.instance.ActivateDialog(sentences, "start"); // open box with first sentence
         DialogController.instance.ActivateQuestAtEnd("Start Game", true); // activate quest after dialog
     }
@@ -61,18 +61,19 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // check if Player should stay still
-        if(gameMenuOpened || dialogBoxOpened || battleIsActive || goThroughExit)
+        if (gameMenuOpened || dialogBoxOpened || battleIsActive || goThroughExit)
         {
             Player.instance.deactivateMovement = true;
             Joystick.ActivateJoystick(false);
             Joystick.instance.ResetJoystick();
-        }else
+        }
+        else
         {
             Player.instance.deactivateMovement = false;
             Joystick.ActivateJoystick(true);
         }
 
-        if(QuestManager.instance.questMarkersCompleted[3] == true)
+        if (QuestManager.instance.questMarkersCompleted[3] == true)
         {
             //StartCoroutine(Transition());
         }
@@ -103,9 +104,9 @@ public class GameManager : MonoBehaviour
     {
         KanjiManager[] collectedKanji = GetCollectedKanji();
 
-        foreach(KanjiManager kanji in collectedKanji)
+        foreach (KanjiManager kanji in collectedKanji)
         {
-            if(kanji.currentXP < 100)
+            if (kanji.currentXP < 100)
             {
                 return false;
             }
@@ -130,12 +131,12 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetString("Current_Scene", SceneManager.GetActiveScene().name);
 
         PlayerPrefs.SetInt("Number_Of_Items", Inventory.instance.GetItemsList().Count); // save inventory length
-        for(int i = 0; i < Inventory.instance.GetItemsList().Count; i++)
+        for (int i = 0; i < Inventory.instance.GetItemsList().Count; i++)
         {
             ItemsManager itemInInventory = Inventory.instance.GetItemsList()[i];
             PlayerPrefs.SetString("Item_" + i + "_Name", itemInInventory.itemName); // save item name
 
-            if(itemInInventory.isStackable)
+            if (itemInInventory.isStackable)
             {
                 PlayerPrefs.SetInt("Items_" + i + "_Name", itemInInventory.amount); // save item amount
             }
@@ -171,10 +172,10 @@ public class GameManager : MonoBehaviour
 
     private void SavingPlayerStats()
     {
-        for(int i = 0; i < playerStats.Length; i++)
+        for (int i = 0; i < playerStats.Length; i++)
         {
             // players' active statuses
-            if(playerStats[i].gameObject.activeInHierarchy)
+            if (playerStats[i].gameObject.activeInHierarchy)
             {
                 PlayerPrefs.SetInt("Player_" + playerStats[i].playerName + "_active", 1);
             }
@@ -207,20 +208,20 @@ public class GameManager : MonoBehaviour
 
         LoadingPlayerPosition();
         LoadingPlayerStats();
-        
-        for(int i = 0; i < PlayerPrefs.GetInt("Number_Of_Items"); i++) // go through inventory positions
+
+        for (int i = 0; i < PlayerPrefs.GetInt("Number_Of_Items"); i++) // go through inventory positions
         {
             string itemName = PlayerPrefs.GetString("Item_" + i + "_Name"); // get item for each position
             ItemsManager itemToAdd = ItemsAssets.instance.GetItemAsset(itemName);
 
             int itemAmount = 0;
-            if(PlayerPrefs.HasKey("Items_" + i + "_Amount")) // if item has amount
+            if (PlayerPrefs.HasKey("Items_" + i + "_Amount")) // if item has amount
             {
                 itemAmount = PlayerPrefs.GetInt("Items_" + i + "_Amount"); // set item amount
             }
 
             Inventory.instance.AddItems(itemToAdd); // add item to loaded inventory
-            if(itemToAdd.isStackable && itemAmount > 1)
+            if (itemToAdd.isStackable && itemAmount > 1)
             {
                 itemToAdd.amount = itemAmount; // if it has amount bigger than 1, add it
             }
@@ -238,9 +239,9 @@ public class GameManager : MonoBehaviour
 
     private void LoadingPlayerStats()
     {
-        for(int i = 0; i < playerStats.Length; i++)
+        for (int i = 0; i < playerStats.Length; i++)
         {
-            if(PlayerPrefs.GetInt("Player_" + playerStats[i].playerName + "_active") == 0)
+            if (PlayerPrefs.GetInt("Player_" + playerStats[i].playerName + "_active") == 0)
             {
                 playerStats[i].gameObject.SetActive(false);
             }

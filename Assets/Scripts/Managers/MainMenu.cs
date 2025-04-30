@@ -17,7 +17,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         // check any key in player prefs to see if continue button should be displayed
-        if(PlayerPrefs.HasKey("Player_Pos_X"))
+        if (PlayerPrefs.HasKey("Player_Pos_X"))
         {
             //continueButton.SetActive(true);
         }
@@ -30,12 +30,12 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
         // play background music
-        if(!musicAlreadyPlaying)
-            {
-                musicAlreadyPlaying = true;
-                AudioManager.instance.PlayBackgroundMusic(musicToPlay);
-                AudioManager.instance.prevMusic = musicToPlay; // set prevMusic
-            }   
+        if (!musicAlreadyPlaying)
+        {
+            musicAlreadyPlaying = true;
+            AudioManager.instance.PlayBackgroundMusic(musicToPlay);
+            AudioManager.instance.prevMusic = musicToPlay; // set prevMusic
+        }
     }
 
     // functions for the menu buttons

@@ -20,7 +20,7 @@ public class BattleInstantiator : MonoBehaviour
     public string questToComplete;
 
     private void Start()
-    {    
+    {
         battleCounter = Random.Range(timeBetweenBattles * 0.5f, timeBetweenBattles * 1.5f); // define a random time around timeBetweenBattles
         inArea = false; // when entering a new scene, you are not automatically in a battle zone
     }
@@ -28,16 +28,16 @@ public class BattleInstantiator : MonoBehaviour
     private void Update()
     {
         // count down time between battles
-        if(inArea && !Player.instance.deactivateMovement) // player is in this battle zone an able to move (menu not open)
+        if (inArea && !Player.instance.deactivateMovement) // player is in this battle zone an able to move (menu not open)
         {
-            if(Joystick.instance.Horizontal != 0 || Joystick.instance.Vertical != 0) // when player moves, reduce battle counter
+            if (Joystick.instance.Horizontal != 0 || Joystick.instance.Vertical != 0) // when player moves, reduce battle counter
             {
                 battleCounter -= Time.deltaTime; // this could go below 0
             }
         }
 
         // start a new battle when counter reaches 0
-        if(battleCounter <= 0) 
+        if (battleCounter <= 0)
         {
             battleCounter = Random.Range(timeBetweenBattles * 0.5f, timeBetweenBattles * 1.5f); // set new counter
             StartCoroutine(StartBattleCoroutine()); // start battle coroutine
@@ -63,7 +63,7 @@ public class BattleInstantiator : MonoBehaviour
         BattleManager.instance.StartBattle(availableBattles[selectBattle].enemies, canRunAway); // activate battle scene
         MenuManager.instance.FadeOut(); // fade out to reveal battle scene
 
-        if(deactivateAfterStarting)
+        if (deactivateAfterStarting)
         {
             Destroy(gameObject); // destroy zone
         }
@@ -72,9 +72,9 @@ public class BattleInstantiator : MonoBehaviour
     // when player enters battle zone, either start battle or start counter
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            if(activateOnEnter)
+            if (activateOnEnter)
             {
                 StartCoroutine(StartBattleCoroutine());
             }
@@ -89,7 +89,7 @@ public class BattleInstantiator : MonoBehaviour
     // when player exits battle zone, stop counter
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             inArea = false; // Update() can no longer reduce counter
         }

@@ -11,7 +11,7 @@ public class QuestObject : MonoBehaviour
 
     public void CheckForCompletion() // gets called for every quest object after any quest got completed (by QuestManager)
     {
-        if(QuestManager.instance.CheckIfComplete(questToCheck)) // if the completed quest is questToCheck
+        if (QuestManager.instance.CheckIfComplete(questToCheck)) // if the completed quest is questToCheck
         {
             // de/-activate object
             objectToActivate.SetActive(activateIfComplete);

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LostBookMan : MonoBehaviour
 {
     public string[] sentences;
-    private bool canActivateBox; 
+    private bool canActivateBox;
 
     // for adjusting NPC's position
     public enum Direction { Up, Down, Left, Right }
@@ -27,7 +27,7 @@ public class LostBookMan : MonoBehaviour
     // box can only be activated when player is inside object's trigger collider
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             canActivateBox = true;
             ActionButton.instance.SetActiveState(true);
@@ -41,7 +41,7 @@ public class LostBookMan : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             canActivateBox = false;
             if (ActionButton.instance != null)
@@ -56,15 +56,15 @@ public class LostBookMan : MonoBehaviour
     {
         ActionButton.instance.SetActiveState(false);
 
-        if(canActivateBox && !DialogController.instance.IsDialogBoxActive() && GameManager.instance.gameMenuOpened != true) // only call if the box is not already active and menu is not open
+        if (canActivateBox && !DialogController.instance.IsDialogBoxActive() && GameManager.instance.gameMenuOpened != true) // only call if the box is not already active and menu is not open
         {
             List<string> sentencesList = new List<string> { "#Visitor", "Some potted plant monsters tackled me and stole the books I was about to borrow!", "They should still be around here somewhere...", "If you help me get my three books back I will give you this floating kanji I found." };
 
-            if(QuestManager.instance.questMarkersCompleted[2] == true)
+            if (QuestManager.instance.questMarkersCompleted[2] == true)
             {
                 sentencesList = new List<string> { "#Visitor", "It is the kanji for 'male'(男), which combines the symbol of 'field' and 'strength'.", "It's supposed to reflect the role of men in agricultural society." };
             }
-            else if(Inventory.instance.GetItemsList().Count == 4)
+            else if (Inventory.instance.GetItemsList().Count == 4)
             {
                 sentencesList = new List<string> { "#Visitor", "Some potted plant monsters tackled me and stole the books I was about to borrow!", "Wait what? You fought them and got my books back?!", "Amazing! Here have this kanji I found as a reward.", "It is the kanji for 'male'(男), which combines the symbol of 'field' and 'strength'.", "It's supposed to reflect the role of men in agricultural society." };
                 DialogController.instance.ActivateQuestAtEnd("Return Stolen Books", true); // activate quest after dialog

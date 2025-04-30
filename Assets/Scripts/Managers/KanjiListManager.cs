@@ -9,7 +9,7 @@ public class KanjiListManager : MonoBehaviour
     void Awake()
     {
         //singelton pattern --> avoid duplicate Players in new scenes
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
         }

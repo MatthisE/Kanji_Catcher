@@ -35,7 +35,7 @@ public class PlayerAttack : MonoBehaviour
         wordInKana.text = trainingWord.inKana;
 
         imageAmount = trainingWord.wordImage.Length;
-        for(int i=0; i<imageAmount; i++)
+        for (int i = 0; i < imageAmount; i++)
         {
             rawImages[i].SetActive(true);
         }
@@ -43,7 +43,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void ClearImages()
     {
-        for(int i=0; i<imageAmount; i++)
+        for (int i = 0; i < imageAmount; i++)
         {
             rawImages[i].GetComponent<DrawOnRawImage>().Repaint();
         }
@@ -57,16 +57,16 @@ public class PlayerAttack : MonoBehaviour
         ShowStrokeOrder();
         strokeOrderDisplayed = true;
     }
-    
+
     private void ShowStrokeOrder()
     {
-        for(int i = 0; i < imageAmount; i++)
+        for (int i = 0; i < imageAmount; i++)
         {
-            if(rawImages[i].activeInHierarchy)
+            if (rawImages[i].activeInHierarchy)
             {
-                RawImage rawImage = rawImages[i].GetComponent<RawImage>(); 
-                Sprite  overlaySprite = trainingWord.strokeOrder[i];
-                
+                RawImage rawImage = rawImages[i].GetComponent<RawImage>();
+                Sprite overlaySprite = trainingWord.strokeOrder[i];
+
                 // Create a new GameObject for the overlay
                 overlayObject = new GameObject("SpriteOverlay");
                 overlayObject.transform.SetParent(rawImage.transform, false); // Make it a child of the RawImage
@@ -96,38 +96,39 @@ public class PlayerAttack : MonoBehaviour
     private double GetOffence(double similarity)
     {
         double decrement = 1;
-        if(strokeOrderDisplayed)
+        if (strokeOrderDisplayed)
         {
             decrement = 2;
         }
 
-        if(similarity < 75)
+        if (similarity < 75)
         {
-            if(similarity < 50)
+            if (similarity < 50)
             {
-                if(similarity < 25)
+                if (similarity < 25)
                 {
                     return 0;
                 }
                 else
                 {
-                    return 0.5/decrement;
+                    return 0.5 / decrement;
                 }
             }
             else
             {
-                return 0.75/decrement;
+                return 0.75 / decrement;
             }
         }
         else
         {
-            return 1/decrement;
+            return 1 / decrement;
         }
     }
 
     public IEnumerator CheckAnswerCoroutine()
     {
-        if(!strokeOrderDisplayed){
+        if (!strokeOrderDisplayed)
+        {
             ShowStrokeOrder();
         }
 
@@ -138,8 +139,8 @@ public class PlayerAttack : MonoBehaviour
 
         double similarity = CompareImages();
         double offence = GetOffence(similarity);
-        
-        if(imageAmount == 1)
+
+        if (imageAmount == 1)
         {
             yield return new WaitForSeconds(3f);
         }
@@ -149,7 +150,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         // reset elements
-        for(int i=0; i<imageAmount; i++)
+        for (int i = 0; i < imageAmount; i++)
         {
             rawImages[i].GetComponent<DrawOnRawImage>().Repaint();
         }
@@ -172,7 +173,7 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
-        for(int i=0; i<imageAmount; i++)
+        for (int i = 0; i < imageAmount; i++)
         {
             rawImages[i].SetActive(false);
         }
@@ -180,18 +181,18 @@ public class PlayerAttack : MonoBehaviour
         // turn final damage into xp for kanji in the training word which you will get at end of battle
         KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
 
-        foreach(KanjiManager kanjiInWord in trainingWord.kanjiInWord)
+        foreach (KanjiManager kanjiInWord in trainingWord.kanjiInWord)
         {
-            foreach(KanjiManager kanji in collectedKanji)
+            foreach (KanjiManager kanji in collectedKanji)
             {
-                if(kanjiInWord.kanjiSymbol == kanji.kanjiSymbol)
+                if (kanjiInWord.kanjiSymbol == kanji.kanjiSymbol)
                 {
-                    kanji.xpReward += (int)(offence*35);
+                    kanji.xpReward += (int)(offence * 35);
                 }
             }
         }
 
-        if(forHealing)
+        if (forHealing)
         {
             battleManager.HealPlayer(offence);
         }
@@ -207,11 +208,11 @@ public class PlayerAttack : MonoBehaviour
         float totalSimilarity = 0.0f;
 
         // for every rawimage
-        for(int i=0; i<imageAmount; i++)
+        for (int i = 0; i < imageAmount; i++)
         {
             // get their content (texture)
             Texture2D rawTexture = rawImages[i].GetComponent<RawImage>().texture as Texture2D;
-            Texture2D spriteTexture = SpriteToTexture(trainingWord.wordImage[i]); 
+            Texture2D spriteTexture = SpriteToTexture(trainingWord.wordImage[i]);
 
             if (rawTexture == null || spriteTexture == null)
             {
@@ -221,7 +222,7 @@ public class PlayerAttack : MonoBehaviour
 
             // compare the textures
             float similarity = ComputeSimilarityForBlackPixels(rawTexture, spriteTexture);
-            if(similarity > 1f)
+            if (similarity > 1f)
             {
                 similarity = 1f;
             }
@@ -234,15 +235,15 @@ public class PlayerAttack : MonoBehaviour
         // display similarity text
         similarityText.GetComponent<TextMeshProUGUI>().text = finalSimilarity + "%";
 
-        if(finalSimilarity >= 75)
+        if (finalSimilarity >= 75)
         {
             similarityText.GetComponent<TextMeshProUGUI>().color = new Color(70f / 255f, 60f / 255f, 103f / 255f); // dark blue
         }
-        else if(finalSimilarity >= 50)
+        else if (finalSimilarity >= 50)
         {
             similarityText.GetComponent<TextMeshProUGUI>().color = new Color(60f / 255f, 103f / 255f, 72f / 255f); // dark green
         }
-        else if(finalSimilarity >= 25)
+        else if (finalSimilarity >= 25)
         {
             similarityText.GetComponent<TextMeshProUGUI>().color = new Color(103f / 255f, 95f / 255f, 60f / 255f); // dark yellow
         }
@@ -327,10 +328,10 @@ public class PlayerAttack : MonoBehaviour
                 if (IsBlack(pixels1[index], threshold))
                 {
                     totalBlackPixels1++;
-                    
+
                 }
-                
-                unmatchedBlackPixels1 = totalBlackPixels1 - matchingBlackPixels; 
+
+                unmatchedBlackPixels1 = totalBlackPixels1 - matchingBlackPixels;
             }
         }
 

@@ -12,7 +12,7 @@ public class ItemsAssets : MonoBehaviour
     void Start()
     {
         //singelton pattern --> avoid duplicate in new scenes
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
         }
@@ -25,9 +25,9 @@ public class ItemsAssets : MonoBehaviour
     // get an item (if it is available)
     public ItemsManager GetItemAsset(string itemToGetName)
     {
-        foreach(ItemsManager item in itemsAvailable)
+        foreach (ItemsManager item in itemsAvailable)
         {
-            if(item.itemName == itemToGetName)
+            if (item.itemName == itemToGetName)
             {
                 return item;
             }

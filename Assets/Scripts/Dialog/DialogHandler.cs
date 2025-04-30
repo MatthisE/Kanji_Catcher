@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class DialogHandler : MonoBehaviour
 {
     public string[] sentences;
-    private bool canActivateBox; 
+    private bool canActivateBox;
 
     [SerializeField] bool shouldActivateQuest;
     [SerializeField] string questToMark;
@@ -33,7 +33,7 @@ public class DialogHandler : MonoBehaviour
     // box can only be activated when player is inside object's trigger collider
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             canActivateBox = true;
             ActionButton.instance.SetActiveState(true);
@@ -47,7 +47,7 @@ public class DialogHandler : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             canActivateBox = false;
             if (ActionButton.instance != null)
@@ -62,17 +62,17 @@ public class DialogHandler : MonoBehaviour
     {
         ActionButton.instance.SetActiveState(false);
 
-        if(canActivateBox && !DialogController.instance.IsDialogBoxActive() && GameManager.instance.gameMenuOpened != true) // only call if the box is not already active and menu is not open
+        if (canActivateBox && !DialogController.instance.IsDialogBoxActive() && GameManager.instance.gameMenuOpened != true) // only call if the box is not already active and menu is not open
         {
             DialogController.instance.ActivateDialog(sentences, ""); // open box with first sentence
 
-            if(shouldActivateQuest)
+            if (shouldActivateQuest)
             {
                 DialogController.instance.ActivateQuestAtEnd(questToMark, markAsComplete); // activate quest after dialog
             }
         }
     }
-    
+
     // make the NPC face the player
     public void FacePlayer()
     {

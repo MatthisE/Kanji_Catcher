@@ -17,7 +17,7 @@ public class BattleMagicButtons : MonoBehaviour
     public void Press()
     {
         // if player has enough mana
-        if(BattleManager.instance.GetCurrentActiveCharacter().currentMana >= spellCost)
+        if (BattleManager.instance.GetCurrentActiveCharacter().currentMana >= spellCost)
         {
             // make enemy target selectable
             BattleManager.instance.magicChoicePanel.SetActive(false);

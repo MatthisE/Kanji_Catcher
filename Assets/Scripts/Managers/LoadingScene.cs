@@ -10,7 +10,7 @@ public class LoadingScene : MonoBehaviour
 
     void Start()
     {
-        if(waitToLoadTime > 0)
+        if (waitToLoadTime > 0)
         {
             StartCoroutine(LoadScene());
         }

@@ -20,9 +20,9 @@ public class QuestManager : MonoBehaviour
     // get index of quest in questNames
     public int GetQuestNumber(string questToFind)
     {
-        for(int i = 0; i < questNames.Length; i++)
+        for (int i = 0; i < questNames.Length; i++)
         {
-            if(questNames[i] == questToFind)
+            if (questNames[i] == questToFind)
             {
                 return i;
             }
@@ -36,7 +36,7 @@ public class QuestManager : MonoBehaviour
     {
         int questNumberToCheck = GetQuestNumber(questToCheck);
 
-        if(questNumberToCheck != 0)
+        if (questNumberToCheck != 0)
         {
             return questMarkersCompleted[questNumberToCheck]; // true or false
         }
@@ -49,9 +49,9 @@ public class QuestManager : MonoBehaviour
     {
         QuestObject[] questObjects = FindObjectsOfType<QuestObject>();
 
-        if(questObjects.Length > 0)
+        if (questObjects.Length > 0)
         {
-            foreach(QuestObject questObject in questObjects)
+            foreach (QuestObject questObject in questObjects)
             {
                 questObject.CheckForCompletion();
             }
@@ -79,9 +79,9 @@ public class QuestManager : MonoBehaviour
     // save completion data (1,0) of each quest in PlayerPrefs (using keyword "QuestMarker_") 
     public void SaveQuestData()
     {
-        for(int i = 0; i < questNames.Length; i++)
+        for (int i = 0; i < questNames.Length; i++)
         {
-            if(questMarkersCompleted[i])
+            if (questMarkersCompleted[i])
             {
                 PlayerPrefs.SetInt("QuestMarker_" + questNames[i], 1);
             }
@@ -95,17 +95,17 @@ public class QuestManager : MonoBehaviour
     // look for QuestMarker of each quest in PlayerPrefs and set the completion statuses in questMarkersCompleted accordingly
     public void LoadQuestData()
     {
-        for(int i = 0; i < questNames.Length; i++)
+        for (int i = 0; i < questNames.Length; i++)
         {
             int valueToSet = 0;
             string keyToUse = "QuestMarker_" + questNames[i];
 
-            if(PlayerPrefs.HasKey(keyToUse))
+            if (PlayerPrefs.HasKey(keyToUse))
             {
                 valueToSet = PlayerPrefs.GetInt(keyToUse);
             }
 
-            if(valueToSet == 0)
+            if (valueToSet == 0)
             {
                 questMarkersCompleted[i] = false;
             }

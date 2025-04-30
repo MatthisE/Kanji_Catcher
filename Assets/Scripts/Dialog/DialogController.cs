@@ -31,7 +31,7 @@ public class DialogController : MonoBehaviour
 
     void Update()
     {
-        if(nameText.text == "")
+        if (nameText.text == "")
         {
             nameBox.SetActive(false);
         }
@@ -40,15 +40,15 @@ public class DialogController : MonoBehaviour
             nameBox.SetActive(true);
         }
 
-        if(dialogBox.activeInHierarchy) // box got activated by NPCs dialog handler
+        if (dialogBox.activeInHierarchy) // box got activated by NPCs dialog handler
         {
-            if(Input.GetButtonUp("Fire1") && !stillTyping) // Fire1 --> left click (Project Settings --> Input Manager)
+            if (Input.GetButtonUp("Fire1") && !stillTyping) // Fire1 --> left click (Project Settings --> Input Manager)
             {
-                if(!dialogJustStarted)
+                if (!dialogJustStarted)
                 {
                     // move along the dialog
                     currentSentence++;
-                    if(currentSentence >= dialogSentences.Length)
+                    if (currentSentence >= dialogSentences.Length)
                     {
                         // after end of dialog
                         dialogBox.SetActive(false);
@@ -57,11 +57,11 @@ public class DialogController : MonoBehaviour
                         MenuButton.instance.SetActiveState(true);
 
                         // activate quest after opening dialog for the first time
-                        if(shouldMarkQuest)
+                        if (shouldMarkQuest)
                         {
                             shouldMarkQuest = false;
                             // mark quest complete or incomplete
-                            if(markQuestComplete)
+                            if (markQuestComplete)
                             {
                                 QuestManager.instance.MarkQuestComplete(questToMark);
                             }
@@ -71,13 +71,13 @@ public class DialogController : MonoBehaviour
                             }
                         }
 
-                        if(openKanjiInMenu != "")
+                        if (openKanjiInMenu != "")
                         {
-                            if(openKanjiInMenu == "boss")
+                            if (openKanjiInMenu == "boss")
                             {
                                 StartCoroutine(StartBattleCoroutine());
                             }
-                            else if(openKanjiInMenu == "end")
+                            else if (openKanjiInMenu == "end")
                             {
                                 SceneManager.LoadScene("FinalImage");
                             }
@@ -85,7 +85,7 @@ public class DialogController : MonoBehaviour
                             {
                                 MenuManager.instance.OpenMenu();
 
-                                if(openKanjiInMenu != "start")
+                                if (openKanjiInMenu != "start")
                                 {
                                     MenuManager.instance.CloseKanjiPanel();
                                     KanjiInfoPageManager.instance.SetActiveState(true);
@@ -156,9 +156,9 @@ public class DialogController : MonoBehaviour
     // if a dialog line starts with hashtag, its a name. Check for name before going to next line in dialog
     void CheckForName()
     {
-        if(dialogSentences[currentSentence].StartsWith("#"))
+        if (dialogSentences[currentSentence].StartsWith("#"))
         {
-            nameText.text = dialogSentences[currentSentence].Replace("#",""); // remove hashtag from line and set it as name
+            nameText.text = dialogSentences[currentSentence].Replace("#", ""); // remove hashtag from line and set it as name
             currentSentence++; // move to next line
         }
     }
@@ -178,7 +178,7 @@ public class DialogController : MonoBehaviour
         BattleRewardsHandler.instance.markQuestComplete = true;
         BattleRewardsHandler.instance.questToComplete = "Defeat Boss";
 
-        string[] boss = {"Darkness"};
+        string[] boss = { "Darkness" };
 
         yield return new WaitForSeconds(1.5f); // wait 1.5sec
         BattleManager.instance.StartBattle(boss, false); // activate battle scene

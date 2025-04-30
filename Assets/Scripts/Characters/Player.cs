@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         // singelton pattern --> avoid duplicate players in new scenes
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject); // destroy duplicate
         }
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject); //gameObject = player --> does not get destroyed when entering new scene 
 
-         // initialize the player's default look direction to "down"
+        // initialize the player's default look direction to "down"
         playerAnimator.SetFloat("lastX", 0);
         playerAnimator.SetFloat("lastY", -1);
     }
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         float horizontalMovement = Joystick.instance.Horizontal;
         float verticalMovement = Joystick.instance.Vertical;
 
-        if(deactivateMovement) // make player stand still (for example by NPC dialog)
+        if (deactivateMovement) // make player stand still (for example by NPC dialog)
         {
             playerRigidBody.velocity = Vector2.zero; // turn all values to 0
         }
@@ -62,9 +62,9 @@ public class Player : MonoBehaviour
         playerAnimator.SetFloat("movementY", playerRigidBody.velocity.y);
 
         // set Animator values of last X and Y movements to make player look in that direction when he stops moving
-        if(horizontalMovement != 0 || verticalMovement != 0)
+        if (horizontalMovement != 0 || verticalMovement != 0)
         {
-            if(!deactivateMovement) // player should not be able to look around when still
+            if (!deactivateMovement) // player should not be able to look around when still
             {
                 playerAnimator.SetFloat("lastX", horizontalMovement);
                 playerAnimator.SetFloat("lastY", verticalMovement);
