@@ -77,17 +77,11 @@ public class DialogHandler : MonoBehaviour
         Vector2 npcPosition = transform.position;
         Vector2 difference = playerPosition - npcPosition;
 
-        Direction facingDirection;
+        Direction facingDirection = Mathf.Abs(difference.x) > Mathf.Abs(difference.y)
+            ? difference.x > 0 ? Direction.Right : Direction.Left
+            : difference.y > 0 ? Direction.Up : Direction.Down;
 
         // determine the facing direction based on the player's position
-        if (Mathf.Abs(difference.x) > Mathf.Abs(difference.y))
-        {
-            facingDirection = difference.x > 0 ? Direction.Right : Direction.Left;
-        }
-        else
-        {
-            facingDirection = difference.y > 0 ? Direction.Up : Direction.Down;
-        }
 
         UpdateSprite(facingDirection);
     }

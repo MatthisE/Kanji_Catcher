@@ -100,21 +100,7 @@ public class PlayerAttack : MonoBehaviour
             decrement = 2;
         }
 
-        if (similarity < 75)
-        {
-            if (similarity < 50)
-            {
-                return similarity < 25 ? 0 : 0.5 / decrement;
-            }
-            else
-            {
-                return 0.75 / decrement;
-            }
-        }
-        else
-        {
-            return 1 / decrement;
-        }
+        return similarity < 75 ? similarity < 50 ? similarity < 25 ? 0 : 0.5 / decrement : 0.75 / decrement : 1 / decrement;
     }
 
     public IEnumerator CheckAnswerCoroutine()

@@ -7,14 +7,16 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     public float Horizontal => SnapX ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x;
     public float Vertical => SnapY ? SnapFloat(input.y, AxisOptions.Vertical) : input.y;
-    public Vector2 Direction => new Vector2(Horizontal, Vertical);
+    public Vector2 Direction => new(Horizontal, Vertical);
 
     public float HandleRange
-    { get => handleRange; set => handleRange = Mathf.Abs(value);
+    {
+        get => handleRange; set => handleRange = Mathf.Abs(value);
     }
 
     public float DeadZone
-    { get => deadZone; set => deadZone = Mathf.Abs(value);
+    {
+        get => deadZone; set => deadZone = Mathf.Abs(value);
     }
 
     public AxisOptions AxisOptions { get => AxisOptions; set => axisOptions = value; }
