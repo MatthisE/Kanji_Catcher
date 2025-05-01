@@ -1,22 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MoviePlayer : MonoBehaviour
 {
-    [SerializeField] GameObject image1;
-    [SerializeField] GameObject image2;
-    [SerializeField] GameObject image3;
-    [SerializeField] GameObject image4;
-    [SerializeField] GameObject image5;
+    [SerializeField] private GameObject image1;
+    [SerializeField] private GameObject image2;
+    [SerializeField] private GameObject image3;
+    [SerializeField] private GameObject image4;
+    [SerializeField] private GameObject image5;
 
-    [SerializeField] int musicToPlay;
+    [SerializeField] private int musicToPlay;
 
 
-    void Start()
+    private void Start()
     {
-        StartCoroutine(Slideshow());
+        _ = StartCoroutine(Slideshow());
 
         AudioManager.instance.PlayBackgroundMusic(musicToPlay);
         AudioManager.instance.prevMusic = musicToPlay; // set prevMusic

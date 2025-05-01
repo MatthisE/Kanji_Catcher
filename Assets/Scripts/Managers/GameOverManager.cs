@@ -1,16 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 // given to canvas object of game over scene
 public class GameOverManager : MonoBehaviour
 {
-    [SerializeField] GameObject continueButton;
+    [SerializeField] private GameObject continueButton;
 
-    [SerializeField] int musicToPlay;
+    [SerializeField] private int musicToPlay;
 
-    void Start()
+    private void Start()
     {
         // play death music and turn off other objects
         AudioManager.instance.PlayBackgroundMusic(musicToPlay);
@@ -33,7 +32,7 @@ public class GameOverManager : MonoBehaviour
     // functions for the menu buttons
     public void QuitToMainMenu()
     {
-        StartCoroutine(Transition());
+        _ = StartCoroutine(Transition());
     }
 
     public IEnumerator Transition()

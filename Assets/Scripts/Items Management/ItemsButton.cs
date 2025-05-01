@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 // given to buttons of individual items in normal menu or battle menu
 public class ItemButton : MonoBehaviour

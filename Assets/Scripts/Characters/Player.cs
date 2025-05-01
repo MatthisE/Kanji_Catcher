@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // given to player object, handels its movement
@@ -7,9 +5,9 @@ public class Player : MonoBehaviour
 {
     public static Player instance; //constant across all projects, makes player functions and vars usable in other scripts
 
-    [SerializeField] int moveSpeed = 1; // used for rigid body velocity
-    [SerializeField] Rigidbody2D playerRigidBody;
-    [SerializeField] Animator playerAnimator;
+    [SerializeField] private int moveSpeed = 1; // used for rigid body velocity
+    [SerializeField] private Rigidbody2D playerRigidBody;
+    [SerializeField] private Animator playerAnimator;
 
     public string transitionAreaName; // given by area exits to give player correct new position (at area entries)
 
@@ -19,12 +17,12 @@ public class Player : MonoBehaviour
 
     public bool deactivateMovement = false;
 
-    void Start()
+    private void Start()
     {
         // singelton pattern --> avoid duplicate players in new scenes
         if (instance != null && instance != this)
         {
-            Destroy(this.gameObject); // destroy duplicate
+            Destroy(gameObject); // destroy duplicate
         }
         else
         {
@@ -37,7 +35,7 @@ public class Player : MonoBehaviour
         playerAnimator.SetFloat("lastY", -1);
     }
 
-    void Update()
+    private void Update()
     {
         /*
         float horizontalMovement = Input.GetAxisRaw("Horizontal"); // up, down, W, S keys

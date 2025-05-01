@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // given to area entries
 public class AreaEnter : MonoBehaviour
 {
-    [SerializeField] string transitionAreaName;
+    [SerializeField] private string transitionAreaName;
 
-    void Start()
+    private void Start()
     {
         if (transitionAreaName == Player.instance.transitionAreaName) // if player is supposed to come out of this entry
         {

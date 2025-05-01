@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,9 +7,9 @@ public class DialogHandler : MonoBehaviour
     public string[] sentences;
     private bool canActivateBox;
 
-    [SerializeField] bool shouldActivateQuest;
-    [SerializeField] string questToMark;
-    [SerializeField] bool markAsComplete;
+    [SerializeField] private bool shouldActivateQuest;
+    [SerializeField] private string questToMark;
+    [SerializeField] private bool markAsComplete;
 
     // for adjusting NPC's position
     public enum Direction { Up, Down, Left, Right }
@@ -25,7 +21,7 @@ public class DialogHandler : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
-    void Start()
+    private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -62,7 +58,7 @@ public class DialogHandler : MonoBehaviour
     {
         ActionButton.instance.SetActiveState(false);
 
-        if (canActivateBox && !DialogController.instance.IsDialogBoxActive() && GameManager.instance.gameMenuOpened != true) // only call if the box is not already active and menu is not open
+        if (canActivateBox && !DialogController.instance.IsDialogBoxActive() && !GameManager.instance.gameMenuOpened) // only call if the box is not already active and menu is not open
         {
             DialogController.instance.ActivateDialog(sentences, ""); // open box with first sentence
 
@@ -86,17 +82,11 @@ public class DialogHandler : MonoBehaviour
         // determine the facing direction based on the player's position
         if (Mathf.Abs(difference.x) > Mathf.Abs(difference.y))
         {
-            if (difference.x > 0)
-                facingDirection = Direction.Right;
-            else
-                facingDirection = Direction.Left;
+            facingDirection = difference.x > 0 ? Direction.Right : Direction.Left;
         }
         else
         {
-            if (difference.y > 0)
-                facingDirection = Direction.Up;
-            else
-                facingDirection = Direction.Down;
+            facingDirection = difference.y > 0 ? Direction.Up : Direction.Down;
         }
 
         UpdateSprite(facingDirection);
@@ -118,6 +108,8 @@ public class DialogHandler : MonoBehaviour
                 break;
             case Direction.Right:
                 spriteRenderer.sprite = rightSprite;
+                break;
+            default:
                 break;
         }
     }

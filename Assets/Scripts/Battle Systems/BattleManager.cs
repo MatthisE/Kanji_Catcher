@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
-using UnityEngine.Rendering;
 
 // given to battle manager object
 public class BattleManager : MonoBehaviour
@@ -15,56 +13,56 @@ public class BattleManager : MonoBehaviour
     private bool isBattleActive;
 
     // scene with characters and their positions
-    [SerializeField] GameObject battleScene;
-    [SerializeField] List<BattleCharacters> activeCharacters = new List<BattleCharacters>();
-    [SerializeField] Transform playerPosition;
-    [SerializeField] BattleCharacters player;
-    [SerializeField] Transform[] enemiesPositions;
-    [SerializeField] BattleCharacters[] enemiesPrefabs;
+    [SerializeField] private GameObject battleScene;
+    [SerializeField] private List<BattleCharacters> activeCharacters = new();
+    [SerializeField] private Transform playerPosition;
+    [SerializeField] private BattleCharacters player;
+    [SerializeField] private Transform[] enemiesPositions;
+    [SerializeField] private BattleCharacters[] enemiesPrefabs;
 
     // info of player
-    [SerializeField] GameObject[] playersBattleStats;
-    [SerializeField] TextMeshProUGUI[] playersNameText; // just has 1 entry
-    [SerializeField] Slider[] playerHealthSlider, playerManaSlider; // just has 1 entry
-    [SerializeField] TextMeshProUGUI hpText;
+    [SerializeField] private GameObject[] playersBattleStats;
+    [SerializeField] private TextMeshProUGUI[] playersNameText; // just has 1 entry
+    [SerializeField] private Slider[] playerHealthSlider, playerManaSlider; // just has 1 entry
+    [SerializeField] private TextMeshProUGUI hpText;
 
     // attacks of battle characters
-    [SerializeField] BattleMoves[] battleMovesList;
-    [SerializeField] ParticleSystem characterAttackEffect;
-    [SerializeField] CharacterDamageGUI damageText;
+    [SerializeField] private BattleMoves[] battleMovesList;
+    [SerializeField] private ParticleSystem characterAttackEffect;
+    [SerializeField] private CharacterDamageGUI damageText;
     private bool isCritical;
 
     // turn based system
-    [SerializeField] int currentTurn; // does not need to be serialized field
-    [SerializeField] bool waitingForTurn; // does not need to be serialized field
+    [SerializeField] private int currentTurn; // does not need to be serialized field
+    [SerializeField] private bool waitingForTurn; // does not need to be serialized field
 
     // buttons
-    [SerializeField] GameObject UIButtonHolder;
-    [SerializeField] GameObject actionsMenu;
+    [SerializeField] private GameObject UIButtonHolder;
+    [SerializeField] private GameObject actionsMenu;
 
-    [SerializeField] GameObject runningButton;
+    [SerializeField] private GameObject runningButton;
 
     // which enemy to target
-    [SerializeField] GameObject enemyTargetPanel;
-    [SerializeField] BattleTargetButtons[] targetButtons;
+    [SerializeField] private GameObject enemyTargetPanel;
+    [SerializeField] private BattleTargetButtons[] targetButtons;
     private int selectEnemyTarget;
 
     // what magic attack
     public GameObject magicChoicePanel;
-    [SerializeField] BattleMagicButtons[] magicButtons;
+    [SerializeField] private BattleMagicButtons[] magicButtons;
 
     // running away
-    [SerializeField] float chanceToRunAway = 0.5f;
+    [SerializeField] private float chanceToRunAway = 0.5f;
     private bool canRun;
     private bool runningAway;
-    [SerializeField] string gameOverScene;
+    [SerializeField] private string gameOverScene;
 
     // items
     public GameObject itemsToUseMenu;
-    [SerializeField] ItemsManager selectedItem;
-    [SerializeField] GameObject itemSlotContainer;
-    [SerializeField] Transform itemSlotContainerParent;
-    [SerializeField] TextMeshProUGUI itemName, itemDescription;
+    [SerializeField] private ItemsManager selectedItem;
+    [SerializeField] private GameObject itemSlotContainer;
+    [SerializeField] private Transform itemSlotContainerParent;
+    [SerializeField] private TextMeshProUGUI itemName, itemDescription;
 
     // battle notifications
     public BattleNotifications battleNotice;
@@ -72,18 +70,18 @@ public class BattleManager : MonoBehaviour
     // rewards
     public int XPRewardAmount;
     public ItemsManager[] itemsReward;
-    [SerializeField] KanjiXPSliderManager[] xpSliders;
+    [SerializeField] private KanjiXPSliderManager[] xpSliders;
 
     // attack menus
-    [SerializeField] GameObject enemyAttackMenu;
-    [SerializeField] GameObject playerAttackMenu;
+    [SerializeField] private GameObject enemyAttackMenu;
+    [SerializeField] private GameObject playerAttackMenu;
 
-    void Start()
+    private void Start()
     {
         //singelton pattern --> avoid duplicates in new scenes
         if (instance != null && instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
@@ -95,7 +93,7 @@ public class BattleManager : MonoBehaviour
     }
 
     // when battle is active, always check if it is player's turn (show UI) or enemies' turn (make enemy move)
-    void Update()
+    private void Update()
     {
         CheckPlayerButtonHolder();
     }
@@ -111,7 +109,7 @@ public class BattleManager : MonoBehaviour
                 {
                     UIButtonHolder.SetActive(true); // activate
 
-                    if (enemyTargetPanel.activeInHierarchy != true)
+                    if (!enemyTargetPanel.activeInHierarchy)
                     {
                         actionsMenu.SetActive(true);
                     }
@@ -119,7 +117,7 @@ public class BattleManager : MonoBehaviour
                 else
                 {
                     UIButtonHolder.SetActive(false);
-                    StartCoroutine(EnemyMoveCoroutine()); // dactivate and make enemy move
+                    _ = StartCoroutine(EnemyMoveCoroutine()); // dactivate and make enemy move
                 }
             }
             else
@@ -211,26 +209,19 @@ public class BattleManager : MonoBehaviour
                 {
                     if (enemiesPrefabs[j].characterName == enemiesToSpawn[i]) // check if the names are the same
                     {
-                        BattleCharacters newEnemy = null;
-
-                        if (enemiesToSpawn.Length == 1)
-                        {
-                            newEnemy = Instantiate( // make enemy a battle character
+                        BattleCharacters newEnemy = enemiesToSpawn.Length == 1
+                            ? Instantiate( // make enemy a battle character
                                 enemiesPrefabs[j],
                                 enemiesPositions[1].position, // at position 1 (middle)
                                 enemiesPositions[1].rotation,
                                 enemiesPositions[1]
-                            );
-                        }
-                        else
-                        {
-                            newEnemy = Instantiate( // make enemy a battle character
+                            )
+                            : Instantiate( // make enemy a battle character
                                 enemiesPrefabs[j],
                                 enemiesPositions[i].position,
                                 enemiesPositions[i].rotation,
                                 enemiesPositions[i]
                             );
-                        }
                         activeCharacters.Add(newEnemy);
                     }
                 }
@@ -262,13 +253,13 @@ public class BattleManager : MonoBehaviour
                 else
                 {
                     // turn off player
-                    playersBattleStats[i].gameObject.SetActive(false);
+                    playersBattleStats[i].SetActive(false);
                 }
             }
             else
             {
                 // turn off player if you have less active charas than texts
-                playersBattleStats[i].gameObject.SetActive(false);
+                playersBattleStats[i].SetActive(false);
             }
         }
     }
@@ -279,7 +270,7 @@ public class BattleManager : MonoBehaviour
         waitingForTurn = false;
 
         yield return new WaitForSeconds(1f);
-        StartCoroutine(EnemyAttack());
+        _ = StartCoroutine(EnemyAttack());
     }
 
     private IEnumerator EnemyAttack()
@@ -292,7 +283,7 @@ public class BattleManager : MonoBehaviour
 
     public void StartEnemyAttackImpact(float defence)
     {
-        StartCoroutine(EnemyAttackImpact(defence));
+        _ = StartCoroutine(EnemyAttackImpact(defence));
     }
 
     public IEnumerator EnemyAttackImpact(float defence)
@@ -350,7 +341,7 @@ public class BattleManager : MonoBehaviour
         }
 
         // put damage effect of attack move on player
-        Instantiate(
+        _ = Instantiate(
             battleMovesList[battleMove].effectToUse,
             activeCharacters[selectedCharacterTarget].transform.position, // position of selected target
             activeCharacters[selectedCharacterTarget].transform.rotation
@@ -360,7 +351,7 @@ public class BattleManager : MonoBehaviour
     private void InstantiateEffectOnAttackingCharacter()
     {
         // instantiating the particle effect on the attacking character
-        Instantiate(
+        _ = Instantiate(
             characterAttackEffect,
             activeCharacters[currentTurn].transform.position,
             activeCharacters[currentTurn].transform.rotation
@@ -397,7 +388,7 @@ public class BattleManager : MonoBehaviour
         if (Random.value <= 0.1f)
         {
             isCritical = true;
-            return (damageToGive * 2);
+            return damageToGive * 2;
         }
 
         return damageToGive;
@@ -464,18 +455,11 @@ public class BattleManager : MonoBehaviour
         {
             if (allEnemiesAreDead)
             {
-                if (QuestManager.instance.questMarkersCompleted[3] == true)
-                {
-                    StartCoroutine(EndGame());
-                }
-                else
-                {
-                    StartCoroutine(EndBattleCoroutine());
-                }
+                _ = QuestManager.instance.questMarkersCompleted[3] ? StartCoroutine(EndGame()) : StartCoroutine(EndBattleCoroutine());
             }
             else if (playerIsDead)
             {
-                StartCoroutine(GameOverCoroutine());
+                _ = StartCoroutine(GameOverCoroutine());
             }
         }
         else
@@ -574,7 +558,7 @@ public class BattleManager : MonoBehaviour
             else
             {
                 bool isFullyTrained = true;
-                while (isFullyTrained == true)
+                while (isFullyTrained)
                 {
                     randomIndex = Mathf.FloorToInt(Random.value * collectedKanji.Length);
                     if (collectedKanji[randomIndex].currentXP != 100)
@@ -607,7 +591,7 @@ public class BattleManager : MonoBehaviour
         actionsMenu.SetActive(false); // activate enemy target select panel
 
         // create list of all the enemies 
-        List<int> Enemies = new List<int>();
+        List<int> Enemies = new();
 
         for (int i = 0; i < activeCharacters.Count; i++)
         {
@@ -652,7 +636,7 @@ public class BattleManager : MonoBehaviour
     public void StartPlayerAttackImpact(double offence)
     {
         playerAttackMenu.SetActive(false);
-        StartCoroutine(PlayerAttackCoroutine("Slash", offence));
+        _ = StartCoroutine(PlayerAttackCoroutine("Slash", offence));
     }
 
     public IEnumerator PlayerAttackCoroutine(string moveName, double offence)
@@ -684,7 +668,7 @@ public class BattleManager : MonoBehaviour
     // run away
     public void RunAway() // on click on run away
     {
-        StartCoroutine(RunAwayCoroutine());
+        _ = StartCoroutine(RunAwayCoroutine());
     }
 
     private IEnumerator RunAwayCoroutine()
@@ -699,7 +683,7 @@ public class BattleManager : MonoBehaviour
                 runningAway = true;
                 battleNotice.SetText("You managed to run away.");
                 battleNotice.Activate();
-                StartCoroutine(EndBattleCoroutine());
+                _ = StartCoroutine(EndBattleCoroutine());
             }
             else
             {
@@ -747,7 +731,7 @@ public class BattleManager : MonoBehaviour
 
     public void HealPlayer(double amountOfAffect)
     {
-        StartCoroutine(HealPlayerCoroutine(amountOfAffect));
+        _ = StartCoroutine(HealPlayerCoroutine(amountOfAffect));
     }
 
     public IEnumerator HealPlayerCoroutine(double amountOfAffect)
@@ -798,14 +782,7 @@ public class BattleManager : MonoBehaviour
 
             // set the amount text to a number if the amount is bigger than 1
             TextMeshProUGUI itemsAmountText = itemSlot.Find("Amount Text").GetComponent<TextMeshProUGUI>();
-            if (item.amount > 1)
-            {
-                itemsAmountText.text = item.amount.ToString();
-            }
-            else
-            {
-                itemsAmountText.text = "";
-            }
+            itemsAmountText.text = item.amount > 1 ? item.amount.ToString() : "";
 
             // set item of item button (script given to botton component of item slot object)
             itemSlot.GetComponent<ItemButton>().itemOnButton = item;

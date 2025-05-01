@@ -1,23 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // given to audio manager object
 public class AudioManager : MonoBehaviour
 {
     // background music of a scene is set by its virtual camera
-    [SerializeField] AudioSource[] SFX, backgroundMusic;
+    [SerializeField] private AudioSource[] SFX, backgroundMusic;
 
     public int prevMusic; // previous music needs to be safed in global object, current music in local object (camera)
 
     public static AudioManager instance;
 
-    void Start()
+    private void Start()
     {
         //singelton pattern --> avoid duplicate Audio Managers in new scenes
         if (instance != null && instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {

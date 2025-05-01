@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 [System.Serializable] // this class can be used anywhere
 
 // define a battle move, BattleManager has a list of them

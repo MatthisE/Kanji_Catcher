@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class FinalImage : MonoBehaviour
 {
-    [SerializeField] int musicToPlay;
+    [SerializeField] private int musicToPlay;
 
 
-    void Start()
+    private void Start()
     {
         AudioManager.instance.PlayBackgroundMusic(musicToPlay);
         AudioManager.instance.prevMusic = musicToPlay; // set prevMusic

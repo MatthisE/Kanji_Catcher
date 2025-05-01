@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 // given to player object, handels all his stats
 public class PlayerStats : MonoBehaviour
@@ -27,7 +24,7 @@ public class PlayerStats : MonoBehaviour
 
     public KanjiManager[] collectedKanji;
 
-    void Start()
+    private void Start()
     {
         instance = this;
 
@@ -43,7 +40,7 @@ public class PlayerStats : MonoBehaviour
         */
     }
 
-    void Awake()
+    private void Awake()
     {
         DontDestroyOnLoad(gameObject); // Keep this object across scenes
     }

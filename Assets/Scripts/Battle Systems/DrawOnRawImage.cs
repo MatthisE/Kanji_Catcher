@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +6,7 @@ using UnityEngine.UI;
 
 public class DrawOnRawImage : MonoBehaviour
 {
-    [SerializeField] RawImage drawImage;
+    [SerializeField] private RawImage drawImage;
     private int scaleFactor;
 
     private Texture2D canvasTexture;
@@ -18,7 +17,7 @@ public class DrawOnRawImage : MonoBehaviour
     [SerializeField] private float brushSize = 10f;
     [SerializeField] private Color brushColor = Color.black;
 
-    void Start()
+    private void Start()
     {
         Setup();
     }
@@ -35,11 +34,11 @@ public class DrawOnRawImage : MonoBehaviour
 
         for (int i = 0; i < pixels.Length; i++)
         {
-            if (i < width * 10 || i > width * width - width * 10 || i % width > 0 && i % width < 10 || (i - (width - 1)) % width <= 10 || (i - (width - 1)) % width >= width - 10)
+            if (i < width * 10 || i > (width * width) - (width * 10) || i % width > 0 && i % width < 10 || (i - (width - 1)) % width <= 10 || (i - (width - 1)) % width >= width - 10)
             {
                 pixels[i] = Color.gray; // set the pixel color to gray
             }
-            else if (i % (width / 2) > 0 && i % (width / 2) < 5 || i > width * (width / 2 - 2) && i < width * (width / 2 + 3))
+            else if (i % (width / 2) > 0 && i % (width / 2) < 5 || i > width * ((width / 2) - 2) && i < width * ((width / 2) + 3))
             {
                 pixels[i] = new Color(0.8f, 0.8f, 0.8f); // set the pixel color to light gray
             }
@@ -56,14 +55,15 @@ public class DrawOnRawImage : MonoBehaviour
         drawImage.texture = originalTexture;
 
         // calculate scaleFactor automatically based on the width of the RawImage and the original texture
-        float widthRatio = drawImage.rectTransform.rect.width / (float)originalTexture.width;
-        float heightRatio = drawImage.rectTransform.rect.height / (float)originalTexture.height;
+        float widthRatio = drawImage.rectTransform.rect.width / originalTexture.width;
+        float heightRatio = drawImage.rectTransform.rect.height / originalTexture.height;
         scaleFactor = Mathf.RoundToInt(Mathf.Max(widthRatio, heightRatio));
 
-        canvasTexture = new Texture2D(originalTexture.width * scaleFactor, originalTexture.height * scaleFactor, TextureFormat.RGBA32, false);
-
-        canvasTexture.filterMode = FilterMode.Point;
-        canvasTexture.wrapMode = TextureWrapMode.Clamp;
+        canvasTexture = new Texture2D(originalTexture.width * scaleFactor, originalTexture.height * scaleFactor, TextureFormat.RGBA32, false)
+        {
+            filterMode = FilterMode.Point,
+            wrapMode = TextureWrapMode.Clamp
+        };
 
         // Create a new array of size equal to canvasTexture.width multiplied by canvasTexture.height
         canvasColors = new Color32[canvasTexture.width * canvasTexture.height];
@@ -78,7 +78,7 @@ public class DrawOnRawImage : MonoBehaviour
                 {
                     for (int j = 0; j < scaleFactor; j++)
                     {
-                        int index = ((y * scaleFactor) + j) * canvasTexture.width + ((x * scaleFactor) + i);
+                        int index = (((y * scaleFactor) + j) * canvasTexture.width) + (x * scaleFactor) + i;
                         canvasColors[index] = pixel;
                     }
                 }
@@ -137,16 +137,22 @@ public class DrawOnRawImage : MonoBehaviour
         // Draw a circle around the pixel based on the brush size (ensures thick lines)
         for (int i = x - radius; i <= x + radius; i++)
         {
-            if (i < 0 || i >= width) continue;
+            if (i < 0 || i >= width)
+            {
+                continue;
+            }
 
             for (int j = y - radius; j <= y + radius; j++)
             {
-                if (j < 0 || j >= height) continue;
+                if (j < 0 || j >= height)
+                {
+                    continue;
+                }
 
                 // Only set pixels within the circle area to avoid messy lines
                 if (Vector2.Distance(new Vector2(i, j), new Vector2(x, y)) <= radius)
                 {
-                    int index = j * width + i;
+                    int index = (j * width) + i;
                     // Ensure the color has an alpha value (preserving transparency)
                     Color32 c = color;
                     c.a = canvasColors[index].a;
@@ -159,7 +165,7 @@ public class DrawOnRawImage : MonoBehaviour
     private Vector2 GetLocalCursor()
     {
         Vector2 cursor = Input.mousePosition;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(drawImage.rectTransform, cursor, null, out Vector2 localCursor);
+        _ = RectTransformUtility.ScreenPointToLocalPointInRectangle(drawImage.rectTransform, cursor, null, out Vector2 localCursor);
         localCursor += new Vector2(canvasTexture.width / 2f, canvasTexture.height / 2f);
         return localCursor;
     }
@@ -171,11 +177,11 @@ public class DrawOnRawImage : MonoBehaviour
         // Reset the canvasColors array
         for (int i = 0; i < canvasColors.Length; i++)
         {
-            if (i < width * 10 || i > width * width - width * 10 || i % width > 0 && i % width < 10 || (i - (width - 1)) % width <= 10 || (i - (width - 1)) % width >= width - 10)
+            if (i < width * 10 || i > (width * width) - (width * 10) || i % width > 0 && i % width < 10 || (i - (width - 1)) % width <= 10 || (i - (width - 1)) % width >= width - 10)
             {
                 canvasColors[i] = Color.gray; // Set the background color to gray
             }
-            else if (i % (width / 2) > 0 && i % (width / 2) < 5 || i > width * (width / 2 - 2) && i < width * (width / 2 + 3))
+            else if (i % (width / 2) > 0 && i % (width / 2) < 5 || i > width * ((width / 2) - 2) && i < width * ((width / 2) + 3))
             {
                 canvasColors[i] = new Color(0.8f, 0.8f, 0.8f); // Set the background color to light gray
             }

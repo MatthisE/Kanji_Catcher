@@ -1,17 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
 // controls dialog boxes and their text, can mark a quest, used by DialogHandler
 public class DialogController : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI dialogText, nameText;
-    [SerializeField] GameObject dialogBox, nameBox;
-    [SerializeField] string[] dialogSentences;
-    [SerializeField] int currentSentence;
+    [SerializeField] private TextMeshProUGUI dialogText, nameText;
+    [SerializeField] private GameObject dialogBox, nameBox;
+    [SerializeField] private string[] dialogSentences;
+    [SerializeField] private int currentSentence;
 
     public static DialogController instance;
 
@@ -24,12 +22,12 @@ public class DialogController : MonoBehaviour
     private bool stillTyping = false;
     private string openKanjiInMenu = "";
 
-    void Start()
+    private void Start()
     {
         instance = this;
     }
 
-    void Update()
+    private void Update()
     {
         if (nameText.text == "")
         {
@@ -75,7 +73,7 @@ public class DialogController : MonoBehaviour
                         {
                             if (openKanjiInMenu == "boss")
                             {
-                                StartCoroutine(StartBattleCoroutine());
+                                _ = StartCoroutine(StartBattleCoroutine());
                             }
                             else if (openKanjiInMenu == "end")
                             {
@@ -100,7 +98,7 @@ public class DialogController : MonoBehaviour
                         CheckForName(); // display current name
                         //dialogText.text = dialogSentences[currentSentence]; // display current sentence
                         stillTyping = true;
-                        StartCoroutine(RevealText(dialogText, dialogSentences[currentSentence], 0.01f));
+                        _ = StartCoroutine(RevealText(dialogText, dialogSentences[currentSentence], 0.01f));
                     }
                 }
                 else
@@ -112,7 +110,7 @@ public class DialogController : MonoBehaviour
         }
     }
 
-    IEnumerator RevealText(TextMeshProUGUI revealText, string fullText, float typingSpeed)
+    private IEnumerator RevealText(TextMeshProUGUI revealText, string fullText, float typingSpeed)
     {
         AudioManager.instance.PlaySFX(9);
 
@@ -147,14 +145,14 @@ public class DialogController : MonoBehaviour
         CheckForName();
         //dialogText.text = dialogSentences[currentSentence];
         stillTyping = true;
-        StartCoroutine(RevealText(dialogText, dialogSentences[currentSentence], 0.01f));
+        _ = StartCoroutine(RevealText(dialogText, dialogSentences[currentSentence], 0.01f));
         dialogBox.SetActive(true);
 
         GameManager.instance.dialogBoxOpened = true; //set condition for player to stop moving
     }
 
     // if a dialog line starts with hashtag, its a name. Check for name before going to next line in dialog
-    void CheckForName()
+    private void CheckForName()
     {
         if (dialogSentences[currentSentence].StartsWith("#"))
         {

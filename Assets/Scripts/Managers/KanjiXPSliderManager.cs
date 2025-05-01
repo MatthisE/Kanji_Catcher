@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,10 +5,10 @@ using UnityEngine.UI;
 // given to Kanji XP Slider Objects
 public class KanjiXPSliderManager : MonoBehaviour
 {
-    [SerializeField] Image kanjiImage;
-    [SerializeField] Slider XPSlider;
-    [SerializeField] TextMeshProUGUI XPSliderText;
-    [SerializeField] TextMeshProUGUI newXPText;
+    [SerializeField] private Image kanjiImage;
+    [SerializeField] private Slider XPSlider;
+    [SerializeField] private TextMeshProUGUI XPSliderText;
+    [SerializeField] private TextMeshProUGUI newXPText;
 
     public void SetSlider(KanjiManager kanji, int newXP)
     {
@@ -20,13 +18,6 @@ public class KanjiXPSliderManager : MonoBehaviour
         XPSlider.value = kanji.currentXP;
         XPSliderText.text = kanji.currentXP + "/ 100";
 
-        if (newXP == -10)
-        {
-            newXPText.text = "";
-        }
-        else
-        {
-            newXPText.text = "+" + newXP;
-        }
+        newXPText.text = newXP == -10 ? "" : "+" + newXP;
     }
 }

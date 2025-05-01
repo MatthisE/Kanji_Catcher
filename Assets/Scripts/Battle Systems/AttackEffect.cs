@@ -1,20 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // part of a battle move
 public class AttackEffect : MonoBehaviour
 {
-    [SerializeField] float effectTime;
-    [SerializeField] int SFXNumberToPlay;
+    [SerializeField] private float effectTime;
+    [SerializeField] private int SFXNumberToPlay;
 
-    void Start()
+    private void Start()
     {
         // play the right sound when the effect appears
         AudioManager.instance.PlaySFX(SFXNumberToPlay);
     }
 
-    void Update()
+    private void Update()
     {
         // destroy the effect after a certain time
         Destroy(gameObject, effectTime);

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
     private List<ItemsManager> itemsList;
 
-    void Start()
+    private void Start()
     {
         instance = this;
 
@@ -78,18 +77,18 @@ public class Inventory : MonoBehaviour
             // only remove stackable items if their amount is below 1
             if (inventoryItem != null && inventoryItem.amount <= 0)
             {
-                itemsList.Remove(inventoryItem);
+                _ = itemsList.Remove(inventoryItem);
             }
         }
         else
         {
-            itemsList.Remove(item);
+            _ = itemsList.Remove(item);
         }
     }
 
     public void RemoveAllBooks()
     {
-        itemsList.RemoveAll(item => item.itemName == "Book");
+        _ = itemsList.RemoveAll(item => item.itemName == "Book");
     }
 
     public List<ItemsManager> GetItemsList()
