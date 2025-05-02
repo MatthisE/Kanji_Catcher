@@ -28,7 +28,7 @@ public class BattleInstantiator : MonoBehaviour
     private void Update()
     {
         // count down time between battles
-        if (inArea && !Player.instance.deactivateMovement && (Joystick.instance.Horizontal <= 0 - epsilon || Joystick.instance.Horizontal >= 0 + epsilon || Joystick.instance.Vertical <= 0 - epsilon || Joystick.instance.Vertical >= 0 + epsilon)) // player is in this battle zone an able to move (menu not open) & when player moves, reduce battle counter
+        if (inArea && !Player.instance.deactivateMovement && (Joystick.instance.Horizontal < 0 - epsilon || Joystick.instance.Horizontal > 0 + epsilon || Joystick.instance.Vertical < 0 - epsilon || Joystick.instance.Vertical > 0 + epsilon)) // player is in this battle zone an able to move (menu not open) & when player moves, reduce battle counter
         {
             battleCounter -= Time.deltaTime;
         }
