@@ -56,5 +56,10 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Kanji_Catcher.sln"
+    "dotnet.defaultSolution": "Kanji_Catcher.sln",
+    "omnisharp.enableRoslynAnalyzers": true,
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.enableMSBuildLoadProjectsOnDemand": true,
+    "omnisharp.analyzeOpenDocumentsOnly": false,
+    "dotnet.server.useOmnisharp": true
 }

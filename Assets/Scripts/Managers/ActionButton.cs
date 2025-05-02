@@ -6,7 +6,7 @@ public class ActionButton : MonoBehaviour
     public static ActionButton instance;
     private TextMeshProUGUI actionText;
 
-    void Awake()
+    private void Awake()
     {
         if (instance != null && instance != this)
         {

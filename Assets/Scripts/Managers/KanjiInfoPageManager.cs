@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 //using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
@@ -9,13 +7,13 @@ public class KanjiInfoPageManager : MonoBehaviour
 {
     public static KanjiInfoPageManager instance;
 
-    [SerializeField] Image kanjiSymbol;
-    [SerializeField] TextMeshProUGUI onyomi;
-    [SerializeField] TextMeshProUGUI kunyomi;
-    [SerializeField] TextMeshProUGUI meanings;
-    [SerializeField] GameObject practiceImage;
+    [SerializeField] private Image kanjiSymbol;
+    [SerializeField] private TextMeshProUGUI onyomi;
+    [SerializeField] private TextMeshProUGUI kunyomi;
+    [SerializeField] private TextMeshProUGUI meanings;
+    [SerializeField] private GameObject practiceImage;
 
-    [SerializeField] GameObject[] exampleWords;
+    [SerializeField] private GameObject[] exampleWords;
     private KanjiManager kanji;
 
     private bool strokeOrderDisplayed;
@@ -94,15 +92,7 @@ public class KanjiInfoPageManager : MonoBehaviour
             }
         }
 
-        string nextSymbol = null;
-        if (index == collectedKanjiList.Length - 1)
-        {
-            nextSymbol = collectedKanjiList[0].kanjiSymbol;
-        }
-        else
-        {
-            nextSymbol = collectedKanjiList[index + 1].kanjiSymbol;
-        }
+        string nextSymbol = index == collectedKanjiList.Length - 1 ? collectedKanjiList[0].kanjiSymbol : collectedKanjiList[index + 1].kanjiSymbol;
         SetPage(nextSymbol);
     }
 
@@ -121,15 +111,7 @@ public class KanjiInfoPageManager : MonoBehaviour
             }
         }
 
-        string previousSymbol = null;
-        if (index == 0)
-        {
-            previousSymbol = collectedKanjiList[collectedKanjiList.Length - 1].kanjiSymbol;
-        }
-        else
-        {
-            previousSymbol = collectedKanjiList[index - 1].kanjiSymbol;
-        }
+        string previousSymbol = index == 0 ? collectedKanjiList[^1].kanjiSymbol : collectedKanjiList[index - 1].kanjiSymbol;
         SetPage(previousSymbol);
     }
 
@@ -148,7 +130,7 @@ public class KanjiInfoPageManager : MonoBehaviour
             Sprite overlaySprite = kanji.strokeOrder;
 
             // Create a new GameObject for the overlay
-            GameObject overlayObject = new GameObject("SpriteOverlay");
+            GameObject overlayObject = new("SpriteOverlay");
             overlayObject.transform.SetParent(rawImage.transform, false); // Make it a child of the RawImage
 
             // Add an Image component to the overlay GameObject

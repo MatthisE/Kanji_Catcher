@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +6,7 @@ public class BossManager : MonoBehaviour
 {
     public string[] sentences;
     private bool canActivateBox;
-    [SerializeField] string[] bossName;
+    [SerializeField] private string[] bossName;
 
 
     // box can only be activated when player is inside object's trigger collider
@@ -43,9 +42,9 @@ public class BossManager : MonoBehaviour
 
         string battleBoss = "";
 
-        if (canActivateBox && !DialogController.instance.IsDialogBoxActive() && GameManager.instance.gameMenuOpened != true) // only call if the box is not already active and menu is not open
+        if (canActivateBox && !DialogController.instance.IsDialogBoxActive() && !GameManager.instance.gameMenuOpened) // only call if the box is not already active and menu is not open
         {
-            List<string> sentencesList = new List<string> { "#Darkness", "I am an amalgamation of the cursed energy in this place...", "If you want to cleanse this place you must find and train all the cursed kanji and then defeat me..." };
+            List<string> sentencesList = new() { "#Darkness", "I am an amalgamation of the cursed energy in this place...", "If you want to cleanse this place you must find and train all the cursed kanji and then defeat me..." };
 
             KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
             int kanjiLeft = 9 - collectedKanji.Length;

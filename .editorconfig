@@ -1,0 +1,26 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = false
+insert_final_newline = false
+dotnet_analyzer_diagnostic.severity = warning
+dotnet_style_readonly_field = false:none
+
+# Unity safety: don't suggest readonly on SerializeField
+dotnet_diagnostic.IDE0044.severity = none   # 'Make field readonly'
+dotnet_diagnostic.CA1822.severity = none    # 'Mark member as static'
+dotnet_diagnostic.IDE0051.severity = none  # 'Remove unused private members'
+
+# Optional: enable specific useful rules (if analyzers are available)
+dotnet_diagnostic.CA1502.severity = warning 
+dotnet_diagnostic.MA0003.severity = warning 
+
+# Optional: enforce naming or formatting (customize to taste)
+dotnet_naming_rule.private_fields_should_be_camel_case.severity = suggestion

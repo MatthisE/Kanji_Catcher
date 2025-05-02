@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,18 +8,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [SerializeField] PlayerStats[] playerStats;
+    [SerializeField] private PlayerStats[] playerStats;
 
     public bool gameMenuOpened, dialogBoxOpened, battleIsActive, goThroughExit; // conditions for player to stop moving
 
-    [SerializeField] GameObject endOfGameImage;
+    [SerializeField] private GameObject endOfGameImage;
 
-    void Awake()
+    private void Awake()
     {
         // Singleton pattern
         if (instance != null && instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
@@ -33,22 +31,22 @@ public class GameManager : MonoBehaviour
         Array.Reverse(playerStats); // Revert array
     }
 
-    void Start()
+    private void Start()
     {
         ItemsManager itemToAdd = ItemsAssets.instance.GetItemAsset("Cursed Kanji Book");
         Inventory.instance.AddItems(itemToAdd); // add item to loaded inventory
 
-        if (QuestManager.instance.questMarkersCompleted[1] == false)
+        if (!QuestManager.instance.questMarkersCompleted[1])
         {
             dialogBoxOpened = true;
 
             MenuButton.instance.SetActiveState(false);
 
-            StartCoroutine(StartText());
+            _ = StartCoroutine(StartText());
         }
     }
 
-    IEnumerator StartText()
+    private IEnumerator StartText()
     {
         yield return new WaitForSeconds(1.0f); // wait before next letter
 
@@ -58,7 +56,7 @@ public class GameManager : MonoBehaviour
         DialogController.instance.ActivateQuestAtEnd("Start Game", true); // activate quest after dialog
     }
 
-    void Update()
+    private void Update()
     {
         // check if Player should stay still
         if (gameMenuOpened || dialogBoxOpened || battleIsActive || goThroughExit)
@@ -73,7 +71,7 @@ public class GameManager : MonoBehaviour
             Joystick.ActivateJoystick(true);
         }
 
-        if (QuestManager.instance.questMarkersCompleted[3] == true)
+        if (QuestManager.instance.questMarkersCompleted[3])
         {
             //StartCoroutine(Transition());
         }
@@ -143,7 +141,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void PrintPlayerPrefs()
+    private void PrintPlayerPrefs()
     {
         // Get the total number of PlayerPrefs entries
         int count = PlayerPrefs.GetInt("PlayerPrefsCount", 0);

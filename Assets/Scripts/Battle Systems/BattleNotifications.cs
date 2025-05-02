@@ -1,13 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 // set a notification text and make it appear and disappear after certain time, part of BattleManager
 public class BattleNotifications : MonoBehaviour
 {
-    [SerializeField] float timeAlive;
-    [SerializeField] TextMeshProUGUI textNotice;
+    [SerializeField] private float timeAlive;
+    [SerializeField] private TextMeshProUGUI textNotice;
 
     public void SetText(string text)
     {
@@ -17,10 +16,10 @@ public class BattleNotifications : MonoBehaviour
     public void Activate()
     {
         gameObject.SetActive(true);
-        StartCoroutine(MakeNoticeDisappear());
+        _ = StartCoroutine(MakeNoticeDisappear());
     }
 
-    IEnumerator MakeNoticeDisappear()
+    private IEnumerator MakeNoticeDisappear()
     {
         yield return new WaitForSeconds(timeAlive);
         gameObject.SetActive(false);

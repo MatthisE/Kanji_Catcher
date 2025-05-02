@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,14 +6,14 @@ using UnityEngine.UI;
 // given to main menu canvas object of main menu scene
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] Image imageToFade;
-    [SerializeField] string newGameScene;
-    [SerializeField] GameObject continueButton;
+    [SerializeField] private Image imageToFade;
+    [SerializeField] private string newGameScene;
+    [SerializeField] private GameObject continueButton;
 
-    [SerializeField] int musicToPlay;
+    [SerializeField] private int musicToPlay;
     private bool musicAlreadyPlaying;
 
-    void Start()
+    private void Start()
     {
         // check any key in player prefs to see if continue button should be displayed
         if (PlayerPrefs.HasKey("Player_Pos_X"))
@@ -27,7 +26,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         // play background music
         if (!musicAlreadyPlaying)
@@ -41,7 +40,7 @@ public class MainMenu : MonoBehaviour
     // functions for the menu buttons
     public void NewGameButton()
     {
-        StartCoroutine(StartNewGame());
+        _ = StartCoroutine(StartNewGame());
     }
 
     public IEnumerator StartNewGame()

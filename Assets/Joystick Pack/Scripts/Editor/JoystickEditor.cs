@@ -1,5 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
@@ -14,7 +12,7 @@ public class JoystickEditor : Editor
     protected SerializedProperty background;
     private SerializedProperty handle;
 
-    protected Vector2 center = new Vector2(0.5f, 0.5f);
+    protected Vector2 center = new(0.5f, 0.5f);
 
     protected virtual void OnEnable()
     {
@@ -35,7 +33,7 @@ public class JoystickEditor : Editor
         EditorGUILayout.Space();
         DrawComponents();
 
-        serializedObject.ApplyModifiedProperties();
+        _ = serializedObject.ApplyModifiedProperties();
 
         if (handle != null)
         {
@@ -49,11 +47,11 @@ public class JoystickEditor : Editor
 
     protected virtual void DrawValues()
     {
-        EditorGUILayout.PropertyField(handleRange, new GUIContent("Handle Range", "The distance the visual handle can move from the center of the joystick."));
-        EditorGUILayout.PropertyField(deadZone, new GUIContent("Dead Zone", "The distance away from the center input has to be before registering."));
-        EditorGUILayout.PropertyField(axisOptions, new GUIContent("Axis Options", "Which axes the joystick uses."));
-        EditorGUILayout.PropertyField(snapX, new GUIContent("Snap X", "Snap the horizontal input to a whole value."));
-        EditorGUILayout.PropertyField(snapY, new GUIContent("Snap Y", "Snap the vertical input to a whole value."));
+        _ = EditorGUILayout.PropertyField(handleRange, new GUIContent("Handle Range", "The distance the visual handle can move from the center of the joystick."));
+        _ = EditorGUILayout.PropertyField(deadZone, new GUIContent("Dead Zone", "The distance away from the center input has to be before registering."));
+        _ = EditorGUILayout.PropertyField(axisOptions, new GUIContent("Axis Options", "Which axes the joystick uses."));
+        _ = EditorGUILayout.PropertyField(snapX, new GUIContent("Snap X", "Snap the horizontal input to a whole value."));
+        _ = EditorGUILayout.PropertyField(snapY, new GUIContent("Snap Y", "Snap the vertical input to a whole value."));
     }
 
     protected virtual void DrawComponents()

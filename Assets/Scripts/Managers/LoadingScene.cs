@@ -1,18 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 // given to loader object of loading scene
 public class LoadingScene : MonoBehaviour
 {
-    [SerializeField] float waitToLoadTime;
+    [SerializeField] private float waitToLoadTime;
 
-    void Start()
+    private void Start()
     {
         if (waitToLoadTime > 0)
         {
-            StartCoroutine(LoadScene());
+            _ = StartCoroutine(LoadScene());
         }
     }
 

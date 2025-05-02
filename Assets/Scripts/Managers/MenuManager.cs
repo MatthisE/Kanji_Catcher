@@ -1,40 +1,37 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor;
 using UnityEngine.SceneManagement;
 //using UnityEngine.UIElements;
 
 // given to canvas object
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] Image imageToFade;
-    [SerializeField] GameObject menu;
+    [SerializeField] private Image imageToFade;
+    [SerializeField] private GameObject menu;
 
-    [SerializeField] GameObject[] statsButtons;
+    [SerializeField] private GameObject[] statsButtons;
 
     public static MenuManager instance;
 
-    [SerializeField] TextMeshProUGUI[] xpText;
-    [SerializeField] Slider[] xpSlider;
-    [SerializeField] Image[] characterImage;
-    [SerializeField] Button[] detailsButtons;
-    [SerializeField] GameObject[] characterPanel;
+    [SerializeField] private TextMeshProUGUI[] xpText;
+    [SerializeField] private Slider[] xpSlider;
+    [SerializeField] private Image[] characterImage;
+    [SerializeField] private Button[] detailsButtons;
+    [SerializeField] private GameObject[] characterPanel;
 
-    [SerializeField] TextMeshProUGUI statName, statHP, statMana;
-    [SerializeField] Image characterSatImage;
+    [SerializeField] private TextMeshProUGUI statName, statHP, statMana;
+    [SerializeField] private Image characterSatImage;
 
-    [SerializeField] GameObject itemSlotContainer; // items button prefab
-    [SerializeField] Transform itemSlotContainerParent; // items display panel
+    [SerializeField] private GameObject itemSlotContainer; // items button prefab
+    [SerializeField] private Transform itemSlotContainerParent; // items display panel
 
-    [SerializeField] GameObject itemsPanel;
-    [SerializeField] GameObject itemsDescription;
-    [SerializeField] GameObject kanjiPanel;
-    [SerializeField] Scrollbar scrollbar;
-    [SerializeField] GameObject kanjiInfoPage;
+    [SerializeField] private GameObject itemsPanel;
+    [SerializeField] private GameObject itemsDescription;
+    [SerializeField] private GameObject kanjiPanel;
+    [SerializeField] private Scrollbar scrollbar;
+    [SerializeField] private GameObject kanjiInfoPage;
 
     public TextMeshProUGUI itemName, itemDescription;
     public ItemsManager activeItem;
@@ -55,7 +52,7 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            if (GameManager.instance.dialogBoxOpened != true && GameManager.instance.battleIsActive != true && GameManager.instance.goThroughExit != true) // don't open if one of these are texture
+            if (!GameManager.instance.dialogBoxOpened && !GameManager.instance.battleIsActive && !GameManager.instance.goThroughExit) // don't open if one of these are texture
             {
                 AudioManager.instance.PlaySFX(2);
                 MenuButton.instance.SetActiveState(false);
@@ -129,7 +126,7 @@ public class MenuManager : MonoBehaviour
             Image itemImage = itemSlot.Find("Items Image").GetComponent<Image>(); // get the image of the slot
             itemImage.sprite = item.itemsImage; // set the image of the slot to the image of item in inventory
 
-            Vector3 newScale = new Vector3(0.8f, 0.8f, 0.8f);
+            Vector3 newScale = new(0.8f, 0.8f, 0.8f);
             itemImage.transform.localScale = newScale;
 
             // set the amount text to a number if the amount is bigger than 1
@@ -203,7 +200,7 @@ public class MenuManager : MonoBehaviour
 
     public void QuitToMainMenu()
     {
-        StartCoroutine(Transition());
+        _ = StartCoroutine(Transition());
     }
 
     public IEnumerator Transition()
@@ -222,7 +219,7 @@ public class MenuManager : MonoBehaviour
         // destroy managers
         Destroy(GameManager.instance.gameObject);
         Destroy(Player.instance.gameObject);
-        Destroy(MenuManager.instance.gameObject);
+        Destroy(instance.gameObject);
         Destroy(BattleManager.instance.gameObject);
     }
 }

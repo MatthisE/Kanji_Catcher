@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 // displays rewards after a won battle and can complete a quest, called in BattleManager and BattleInstantiator
@@ -10,9 +6,9 @@ public class BattleRewardsHandler : MonoBehaviour
     public static BattleRewardsHandler instance;
 
     // display elements
-    [SerializeField] GameObject rewardScreen;
-    [SerializeField] ItemsManager[] rewardItems;
-    [SerializeField] int xpReward;
+    [SerializeField] private GameObject rewardScreen;
+    [SerializeField] private ItemsManager[] rewardItems;
+    [SerializeField] private int xpReward;
     public KanjiXPSliderManager[] xpSliders;
 
     // optional quest completion
@@ -82,7 +78,7 @@ public class BattleRewardsHandler : MonoBehaviour
         // add won items to inventory
         foreach (ItemsManager itemrewarded in rewardItems)
         {
-            if (Inventory.instance.GetItemsList().Count < 4 && QuestManager.instance.questMarkersCompleted[2] != true)
+            if (Inventory.instance.GetItemsList().Count < 4 && !QuestManager.instance.questMarkersCompleted[2])
             {
                 ActionButton.instance.SetActiveState(false);
                 string[] sentences = { "The enemy dropped a book.", "You put in your inventory." };

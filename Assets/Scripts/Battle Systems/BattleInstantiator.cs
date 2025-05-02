@@ -1,22 +1,21 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // given to a battle zone object
 public class BattleInstantiator : MonoBehaviour
 {
-    [SerializeField] BattleTypeManager[] availableBattles; // the kind of battles that can happen in that zone
-    [SerializeField] bool activateOnEnter; // a battle starts immediately when entering the zone, you can only have one battle in it (useful for bosses)
+    [SerializeField] private BattleTypeManager[] availableBattles; // the kind of battles that can happen in that zone
+    [SerializeField] private bool activateOnEnter; // a battle starts immediately when entering the zone, you can only have one battle in it (useful for bosses)
 
-    [SerializeField] float timeBetweenBattles;
+    [SerializeField] private float timeBetweenBattles;
     private float battleCounter; // to count the time between battles
     private bool inArea; // make Update() able to reduce battleCounter
 
-    [SerializeField] bool deactivateAfterStarting; // after 1 battle starts, zone disappears (should be used along activateOnEnter)
+    [SerializeField] private bool deactivateAfterStarting; // after 1 battle starts, zone disappears (should be used along activateOnEnter)
 
-    [SerializeField] bool canRunAway;
+    [SerializeField] private bool canRunAway;
 
-    [SerializeField] bool shouldCompleteQuest; // winning a battle in this zone completes a quest (useful for bosses)
+    [SerializeField] private bool shouldCompleteQuest; // winning a battle in this zone completes a quest (useful for bosses)
     public string questToComplete;
 
     private void Start()
@@ -40,7 +39,7 @@ public class BattleInstantiator : MonoBehaviour
         if (battleCounter <= 0)
         {
             battleCounter = Random.Range(timeBetweenBattles * 0.5f, timeBetweenBattles * 1.5f); // set new counter
-            StartCoroutine(StartBattleCoroutine()); // start battle coroutine
+            _ = StartCoroutine(StartBattleCoroutine()); // start battle coroutine
         }
     }
 
@@ -76,7 +75,7 @@ public class BattleInstantiator : MonoBehaviour
         {
             if (activateOnEnter)
             {
-                StartCoroutine(StartBattleCoroutine());
+                _ = StartCoroutine(StartBattleCoroutine());
             }
             else
             {

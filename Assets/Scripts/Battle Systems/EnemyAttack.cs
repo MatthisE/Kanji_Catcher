@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -8,16 +7,16 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     private TrainingWord trainingWord;
-    [SerializeField] TextMeshProUGUI kanjiToRead;
-    [SerializeField] TextMeshProUGUI kanjiMeaning1;
-    [SerializeField] TextMeshProUGUI kanjiMeaning2;
-    [SerializeField] TextMeshProUGUI kanjiMeaning3;
-    [SerializeField] TextMeshProUGUI kanjiMeaning4;
-    [SerializeField] BattleManager battleManager;
+    [SerializeField] private TextMeshProUGUI kanjiToRead;
+    [SerializeField] private TextMeshProUGUI kanjiMeaning1;
+    [SerializeField] private TextMeshProUGUI kanjiMeaning2;
+    [SerializeField] private TextMeshProUGUI kanjiMeaning3;
+    [SerializeField] private TextMeshProUGUI kanjiMeaning4;
+    [SerializeField] private BattleManager battleManager;
 
-    [SerializeField] GameObject helpButton;
-    [SerializeField] GameObject lessDefenceText;
-    [SerializeField] GameObject hintText;
+    [SerializeField] private GameObject helpButton;
+    [SerializeField] private GameObject lessDefenceText;
+    [SerializeField] private GameObject hintText;
 
     private bool hintGiven = false;
 
@@ -31,7 +30,7 @@ public class EnemyAttack : MonoBehaviour
 
         exerciseType = Random.value > 0.5f; // get random exercise type
 
-        List<string> meanings = new List<string>();
+        List<string> meanings = new();
 
         if (exerciseType)
         {
@@ -105,9 +104,7 @@ public class EnemyAttack : MonoBehaviour
         {
             int randomIndex = Random.Range(0, i + 1); // get a random index
             // swap elements
-            T temp = list[i];
-            list[i] = list[randomIndex];
-            list[randomIndex] = temp;
+            (list[randomIndex], list[i]) = (list[i], list[randomIndex]);
         }
     }
 
@@ -124,14 +121,7 @@ public class EnemyAttack : MonoBehaviour
     {
         hintText.SetActive(true);
 
-        if (exerciseType)
-        {
-            hintText.GetComponent<TextMeshProUGUI>().text = trainingWord.englishMeaning;
-        }
-        else
-        {
-            hintText.GetComponent<TextMeshProUGUI>().text = trainingWord.inKana;
-        }
+        hintText.GetComponent<TextMeshProUGUI>().text = exerciseType ? trainingWord.englishMeaning : trainingWord.inKana;
     }
 
     public void CheckAnswer(TextMeshProUGUI pressedMeaning)
@@ -140,7 +130,7 @@ public class EnemyAttack : MonoBehaviour
         lessDefenceText.SetActive(false);
         ShowHint();
 
-        StartCoroutine(CheckAnswerCoroutine(pressedMeaning));
+        _ = StartCoroutine(CheckAnswerCoroutine(pressedMeaning));
     }
 
     public IEnumerator CheckAnswerCoroutine(TextMeshProUGUI pressedMeaning)
@@ -201,80 +191,24 @@ public class EnemyAttack : MonoBehaviour
 
     private void ChangeColorKana()
     {
-        if (kanjiMeaning1.text == trainingWord.inKana)
-        {
-            kanjiMeaning1.color = Color.green;
-        }
-        else
-        {
-            kanjiMeaning1.color = Color.red;
-        }
+        kanjiMeaning1.color = kanjiMeaning1.text == trainingWord.inKana ? Color.green : Color.red;
 
-        if (kanjiMeaning2.text == trainingWord.inKana)
-        {
-            kanjiMeaning2.color = Color.green;
-        }
-        else
-        {
-            kanjiMeaning2.color = Color.red;
-        }
+        kanjiMeaning2.color = kanjiMeaning2.text == trainingWord.inKana ? Color.green : Color.red;
 
-        if (kanjiMeaning3.text == trainingWord.inKana)
-        {
-            kanjiMeaning3.color = Color.green;
-        }
-        else
-        {
-            kanjiMeaning3.color = Color.red;
-        }
+        kanjiMeaning3.color = kanjiMeaning3.text == trainingWord.inKana ? Color.green : Color.red;
 
-        if (kanjiMeaning4.text == trainingWord.inKana)
-        {
-            kanjiMeaning4.color = Color.green;
-        }
-        else
-        {
-            kanjiMeaning4.color = Color.red;
-        }
+        kanjiMeaning4.color = kanjiMeaning4.text == trainingWord.inKana ? Color.green : Color.red;
     }
 
     private void ChangeColorEnglish()
     {
-        if (kanjiMeaning1.text == trainingWord.englishMeaning)
-        {
-            kanjiMeaning1.color = Color.green;
-        }
-        else
-        {
-            kanjiMeaning1.color = Color.red;
-        }
+        kanjiMeaning1.color = kanjiMeaning1.text == trainingWord.englishMeaning ? Color.green : Color.red;
 
-        if (kanjiMeaning2.text == trainingWord.englishMeaning)
-        {
-            kanjiMeaning2.color = Color.green;
-        }
-        else
-        {
-            kanjiMeaning2.color = Color.red;
-        }
+        kanjiMeaning2.color = kanjiMeaning2.text == trainingWord.englishMeaning ? Color.green : Color.red;
 
-        if (kanjiMeaning3.text == trainingWord.englishMeaning)
-        {
-            kanjiMeaning3.color = Color.green;
-        }
-        else
-        {
-            kanjiMeaning3.color = Color.red;
-        }
+        kanjiMeaning3.color = kanjiMeaning3.text == trainingWord.englishMeaning ? Color.green : Color.red;
 
-        if (kanjiMeaning4.text == trainingWord.englishMeaning)
-        {
-            kanjiMeaning4.color = Color.green;
-        }
-        else
-        {
-            kanjiMeaning4.color = Color.red;
-        }
+        kanjiMeaning4.color = kanjiMeaning4.text == trainingWord.englishMeaning ? Color.green : Color.red;
     }
 
     private void ChangeColorToBlack()

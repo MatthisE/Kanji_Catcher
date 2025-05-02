@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 // given to game manager object
 public class QuestManager : MonoBehaviour
 {
-    [SerializeField] string[] questNames;
+    [SerializeField] private string[] questNames;
     public bool[] questMarkersCompleted; // set by code, each bool stands for one of the quests in questNames
 
     public static QuestManager instance;
 
-    void Start()
+    private void Start()
     {
         instance = this;
         questMarkersCompleted = new bool[questNames.Length]; // set length of questMarkersCompleted
@@ -105,14 +102,7 @@ public class QuestManager : MonoBehaviour
                 valueToSet = PlayerPrefs.GetInt(keyToUse);
             }
 
-            if (valueToSet == 0)
-            {
-                questMarkersCompleted[i] = false;
-            }
-            else
-            {
-                questMarkersCompleted[i] = true;
-            }
+            questMarkersCompleted[i] = valueToSet != 0;
         }
     }
 }

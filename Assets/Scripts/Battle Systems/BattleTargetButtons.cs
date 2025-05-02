@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +8,7 @@ public class BattleTargetButtons : MonoBehaviour
     public int activeBattleTarget;
     public TextMeshProUGUI targetName; // referenced by BattleManager
 
-    void Start()
+    private void Start()
     {
         targetName = GetComponentInChildren<TextMeshProUGUI>(); // set targetName to the TextMeshProUGUI of the button (its child)
     }

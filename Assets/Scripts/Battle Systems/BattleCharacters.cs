@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // given to a battle character object
 public class BattleCharacters : MonoBehaviour
 {
-    [SerializeField] bool isPlayer;
-    [SerializeField] string[] attacksAvailable;
+    [SerializeField] private bool isPlayer;
+    [SerializeField] private string[] attacksAvailable;
 
     public string characterName;
     public int currentHP, maxHP, currentMana, maxMana, dexterity, defence;

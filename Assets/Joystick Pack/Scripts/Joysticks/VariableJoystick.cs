@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class VariableJoystick : Joystick
 {
-    public float MoveThreshold { get { return moveThreshold; } set { moveThreshold = Mathf.Abs(value); } }
+    public float MoveThreshold { get => moveThreshold; set => moveThreshold = Mathf.Abs(value); }
 
     [SerializeField] private float moveThreshold = 1;
     [SerializeField] private JoystickType joystickType = JoystickType.Fixed;
@@ -21,7 +19,9 @@ public class VariableJoystick : Joystick
             background.gameObject.SetActive(true);
         }
         else
+        {
             background.gameObject.SetActive(false);
+        }
     }
 
     protected override void Start()
@@ -44,7 +44,9 @@ public class VariableJoystick : Joystick
     public override void OnPointerUp(PointerEventData eventData)
     {
         if (joystickType != JoystickType.Fixed)
+        {
             background.gameObject.SetActive(false);
+        }
 
         base.OnPointerUp(eventData);
     }

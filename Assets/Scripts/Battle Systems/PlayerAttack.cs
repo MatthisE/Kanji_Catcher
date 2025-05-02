@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System;
 using TMPro;
 using UnityEngine;
@@ -8,16 +7,16 @@ using UnityEngine.UI;
 public class PlayerAttack : MonoBehaviour
 {
     private TrainingWord trainingWord;
-    [SerializeField] TextMeshProUGUI wordInKana;
-    [SerializeField] BattleManager battleManager;
-    [SerializeField] GameObject[] rawImages;
+    [SerializeField] private TextMeshProUGUI wordInKana;
+    [SerializeField] private BattleManager battleManager;
+    [SerializeField] private GameObject[] rawImages;
 
-    [SerializeField] GameObject helpButton;
-    [SerializeField] GameObject clearButton;
-    [SerializeField] GameObject doneButton;
-    [SerializeField] GameObject lessDamageText;
+    [SerializeField] private GameObject helpButton;
+    [SerializeField] private GameObject clearButton;
+    [SerializeField] private GameObject doneButton;
+    [SerializeField] private GameObject lessDamageText;
 
-    [SerializeField] GameObject similarityText;
+    [SerializeField] private GameObject similarityText;
 
     private int imageAmount;
     private GameObject overlayObject;
@@ -90,7 +89,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void CheckAnswer()
     {
-        StartCoroutine(CheckAnswerCoroutine());
+        _ = StartCoroutine(CheckAnswerCoroutine());
     }
 
     private double GetOffence(double similarity)
@@ -101,28 +100,7 @@ public class PlayerAttack : MonoBehaviour
             decrement = 2;
         }
 
-        if (similarity < 75)
-        {
-            if (similarity < 50)
-            {
-                if (similarity < 25)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return 0.5 / decrement;
-                }
-            }
-            else
-            {
-                return 0.75 / decrement;
-            }
-        }
-        else
-        {
-            return 1 / decrement;
-        }
+        return similarity < 75 ? similarity < 50 ? similarity < 25 ? 0 : 0.5 / decrement : 0.75 / decrement : 1 / decrement;
     }
 
     public IEnumerator CheckAnswerCoroutine()
@@ -140,14 +118,7 @@ public class PlayerAttack : MonoBehaviour
         double similarity = CompareImages();
         double offence = GetOffence(similarity);
 
-        if (imageAmount == 1)
-        {
-            yield return new WaitForSeconds(3f);
-        }
-        else
-        {
-            yield return new WaitForSeconds(4f);
-        }
+        yield return imageAmount == 1 ? new WaitForSeconds(3f) : new WaitForSeconds(4f);
 
         // reset elements
         for (int i = 0; i < imageAmount; i++)
@@ -163,7 +134,7 @@ public class PlayerAttack : MonoBehaviour
         similarityText.SetActive(false);
 
         // find all objects in the scene
-        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+        GameObject[] allObjects = FindObjectsOfType<GameObject>();
         foreach (GameObject obj in allObjects)
         {
             // check if the object's name matches
@@ -261,9 +232,12 @@ public class PlayerAttack : MonoBehaviour
     // convert Sprite to Texture2D
     private Texture2D SpriteToTexture(Sprite sprite)
     {
-        if (sprite == null) return null;
+        if (sprite == null)
+        {
+            return null;
+        }
 
-        Texture2D texture = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
+        Texture2D texture = new((int)sprite.rect.width, (int)sprite.rect.height);
         Color[] pixels = sprite.texture.GetPixels(
             (int)sprite.rect.x,
             (int)sprite.rect.y,
@@ -312,7 +286,7 @@ public class PlayerAttack : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                int index = y * width + x;
+                int index = (y * width) + x;
 
                 // count black pixels in tex2 and check if they are matched in tex1
                 if (IsBlack(pixels2[index], threshold))
@@ -335,7 +309,10 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
-        if (totalBlackPixels1 == 0 && totalBlackPixels2 == 0) return 1f; // both textures are completely empty of black pixels.
+        if (totalBlackPixels1 == 0 && totalBlackPixels2 == 0)
+        {
+            return 1f; // both textures are completely empty of black pixels.
+        }
 
         // similarity calculation: penalize unmatched black pixels in tex1
         float similarity = (float)matchingBlackPixels / (totalBlackPixels2 + unmatchedBlackPixels1);
@@ -357,7 +334,9 @@ public class PlayerAttack : MonoBehaviour
 
                 // skip out-of-bounds pixels
                 if (neighborX < 0 || neighborX >= width || neighborY < 0 || neighborY >= height)
+                {
                     continue;
+                }
 
                 // check if this neighbor pixel is black
                 if (IsBlack(tex.GetPixel(neighborX, neighborY), threshold))

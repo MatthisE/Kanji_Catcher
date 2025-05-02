@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -7,10 +5,10 @@ using TMPro;
 // instantiated by BattleManager at position of attacked character
 public class CharacterDamageGUI : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI damageText;
-    [SerializeField] float lifeTime = 1f, moveSpeed = 1f, textVibration = 0.5f;
+    [SerializeField] private TextMeshProUGUI damageText;
+    [SerializeField] private float lifeTime = 1f, moveSpeed = 1f, textVibration = 0.5f;
 
-    void Update()
+    private void Update()
     {
         Destroy(gameObject, lifeTime); // destroy after life time
         transform.position += new Vector3(0f, moveSpeed * Time.deltaTime); // slowly move text up across y-axis
