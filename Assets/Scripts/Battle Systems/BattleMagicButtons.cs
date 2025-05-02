@@ -15,21 +15,21 @@ public class BattleMagicButtons : MonoBehaviour
     public void Press()
     {
         // if player has enough mana
-        if (BattleManager.instance.GetCurrentActiveCharacter().currentMana >= spellCost)
+        if (BattleManager.Instance.GetCurrentActiveCharacter().currentMana >= spellCost)
         {
             // make enemy target selectable
-            BattleManager.instance.magicChoicePanel.SetActive(false);
-            BattleManager.instance.OpenTargetMenu(trainingWord);
+            BattleManager.Instance.magicChoicePanel.SetActive(false);
+            BattleManager.Instance.OpenTargetMenu(trainingWord);
 
             // remove mana
-            BattleManager.instance.GetCurrentActiveCharacter().currentMana -= spellCost;
+            BattleManager.Instance.GetCurrentActiveCharacter().currentMana -= spellCost;
         }
         else
         {
             // display message
-            BattleManager.instance.battleNotice.SetText("You don't have enough mana.");
-            BattleManager.instance.battleNotice.Activate();
-            BattleManager.instance.magicChoicePanel.SetActive(false);
+            BattleManager.Instance.battleNotice.SetText("You don't have enough mana.");
+            BattleManager.Instance.battleNotice.Activate();
+            BattleManager.Instance.magicChoicePanel.SetActive(false);
         }
     }
 }

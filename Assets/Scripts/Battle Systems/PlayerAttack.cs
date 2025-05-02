@@ -19,7 +19,6 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GameObject similarityText;
 
     private int imageAmount;
-    private GameObject overlayObject;
     private bool strokeOrderDisplayed = false;
 
     private bool forHealing; // false --> for attack
@@ -59,6 +58,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void ShowStrokeOrder()
     {
+        GameObject overlayObject;
         for (int i = 0; i < imageAmount; i++)
         {
             if (rawImages[i].activeInHierarchy)
@@ -95,12 +95,34 @@ public class PlayerAttack : MonoBehaviour
     private double GetOffence(double similarity)
     {
         double decrement = 1;
+
+        double result;
+
         if (strokeOrderDisplayed)
         {
             decrement = 2;
         }
 
-        return similarity < 75 ? similarity < 50 ? similarity < 25 ? 0 : 0.5 / decrement : 0.75 / decrement : 1 / decrement;
+        switch (similarity)
+        {
+            case < 25:
+                result = 0;
+                break;
+
+            case < 50:
+                result = 0.5 / decrement;
+                break;
+
+            case < 75:
+                result = 0.75 / decrement;
+                break;
+
+            default:
+                result = 1 / decrement;
+                break;
+        }
+
+        return result;
     }
 
     public IEnumerator CheckAnswerCoroutine()
@@ -230,7 +252,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // convert Sprite to Texture2D
-    private Texture2D SpriteToTexture(Sprite sprite)
+    private static Texture2D SpriteToTexture(Sprite sprite)
     {
         if (sprite == null)
         {
@@ -320,7 +342,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // check if there is a black pixel within the tolerance radius
-    private bool IsBlackPixelInNeighborhood(Texture2D tex, int centerX, int centerY, float threshold, int radius)
+    private static bool IsBlackPixelInNeighborhood(Texture2D tex, int centerX, int centerY, float threshold, int radius)
     {
         int width = tex.width;
         int height = tex.height;
@@ -350,7 +372,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // helper method to determine if a pixel is "black"
-    private bool IsBlack(Color color, float threshold)
+    private static bool IsBlack(Color color, float threshold)
     {
         return color.r <= threshold && color.g <= threshold && color.b <= threshold;
     }

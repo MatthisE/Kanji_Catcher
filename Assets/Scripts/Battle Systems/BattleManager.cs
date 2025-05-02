@@ -9,7 +9,8 @@ using UnityEngine.SceneManagement;
 // given to battle manager object
 public class BattleManager : MonoBehaviour
 {
-    public static BattleManager instance;
+    public static BattleManager Instance { get; private set; }
+
     private bool isBattleActive;
 
     // scene with characters and their positions
@@ -79,13 +80,13 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         //singelton pattern --> avoid duplicates in new scenes
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            instance = this;
+            Instance = this;
         }
         DontDestroyOnLoad(gameObject);
 
@@ -166,7 +167,7 @@ public class BattleManager : MonoBehaviour
             UpdatePlayerStats(); // the UI
 
             waitingForTurn = true;
-            currentTurn = 0; // or: Random.Range(0, activeCharacters.Count);
+            currentTurn = 0;
         }
     }
 
@@ -311,7 +312,7 @@ public class BattleManager : MonoBehaviour
         NextTurn();
     }
 
-    private IEnumerator MoveCharacter(Transform charTransform, float moveDistance, float duration)
+    private static IEnumerator MoveCharacter(Transform charTransform, float moveDistance, float duration)
     {
         Vector3 originalPosition = charTransform.position;
         Vector3 targetPosition = originalPosition + new Vector3(0, moveDistance, 0);
@@ -360,15 +361,7 @@ public class BattleManager : MonoBehaviour
 
     private void DealDamageToCharacters(int selectedCharacterToAttack, int movePower)
     {
-        //float attackPower = activeCharacters[currentTurn].dexterity; // power of current chara
-        //float defenceAmount = activeCharacters[selectedCharacterToAttack].dexterity; // defence of chara to be attacked
-
-        //float damageAmount = (attackPower / defenceAmount) * movePower * Random.Range(0.9f, 1.1f);
-        //int damageToGive = (int)damageAmount;
-
         int damageToGive = CalculateCritical(movePower);
-
-        //Debug.Log(activeCharacters[currentTurn].characterName + " just dealt " + damageAmount + "(" + damageToGive + ") to " + activeCharacters[selectedCharacterToAttack]);
 
         activeCharacters[selectedCharacterToAttack].TakeHPDamage(damageToGive); // give chara damage
 
@@ -542,7 +535,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private TrainingWord GetRandomWord(bool needsTraining)
+    private static TrainingWord GetRandomWord(bool needsTraining)
     {
         KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
 
@@ -803,20 +796,6 @@ public class BattleManager : MonoBehaviour
         // put HP and mana of battle player in overworld player
         foreach (BattleCharacters playerInBattle in activeCharacters)
         {
-            /*
-            if(playerInBattle.IsPlayer())
-            {
-                foreach(PlayerStats playerWithStats in GameManager.instance.GetPlayerStats())
-                {
-                    if(playerInBattle.characterName == playerWithStats.playerName)
-                    {
-                        playerWithStats.currentHP = playerInBattle.currentHP;
-                        playerWithStats.currentMana = playerInBattle.currentMana;
-                    }
-                }
-            }
-            */
-
             Destroy(playerInBattle.gameObject); // destroy battle player
         }
 
@@ -834,8 +813,8 @@ public class BattleManager : MonoBehaviour
         {
             // give rewards (and make player movable again)
             xpSliders = FindObjectsOfType<KanjiXPSliderManager>(true);
-            BattleRewardsHandler.instance.xpSliders = xpSliders;
-            BattleRewardsHandler.instance.OpenRewardScreen(XPRewardAmount, itemsReward);
+            BattleRewardsHandler.Instance.xpSliders = xpSliders;
+            BattleRewardsHandler.Instance.OpenRewardScreen(itemsReward);
         }
 
         currentTurn = 0;

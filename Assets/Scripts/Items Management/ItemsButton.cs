@@ -8,9 +8,9 @@ public class ItemButton : MonoBehaviour
 
     public void Press()
     {
-        if (BattleManager.instance.itemsToUseMenu.activeInHierarchy) // --> pressed button on battle menu
+        if (BattleManager.Instance.itemsToUseMenu.activeInHierarchy) // --> pressed button on battle menu
         {
-            BattleManager.instance.SelectedItemToUse(itemOnButton); // mark item as selected (so you can use it)
+            BattleManager.Instance.SelectedItemToUse(itemOnButton); // mark item as selected (so you can use it)
         }
         else // if(MenuManager.instance.menu.activeInHierarchy) --> pressed button on normal menu
         {
