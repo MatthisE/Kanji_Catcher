@@ -1,0 +1,22 @@
+{
+  "isDataChanged": false,
+  "filters": {
+    "code": "",
+    "sastId": "",
+    "message": "",
+    "files": "",
+    "level": [
+      3,
+      2,
+      1
+    ],
+    "isColumnFiltersVisible": false,
+    "isLevelFiltersVisible": true,
+    "isGroupFiltersVisible": true,
+    "type": [
+      "Optimization",
+      "General"
+    ]
+  },
+  "loadableProcessIds": []
+}

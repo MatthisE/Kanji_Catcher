@@ -146,43 +146,30 @@ public class EnemyAttack : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        if (exerciseType)
+        bool isCorrect = exerciseType
+            ? pressedMeaning.text == trainingWord.inKana
+            : pressedMeaning.text == trainingWord.englishMeaning;
+
+        float damage = GetDamageImpact(isCorrect, hintGiven);
+        battleManager.StartEnemyAttackImpact(damage);
+
+        ResetHintUI();
+    }
+
+    private static float GetDamageImpact(bool isCorrect, bool hintUsed)
+    {
+        if (!isCorrect)
         {
-            if (pressedMeaning.text == trainingWord.inKana)
-            {
-                if (hintGiven)
-                {
-                    battleManager.StartEnemyAttackImpact(0.66f);
-                }
-                else
-                {
-                    battleManager.StartEnemyAttackImpact(0.33f);
-                }
-            }
-            else
-            {
-                battleManager.StartEnemyAttackImpact(1);
-            }
+            return 1f;
         }
         else
         {
-            if (pressedMeaning.text == trainingWord.englishMeaning)
-            {
-                if (hintGiven)
-                {
-                    battleManager.StartEnemyAttackImpact(0.66f);
-                }
-                else
-                {
-                    battleManager.StartEnemyAttackImpact(0.33f);
-                }
-            }
-            else
-            {
-                battleManager.StartEnemyAttackImpact(1);
-            }
+            return hintUsed ? 0.66f : 0.33f;
         }
+    }
 
+    private void ResetHintUI()
+    {
         helpButton.SetActive(true);
         hintText.SetActive(false);
         hintGiven = false;

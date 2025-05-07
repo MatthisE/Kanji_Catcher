@@ -403,6 +403,7 @@ public class BattleManager : MonoBehaviour
         UpdatePlayerStats(); // update player stats UI
     }
 
+    // check who died and if battle is over
     private void UpdateBattle()
     {
         bool allEnemiesAreDead = true;
@@ -411,49 +412,41 @@ public class BattleManager : MonoBehaviour
         // check HP of all active characters
         for (int i = 0; i < activeCharacters.Count; i++)
         {
-            if (activeCharacters[i].currentHP < 0)
+            if (activeCharacters[i].currentHP <= 0)
             {
+                // kill player/ enemy
                 activeCharacters[i].currentHP = 0; // min HP
-            }
-
-            if (activeCharacters[i].currentHP == 0)
-            {
-                // kill player
-                if (activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead)
-                {
-                    activeCharacters[i].KillPlayer();
-                }
-
-                // kill enemy
-                if (!activeCharacters[i].IsPlayer() && !activeCharacters[i].isDead)
-                {
-                    activeCharacters[i].KillEnemy(); // so far same as kill player because I don't have death particles
-                }
+                activeCharacters[i].KillCharacter();
             }
             else
             {
                 if (activeCharacters[i].IsPlayer())
                 {
+                    // if player has more than 0 HP, he is not dead
                     playerIsDead = false;
                 }
                 else
                 {
+                    // if an enemy has more than 0 HP, not all enemies are dead
                     allEnemiesAreDead = false;
                 }
             }
         }
 
-        // end battle
-        if (allEnemiesAreDead || playerIsDead)
+        CheckBattleContinuation(allEnemiesAreDead, playerIsDead);
+    }
+
+    private void CheckBattleContinuation(bool allEnemiesAreDead, bool playerIsDead)
+    {
+        if (allEnemiesAreDead)
         {
-            if (allEnemiesAreDead)
-            {
-                _ = QuestManager.instance.questMarkersCompleted[3] ? StartCoroutine(EndGame()) : StartCoroutine(EndBattleCoroutine());
-            }
-            else if (playerIsDead)
-            {
-                _ = StartCoroutine(GameOverCoroutine());
-            }
+            // end battle
+            _ = QuestManager.instance.questMarkersCompleted[3] ? StartCoroutine(EndGame()) : StartCoroutine(EndBattleCoroutine());
+        }
+        else if (playerIsDead)
+        {
+            // end battle
+            _ = StartCoroutine(GameOverCoroutine());
         }
         else
         {
@@ -468,6 +461,7 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+
     private IEnumerator EndGame()
     {
         isBattleActive = false;

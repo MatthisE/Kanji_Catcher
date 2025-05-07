@@ -1,0 +1,971 @@
+{
+  "json": [
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Joystick Pack\\Scripts\\Joysticks\\FixedJoystick.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 794439757,
+            "nextLine": 1513122742,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 2952070936
+    },
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Joystick Pack\\Scripts\\Joysticks\\VariableJoystick.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 794439757,
+            "nextLine": 1513122742,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 3395516732
+    },
+    {
+      "code": "V4007",
+      "message": "Unity Engine. Avoid destroying UnityEngine object in performance-sensitive 'Update' method. Consider deactivating the object instead.",
+      "falseAlarm": false,
+      "level": 2,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 18,
+          "endLine": 18,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\CharacterDamageGUI.cs",
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 1977230990,
+            "nextLine": -1108384647,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 1046401938
+    },
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Joystick Pack\\Examples\\JoystickSetterExample.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 794439757,
+            "nextLine": 1513122742,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 582539825
+    },
+    {
+      "code": "V3013",
+      "message": "It is odd that the body of 'KillEnemy' function is fully equivalent to the body of 'KillPlayer' function (56, line 61).",
+      "falseAlarm": false,
+      "level": 3,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 56,
+          "endLine": 56,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleCharacters.cs",
+          "navigation": {
+            "previousLine": 1528812130,
+            "currentLine": 95743013,
+            "nextLine": 123,
+            "columns": 0
+          }
+        },
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 61,
+          "endLine": 61,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleCharacters.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 0,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 1281477049
+    },
+    {
+      "code": "V4005",
+      "message": "Expensive operation is performed inside the 'GetComponent' method. Calling such method in performance-sensitive context located inside the 'FadeOutEnemy' method can lead to decreased performance.",
+      "falseAlarm": false,
+      "level": 3,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 23,
+          "endLine": 23,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleCharacters.cs",
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 1661553,
+            "nextLine": 125,
+            "columns": 0
+          }
+        },
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 30,
+          "endLine": 30,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleCharacters.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 0,
+            "nextLine": 0,
+            "columns": 0
+          }
+        },
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 31,
+          "endLine": 31,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleCharacters.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 0,
+            "nextLine": 0,
+            "columns": 0
+          }
+        },
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 32,
+          "endLine": 32,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleCharacters.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 0,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 3934976735
+    },
+    {
+      "code": "V4005",
+      "message": "Expensive operation is performed inside the 'GetComponent' method. Calling such method in performance-sensitive context located inside the 'FadeOutEnemy' method can lead to decreased performance.",
+      "falseAlarm": false,
+      "level": 3,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 23,
+          "endLine": 23,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleCharacters.cs",
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 1661553,
+            "nextLine": 125,
+            "columns": 0
+          }
+        },
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 33,
+          "endLine": 33,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleCharacters.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 0,
+            "nextLine": 0,
+            "columns": 0
+          }
+        },
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 34,
+          "endLine": 34,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleCharacters.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 0,
+            "nextLine": 0,
+            "columns": 0
+          }
+        },
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 38,
+          "endLine": 38,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleCharacters.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 0,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 32044779
+    },
+    {
+      "code": "V3024",
+      "message": "An odd precise comparison. Consider using a comparison with defined precision: Math.Abs(A - B) < Epsilon.",
+      "falseAlarm": false,
+      "level": 3,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 38,
+          "endLine": 38,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleCharacters.cs",
+          "navigation": {
+            "previousLine": -1134561630,
+            "currentLine": 1883357146,
+            "nextLine": 123,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 682,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 4057711908
+    },
+    {
+      "code": "V3203",
+      "message": "Method parameter is not used: xpEarned.",
+      "falseAlarm": false,
+      "level": 3,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 31,
+          "endLine": 31,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleRewardsHandler.cs",
+          "navigation": {
+            "previousLine": -1011358369,
+            "currentLine": -1955244641,
+            "nextLine": 123,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 3857327458
+    },
+    {
+      "code": "V3024",
+      "message": "An odd precise comparison: Joystick.instance.Horizontal != 0. Consider using a comparison with defined precision: Math.Abs(A - B) > Epsilon.",
+      "falseAlarm": false,
+      "level": 3,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 36,
+          "endLine": 36,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleInstantiator.cs",
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 1168714639,
+            "nextLine": 123,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 682,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 1919579327
+    },
+    {
+      "code": "V3024",
+      "message": "An odd precise comparison: Joystick.instance.Vertical != 0. Consider using a comparison with defined precision: Math.Abs(A - B) > Epsilon.",
+      "falseAlarm": false,
+      "level": 3,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 36,
+          "endLine": 36,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleInstantiator.cs",
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 1168714639,
+            "nextLine": 123,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 682,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 2743386413
+    },
+    {
+      "code": "V3097",
+      "message": "Possible exception: the 'BattleMoves' type marked by [Serializable] contains non-serializable members not marked by [NonSerialized].",
+      "falseAlarm": false,
+      "level": 3,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 11,
+          "endLine": 11,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleMoves.cs",
+          "navigation": {
+            "previousLine": 625532639,
+            "currentLine": 635338157,
+            "nextLine": 123,
+            "columns": 0
+          }
+        },
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 16,
+          "endLine": 16,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\BattleMoves.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 0,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 442539901
+    },
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Joystick Pack\\Scripts\\Joysticks\\FloatingJoystick.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 794439757,
+            "nextLine": 1513122742,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 674777458
+    },
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Joystick Pack\\Scripts\\Joysticks\\DynamicJoystick.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 794439757,
+            "nextLine": 1513122742,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 2538383085
+    },
+    {
+      "code": "V3024",
+      "message": "An odd precise comparison: horizontalMovement != 0. Consider using a comparison with defined precision: Math.Abs(A - B) > Epsilon.",
+      "falseAlarm": false,
+      "level": 3,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 68,
+          "endLine": 68,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Characters\\Player.cs",
+          "navigation": {
+            "previousLine": -697637231,
+            "currentLine": 828044902,
+            "nextLine": 123,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 682,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 2105437197
+    },
+    {
+      "code": "V3024",
+      "message": "An odd precise comparison: verticalMovement != 0. Consider using a comparison with defined precision: Math.Abs(A - B) > Epsilon.",
+      "falseAlarm": false,
+      "level": 3,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 68,
+          "endLine": 68,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Characters\\Player.cs",
+          "navigation": {
+            "previousLine": -697637231,
+            "currentLine": 828044902,
+            "nextLine": 123,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 682,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 2903460255
+    },
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Joystick Pack\\Scripts\\Base\\Joystick.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 193925,
+            "nextLine": 794439757,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 2463287836
+    },
+    {
+      "code": "V4007",
+      "message": "Unity Engine. Avoid destroying UnityEngine object in performance-sensitive 'Update' method. Consider deactivating the object instead.",
+      "falseAlarm": false,
+      "level": 2,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 23,
+          "endLine": 23,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\AttackEffect.cs",
+          "navigation": {
+            "previousLine": -546662504,
+            "currentLine": 1521367837,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 105136854
+    },
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Joystick Pack\\Examples\\JoystickPlayerExample.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 794439757,
+            "nextLine": 1513122742,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 3625734675
+    },
+    {
+      "code": "V4005",
+      "message": "Expensive operation is performed inside the 'FindObjectOfType' method. Calling such method in performance-sensitive context can lead to decreased performance.",
+      "falseAlarm": false,
+      "level": 1,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 44,
+          "endLine": 44,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Managers\\CamController.cs",
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 1158560459,
+            "nextLine": 5944635,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 1849845858
+    },
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Temp\\obj\\Debug\\Assembly-CSharp\\.NETStandard,Version=v2.1.AssemblyAttributes.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 8177592,
+            "nextLine": 193925,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 2785989302
+    },
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Joystick Pack\\Scripts\\Editor\\DynamicJoystickEditor.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 794439757,
+            "nextLine": 1513122742,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp-Editor"
+      ],
+      "id": 323451104
+    },
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Joystick Pack\\Scripts\\Editor\\FloatingJoystickEditor.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 794439757,
+            "nextLine": 1513122742,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp-Editor"
+      ],
+      "id": 3769148389
+    },
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Joystick Pack\\Scripts\\Editor\\JoystickEditor.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 794439757,
+            "nextLine": 1513122742,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp-Editor"
+      ],
+      "id": 3436516683
+    },
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Joystick Pack\\Scripts\\Editor\\VariableJoystickEditor.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 794439757,
+            "nextLine": 1513122742,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp-Editor"
+      ],
+      "id": 4179579951
+    },
+    {
+      "code": "V009",
+      "message": "To use free version of PVS-Studio, source code files are required to start with a special comment.",
+      "falseAlarm": false,
+      "level": 0,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 1,
+          "endLine": 1,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Temp\\obj\\Debug\\Assembly-CSharp-Editor\\.NETStandard,Version=v2.1.AssemblyAttributes.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 8177592,
+            "nextLine": 193925,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp-Editor"
+      ],
+      "id": 1858745690
+    },
+    {
+      "code": "V3130",
+      "message": "Priority of the '&&' operator is higher than that of the '||' operator. Possible missing parentheses.",
+      "falseAlarm": false,
+      "level": 3,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 41,
+          "endLine": 41,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\DrawOnRawImage.cs",
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -1408324423,
+            "nextLine": 123,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 2654756445
+    },
+    {
+      "code": "V3064",
+      "message": "Potential division by zero. Consider inspecting denominator '(float)steps'.",
+      "falseAlarm": false,
+      "level": 2,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 124,
+          "endLine": 124,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\DrawOnRawImage.cs",
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 61844085,
+            "nextLine": -1275692240,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 369,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 1005230702
+    },
+    {
+      "code": "V3130",
+      "message": "Priority of the '&&' operator is higher than that of the '||' operator. Possible missing parentheses.",
+      "falseAlarm": false,
+      "level": 3,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 177,
+          "endLine": 177,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Battle Systems\\DrawOnRawImage.cs",
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -1408324423,
+            "nextLine": 123,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 0,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 1609923955
+    },
+    {
+      "code": "V3080",
+      "message": "Possible null dereference inside method at 'item.isStackable'. Consider inspecting the 1st argument: itemToAdd.",
+      "falseAlarm": false,
+      "level": 2,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 42,
+          "endLine": 42,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Managers\\GameManager.cs",
+          "navigation": {
+            "previousLine": 1294852181,
+            "currentLine": -1338931860,
+            "nextLine": 0,
+            "columns": 0
+          }
+        },
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 38,
+          "endLine": 38,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Items Management\\Inventory.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 0,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 476,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 3702085329
+    },
+    {
+      "code": "V3080",
+      "message": "Possible null dereference inside method at 'item.isStackable'. Consider inspecting the 1st argument: itemToAdd.",
+      "falseAlarm": false,
+      "level": 2,
+      "positions": [
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 226,
+          "endLine": 226,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Managers\\GameManager.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": -1338931860,
+            "nextLine": -1512059120,
+            "columns": 0
+          }
+        },
+        {
+          "column": 1,
+          "endColumn": 1,
+          "line": 38,
+          "endLine": 38,
+          "file": "c:\\Users\\matth\\Documents\\Kanji Catcher\\Assets\\Scripts\\Items Management\\Inventory.cs",
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 0,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "cwe": 476,
+      "sastId": "",
+      "projects": [
+        "Assembly-CSharp"
+      ],
+      "id": 3041217553
+    }
+  ]
+}
