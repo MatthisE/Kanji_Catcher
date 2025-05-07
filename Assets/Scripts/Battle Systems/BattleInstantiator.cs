@@ -17,6 +17,7 @@ public class BattleInstantiator : MonoBehaviour
 
     [SerializeField] private bool shouldCompleteQuest; // winning a battle in this zone completes a quest (useful for bosses)
     public string questToComplete;
+    private readonly float epsilon = 0.0001f;
 
     private void Start()
     {
@@ -27,12 +28,9 @@ public class BattleInstantiator : MonoBehaviour
     private void Update()
     {
         // count down time between battles
-        if (inArea && !Player.instance.deactivateMovement) // player is in this battle zone an able to move (menu not open)
+        if (inArea && !Player.instance.deactivateMovement && (Joystick.instance.Horizontal < 0 - epsilon || Joystick.instance.Horizontal > 0 + epsilon || Joystick.instance.Vertical < 0 - epsilon || Joystick.instance.Vertical > 0 + epsilon)) // player is in this battle zone an able to move (menu not open) & when player moves, reduce battle counter
         {
-            if (Joystick.instance.Horizontal != 0 || Joystick.instance.Vertical != 0) // when player moves, reduce battle counter
-            {
-                battleCounter -= Time.deltaTime; // this could go below 0
-            }
+            battleCounter -= Time.deltaTime;
         }
 
         // start a new battle when counter reaches 0
@@ -51,15 +49,15 @@ public class BattleInstantiator : MonoBehaviour
         // set up a random possible battle scenario
         int selectBattle = Random.Range(0, availableBattles.Length);
 
-        BattleManager.instance.itemsReward = availableBattles[selectBattle].rewardItems;
-        BattleManager.instance.XPRewardAmount = availableBattles[selectBattle].rewardXP;
+        BattleManager.Instance.itemsReward = availableBattles[selectBattle].rewardItems;
+        BattleManager.Instance.XPRewardAmount = availableBattles[selectBattle].rewardXP;
 
         // tell RewardsHandler to mark a quest as complete if the battle is won (optional)
-        BattleRewardsHandler.instance.markQuestComplete = shouldCompleteQuest;
-        BattleRewardsHandler.instance.questToComplete = questToComplete;
+        BattleRewardsHandler.Instance.markQuestComplete = shouldCompleteQuest;
+        BattleRewardsHandler.Instance.questToComplete = questToComplete;
 
         yield return new WaitForSeconds(1.5f); // wait 1.5sec
-        BattleManager.instance.StartBattle(availableBattles[selectBattle].enemies, canRunAway); // activate battle scene
+        BattleManager.Instance.StartBattle(availableBattles[selectBattle].enemies, canRunAway); // activate battle scene
         MenuManager.instance.FadeOut(); // fade out to reveal battle scene
 
         if (deactivateAfterStarting)

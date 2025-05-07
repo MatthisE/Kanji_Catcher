@@ -15,6 +15,6 @@ public class BattleTargetButtons : MonoBehaviour
 
     public void Press()
     {
-        BattleManager.instance.PlayerAttack(trainingWord, activeBattleTarget); // activate set attack on set target
+        BattleManager.Instance.PlayerAttack(trainingWord, activeBattleTarget); // activate set attack on set target
     }
 }

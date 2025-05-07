@@ -220,6 +220,6 @@ public class MenuManager : MonoBehaviour
         Destroy(GameManager.instance.gameObject);
         Destroy(Player.instance.gameObject);
         Destroy(instance.gameObject);
-        Destroy(BattleManager.instance.gameObject);
+        Destroy(BattleManager.Instance.gameObject);
     }
 }

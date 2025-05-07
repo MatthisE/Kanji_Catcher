@@ -173,13 +173,13 @@ public class DialogController : MonoBehaviour
         GameManager.instance.battleIsActive = true; // make player unable to move
 
         // tell RewardsHandler to mark a quest as complete if the battle is won (optional)
-        BattleRewardsHandler.instance.markQuestComplete = true;
-        BattleRewardsHandler.instance.questToComplete = "Defeat Boss";
+        BattleRewardsHandler.Instance.markQuestComplete = true;
+        BattleRewardsHandler.Instance.questToComplete = "Defeat Boss";
 
         string[] boss = { "Darkness" };
 
         yield return new WaitForSeconds(1.5f); // wait 1.5sec
-        BattleManager.instance.StartBattle(boss, false); // activate battle scene
+        BattleManager.Instance.StartBattle(boss, false); // activate battle scene
         MenuManager.instance.FadeOut(); // fade out to reveal battle scene
     }
 }

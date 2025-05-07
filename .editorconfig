@@ -24,3 +24,9 @@ dotnet_diagnostic.MA0003.severity = warning
 
 # Optional: enforce naming or formatting (customize to taste)
 dotnet_naming_rule.private_fields_should_be_camel_case.severity = suggestion
+
+# IDE0066: Convert switch statement to expression
+dotnet_diagnostic.IDE0066.severity = none
+
+# UNT0017: SetPixels invocation is slow
+dotnet_diagnostic.UNT0017.severity = none

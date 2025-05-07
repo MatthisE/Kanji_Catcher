@@ -30,7 +30,7 @@ public class BattleCharacters : MonoBehaviour
         );
 
         // once fully transparent deactivate object
-        if (GetComponent<SpriteRenderer>().color.a == 0)
+        if ((int)GetComponent<SpriteRenderer>().color.a == 0)
         {
             gameObject.SetActive(false);
         }
