@@ -47,13 +47,8 @@ public class BattleCharacters : MonoBehaviour
         }
     }
 
-    // set battle character to dead
-    public void KillEnemy()
-    {
-        isDead = true;
-    }
-
-    public void KillPlayer()
+    // set battle character or enemy to dead
+    public void KillCharacter()
     {
         isDead = true;
     }
