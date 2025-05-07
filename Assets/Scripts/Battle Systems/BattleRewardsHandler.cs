@@ -3,7 +3,7 @@ using UnityEngine;
 // displays rewards after a won battle and can complete a quest, called in BattleManager and BattleInstantiator
 public class BattleRewardsHandler : MonoBehaviour
 {
-    public static BattleRewardsHandler instance;
+    public static BattleRewardsHandler Instance { get; private set; }
 
     // display elements
     [SerializeField] private GameObject rewardScreen;
@@ -17,11 +17,11 @@ public class BattleRewardsHandler : MonoBehaviour
 
     private void Start()
     {
-        instance = this;
+        Instance = this;
     }
 
     // open reward screen with given elements
-    public void OpenRewardScreen(int xpEarned, ItemsManager[] itemsEarned)
+    public void OpenRewardScreen(ItemsManager[] itemsEarned)
     {
         // mark given quest as complete (optional)
         if (markQuestComplete)

@@ -85,7 +85,7 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    public TrainingWord GetRandomWord()
+    public static TrainingWord GetRandomWord()
     {
         KanjiManager[] collectedKanji = GameManager.instance.GetCollectedKanji();
 
@@ -97,7 +97,7 @@ public class EnemyAttack : MonoBehaviour
         return randomTrainingWords[randomIndex2];
     }
 
-    private void ShuffleList<T>(List<T> list)
+    private static void ShuffleList<T>(List<T> list)
     {
         // Fisher-Yates Algorithm
         for (int i = list.Count - 1; i > 0; i--)

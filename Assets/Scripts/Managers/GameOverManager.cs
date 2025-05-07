@@ -16,7 +16,7 @@ public class GameOverManager : MonoBehaviour
         AudioManager.instance.prevMusic = musicToPlay; // set prevMusic
         Player.instance.gameObject.SetActive(false);
         MenuManager.instance.gameObject.SetActive(false);
-        BattleManager.instance.gameObject.SetActive(false);
+        BattleManager.Instance.gameObject.SetActive(false);
 
         // check any key in player prefs to see if continue button should be displayed
         if (PlayerPrefs.HasKey("Player_Pos_X"))
@@ -59,7 +59,7 @@ public class GameOverManager : MonoBehaviour
         Destroy(GameManager.instance.gameObject);
         Destroy(Player.instance.gameObject);
         Destroy(MenuManager.instance.gameObject);
-        Destroy(BattleManager.instance.gameObject);
+        Destroy(BattleManager.Instance.gameObject);
     }
 
     public void QuitGame()
