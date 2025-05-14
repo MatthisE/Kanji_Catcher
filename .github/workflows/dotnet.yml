@@ -21,10 +21,10 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore Kanji_Catcher.sln
     - name: Format code
-      run: dotnet format --verbosity detailed
+      run: dotnet format Kanji_Catcher.sln --verbosity detailed
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build Kanji_Catcher.sln --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test Kanji_Catcher.sln --no-build --verbosity normal
