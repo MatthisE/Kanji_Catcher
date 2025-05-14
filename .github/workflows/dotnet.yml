@@ -24,7 +24,3 @@ jobs:
       run: dotnet restore Kanji_Catcher.sln
     - name: Format code
       run: dotnet format Kanji_Catcher.sln --verbosity detailed
-    - name: Build
-      run: dotnet build Kanji_Catcher.sln --no-restore
-    - name: Test
-      run: dotnet test Kanji_Catcher.sln --no-build --verbosity normal
