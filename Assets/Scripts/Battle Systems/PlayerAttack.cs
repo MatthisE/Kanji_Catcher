@@ -220,7 +220,8 @@ public class PlayerAttack : MonoBehaviour
             }
 
             // compare the textures
-            float similarity = ComputeSimilarityForBlackPixels(rawTexture, spriteTexture);
+            //float similarity = ComputeSimilarityForBlackPixels(rawTexture, spriteTexture);
+            float similarity = DamageCalculator.ComputeSimilarityForTwoSprites(rawTexture, spriteTexture);
             if(similarity > 1f)
             {
                 similarity = 1f;
