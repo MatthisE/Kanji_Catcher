@@ -7930,6 +7930,7 @@ GameObject:
   - component: {fileID: 2425453003929144487}
   - component: {fileID: 3448850663440009028}
   - component: {fileID: 3746362578239086278}
+  - component: {fileID: 6609203374674003989}
   m_Layer: 0
   m_Name: PlayerAttackMenu
   m_TagString: Untagged
@@ -8026,6 +8027,20 @@ MonoBehaviour:
   doneButton: {fileID: 1502694587848077783}
   lessDamageText: {fileID: 5855091312852270387}
   similarityText: {fileID: 7773447095230289822}
+  damageCalculator: {fileID: 6609203374674003989}
+--- !u!114 &6609203374674003989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6156335170722907676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 634678dfdeda6c646a5fc2cb04f4098a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ramerEpsilon: 5
 --- !u!1 &6166884637360204947
 GameObject:
   m_ObjectHideFlags: 0

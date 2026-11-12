@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 // code heavily based on https://github.com/UnityNinja/drawable-Raw-Image-for-Unity
 // small adjustments were done to DrawLineTo() and DrawPixel() to erase gaps in lines
@@ -17,6 +18,10 @@ public class DrawOnRawImage : MonoBehaviour
 
     [SerializeField] private float brushSize = 10f;
     [SerializeField] private Color brushColor = Color.black;
+
+    public event Action<DrawOnRawImage, Vector2[]> StrokeCompleted;
+    private readonly List<Vector2> currentStroke = new List<Vector2>(); // list of points
+    private bool isDrawing;
 
     void Start()
     {
@@ -91,40 +96,152 @@ public class DrawOnRawImage : MonoBehaviour
         drawImage.texture = canvasTexture;
     }
 
+    // stroke detection
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0) && IsCursorInside())
         {
-            Vector2 currentPosition = GetLocalCursor();
-            DrawLineTo(currentPosition);
+            BeginStroke(GetLocalCursor());
         }
-        else
-        {
-            previousPosition = Vector2.zero;
-        }
-    }
 
-    private void DrawLineTo(Vector2 currentPosition)
-    {
-        if (previousPosition == Vector2.zero)
+        if (!isDrawing)
         {
-            previousPosition = currentPosition;
             return;
         }
 
-        float distance = Vector2.Distance(previousPosition, currentPosition);
-        int steps = Mathf.CeilToInt(distance / 0.5f); // Smaller step size for smoother lines
-
-        // Draw multiple points between the previous and current positions
-        for (int i = 0; i <= steps; i++)
+        if (Input.GetMouseButton(0))
         {
-            Vector2 lerpedPosition = Vector2.Lerp(previousPosition, currentPosition, i / (float)steps);
-            DrawPixel((int)lerpedPosition.x, (int)lerpedPosition.y, brushColor, brushSize);
+            AddStrokePoint(GetLocalCursor());
         }
 
-        // Update the canvas and apply the changes
-        canvasTexture.SetPixels32(canvasColors);
-        canvasTexture.Apply();
+        if (Input.GetMouseButtonUp(0))
+        {
+            AddStrokePoint(GetLocalCursor());
+            EndStroke();
+        }
+    }
+
+    private void BeginStroke(Vector2 position)
+    {
+        isDrawing = true;
+        currentStroke.Clear();
+
+        currentStroke.Add(position);
+        previousPosition = position;
+
+        // Ein kurzer Klick soll ebenfalls einen sichtbaren Punkt erzeugen.
+        DrawPixel(
+            Mathf.RoundToInt(position.x),
+            Mathf.RoundToInt(position.y),
+            brushColor,
+            brushSize
+        );
+
+        ApplyCanvas();
+    }
+
+    private void AddStrokePoint(Vector2 position)
+    {
+        // Identische aufeinanderfolgende Punkte nicht mehrfach speichern.
+        if ((position - previousPosition).sqrMagnitude < 0.0001f)
+        {
+            return;
+        }
+
+        currentStroke.Add(position);
+        DrawLineTo(position);
+    }
+
+    private void EndStroke()
+    {
+        isDrawing = false;
+
+        // Eigenständige Kopie: Der nächste Strich darf diese Daten nicht verändern.
+        Vector2[] completedStroke = currentStroke.ToArray();
+        currentStroke.Clear();
+
+        StrokeCompleted?.Invoke(this, completedStroke);
+    }
+
+    private Vector2 GetLocalCursor()
+    {
+        RectTransform rectTransform = drawImage.rectTransform;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            rectTransform,
+            Input.mousePosition,
+            GetCanvasCamera(),
+            out Vector2 localCursor
+        );
+
+        Rect rect = rectTransform.rect;
+
+        // map local UI coordinates to texture coordinates
+        // works independently of the pivot and the texture resolution
+        float x = (localCursor.x - rect.xMin) / rect.width;
+        float y = (localCursor.y - rect.yMin) / rect.height;
+
+        return new Vector2(
+            x * (canvasTexture.width - 1),
+            y * (canvasTexture.height - 1)
+        );
+    }
+
+    // set camera (to calculate stroke points correctly)
+    private Camera GetCanvasCamera()
+    {
+        Canvas canvas = drawImage.canvas;
+
+        if (canvas == null ||
+            canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+        {
+            return null;
+        }
+
+        return canvas.worldCamera;
+    }
+
+    private bool IsCursorInside()
+    {
+        return RectTransformUtility.RectangleContainsScreenPoint(
+            drawImage.rectTransform,
+            Input.mousePosition,
+            GetCanvasCamera()
+        );
+    }
+
+    // draw on image
+    private void DrawLineTo(Vector2 currentPosition)
+    {
+        float distance = Vector2.Distance(
+            previousPosition,
+            currentPosition
+        );
+
+        int steps = Mathf.Max(
+            1,
+            Mathf.CeilToInt(distance / 0.5f) // smaller step size for smoother lines
+        );
+
+        // draw multiple points between the previous and current positions
+        for (int i = 0; i <= steps; i++)
+        {
+            Vector2 position = Vector2.Lerp(
+                previousPosition,
+                currentPosition,
+                i / (float)steps
+            );
+
+            DrawPixel(
+                Mathf.RoundToInt(position.x),
+                Mathf.RoundToInt(position.y),
+                brushColor,
+                brushSize
+            );
+        }
+
+        // update the canvas and apply the changes
+        ApplyCanvas();
         previousPosition = currentPosition;
     }
 
@@ -156,16 +273,17 @@ public class DrawOnRawImage : MonoBehaviour
         }
     }
 
-    private Vector2 GetLocalCursor()
+    private void ApplyCanvas()
     {
-        Vector2 cursor = Input.mousePosition;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(drawImage.rectTransform, cursor, null, out Vector2 localCursor);
-        localCursor += new Vector2(canvasTexture.width / 2f, canvasTexture.height / 2f);
-        return localCursor;
+        canvasTexture.SetPixels32(canvasColors);
+        canvasTexture.Apply();
     }
 
     public void Repaint()
     {
+        isDrawing = false;
+        currentStroke.Clear();
+
         int width = (int)drawImage.GetComponent<RectTransform>().sizeDelta.x;
 
         // Reset the canvasColors array
@@ -187,6 +305,28 @@ public class DrawOnRawImage : MonoBehaviour
         // Apply the cleared colors to the canvas texture
         canvasTexture.SetPixels32(canvasColors);
         canvasTexture.Apply(); // Refresh the texture
+    }
+
+    private void OnDisable()
+    {
+        isDrawing = false;
+        currentStroke.Clear();
+    }
+
+    public void DisplayFeaturePoints(Vector2[] featurePoints)
+    {
+        foreach (Vector2 point in featurePoints)
+        {
+            DrawPixel(
+                Mathf.RoundToInt(point.x),
+                Mathf.RoundToInt(point.y),
+                Color.red,
+                14f
+            );
+        }
+
+        canvasTexture.SetPixels32(canvasColors);
+        canvasTexture.Apply();
     }
 
 }

@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] TextMeshProUGUI wordInKana;
     [SerializeField] BattleManager battleManager;
     [SerializeField] GameObject[] rawImages;
+    private readonly List<DrawOnRawImage> drawingFields = new List<DrawOnRawImage>();
 
     [SerializeField] GameObject helpButton;
     [SerializeField] GameObject clearButton;
@@ -22,8 +23,51 @@ public class PlayerAttack : MonoBehaviour
     private int imageAmount;
     private GameObject overlayObject;
     private bool strokeOrderDisplayed = false;
-
     private bool forHealing; // false --> for attack
+
+    [SerializeField] private DamageCalculator damageCalculator;
+
+    // listen for new strokes in the raw images
+    private void Awake()
+    {
+        foreach (GameObject rawImageObject in rawImages)
+        {
+            DrawOnRawImage drawing =
+                rawImageObject.GetComponent<DrawOnRawImage>();
+
+            drawingFields.Add(drawing);
+
+            if (drawing != null)
+            {
+                drawing.StrokeCompleted += HandleStrokeCompleted;
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        foreach (DrawOnRawImage drawing in drawingFields)
+        {
+            if (drawing != null)
+            {
+                drawing.StrokeCompleted -= HandleStrokeCompleted;
+            }
+        }
+    }
+
+    private void HandleStrokeCompleted( DrawOnRawImage source, Vector2[] points)
+    {
+        int characterIndex = drawingFields.IndexOf(source);
+
+        if (trainingWord == null || characterIndex < 0 || characterIndex >= imageAmount)
+        {
+            return;
+        }
+
+        Vector2[] featurePoints = damageCalculator.AnalyzeStroke(characterIndex, points);
+
+        source.DisplayFeaturePoints(featurePoints);
+    }
 
     public void SetWords(TrainingWord thisTrainingWord, bool healing)
     {
@@ -221,7 +265,7 @@ public class PlayerAttack : MonoBehaviour
 
             // compare the textures
             //float similarity = ComputeSimilarityForBlackPixels(rawTexture, spriteTexture);
-            float similarity = DamageCalculator.ComputeSimilarityForTwoSprites(rawTexture, spriteTexture);
+            float similarity = damageCalculator.ComputeSimilarityForTwoSprites(rawTexture, spriteTexture);
             if(similarity > 1f)
             {
                 similarity = 1f;
@@ -285,6 +329,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
     // compute similarity of black pixels
+    /*
     private float ComputeSimilarityForBlackPixels(Texture2D tex1, Texture2D tex2, float threshold = 0.0f, int toleranceRadius = 10)  // threshold --> how black pixel has to be, toleranceRadius --> how close black pixel of rawimage has to be to kanji sprite
     {
         // get oixels of the two textures
@@ -375,5 +420,6 @@ public class PlayerAttack : MonoBehaviour
     {
         return color.r <= threshold && color.g <= threshold && color.b <= threshold;
     }
+    */
 
 }
