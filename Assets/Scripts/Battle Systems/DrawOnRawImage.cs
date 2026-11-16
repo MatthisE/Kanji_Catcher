@@ -30,7 +30,7 @@ public class DrawOnRawImage : MonoBehaviour
 
     public void Setup()
     {
-        // Create a Texture2D that matches the RawImage size (568x568)
+        // create a Texture2D that matches the RawImage size (568x568)
         int width = (int)drawImage.GetComponent<RectTransform>().sizeDelta.x;
         int height = (int)drawImage.GetComponent<RectTransform>().sizeDelta.y;
         originalTexture = new Texture2D(width, height);
@@ -57,7 +57,7 @@ public class DrawOnRawImage : MonoBehaviour
         originalTexture.SetPixels(pixels);
         originalTexture.Apply(); // apply the background color
 
-        // Assign the texture to the RawImage
+        // assign the texture to the RawImage
         drawImage.texture = originalTexture;
 
         // calculate scaleFactor automatically based on the width of the RawImage and the original texture
@@ -70,10 +70,10 @@ public class DrawOnRawImage : MonoBehaviour
         canvasTexture.filterMode = FilterMode.Point;
         canvasTexture.wrapMode = TextureWrapMode.Clamp;
 
-        // Create a new array of size equal to canvasTexture.width multiplied by canvasTexture.height
+        // create a new array of size equal to canvasTexture.width multiplied by canvasTexture.height
         canvasColors = new Color32[canvasTexture.width * canvasTexture.height];
 
-        // Copy the pixels from the original texture to the new array
+        // copy the pixels from the original texture to the new array
         for (int y = 0; y < originalTexture.height; y++)
         {
             for (int x = 0; x < originalTexture.width; x++)
@@ -129,7 +129,7 @@ public class DrawOnRawImage : MonoBehaviour
         currentStroke.Add(position);
         previousPosition = position;
 
-        // Ein kurzer Klick soll ebenfalls einen sichtbaren Punkt erzeugen.
+        // a simple click also creates a stroke
         DrawPixel(
             Mathf.RoundToInt(position.x),
             Mathf.RoundToInt(position.y),
@@ -142,7 +142,7 @@ public class DrawOnRawImage : MonoBehaviour
 
     private void AddStrokePoint(Vector2 position)
     {
-        // Identische aufeinanderfolgende Punkte nicht mehrfach speichern.
+        // do not safe identical consecutive points
         if ((position - previousPosition).sqrMagnitude < 0.0001f)
         {
             return;
@@ -156,7 +156,6 @@ public class DrawOnRawImage : MonoBehaviour
     {
         isDrawing = false;
 
-        // Eigenständige Kopie: Der nächste Strich darf diese Daten nicht verändern.
         Vector2[] completedStroke = currentStroke.ToArray();
         currentStroke.Clear();
 
@@ -251,7 +250,7 @@ public class DrawOnRawImage : MonoBehaviour
         int height = canvasTexture.height;
         int radius = Mathf.CeilToInt(size / 2); // radius depends on brush size
 
-        // Draw a circle around the pixel based on the brush size (ensures thick lines)
+        // draw a circle around the pixel based on the brush size (ensures thick lines)
         for (int i = x - radius; i <= x + radius; i++)
         {
             if (i < 0 || i >= width) continue;
@@ -260,11 +259,11 @@ public class DrawOnRawImage : MonoBehaviour
             {
                 if (j < 0 || j >= height) continue;
 
-                // Only set pixels within the circle area to avoid messy lines
+                // only set pixels within the circle area to avoid messy lines
                 if (Vector2.Distance(new Vector2(i, j), new Vector2(x, y)) <= radius)
                 {
                     int index = j * width + i;
-                    // Ensure the color has an alpha value (preserving transparency)
+                    // ensure the color has an alpha value (preserving transparency)
                     Color32 c = color;
                     c.a = canvasColors[index].a;
                     canvasColors[index] = c;
@@ -286,25 +285,25 @@ public class DrawOnRawImage : MonoBehaviour
 
         int width = (int)drawImage.GetComponent<RectTransform>().sizeDelta.x;
 
-        // Reset the canvasColors array
+        // reset the canvasColors array
         for (int i = 0; i < canvasColors.Length; i++)
         {
             if(i < width*10 || i > width*width-width*10 || i % width > 0 && i % width < 10 || (i - (width-1)) % width <= 10 || (i - (width-1)) % width >= width - 10)
             {
-                canvasColors[i] = Color.gray; // Set the background color to gray
+                canvasColors[i] = Color.gray; // set the background color to gray
             }
             else if(i % (width/2) > 0 && i % (width/2) < 5 || i > width*(width/2-2) && i < width*(width/2+3))
             {
-                canvasColors[i] = new Color(0.8f, 0.8f, 0.8f); // Set the background color to light gray
+                canvasColors[i] = new Color(0.8f, 0.8f, 0.8f); // set the background color to light gray
             }
             else
             {
-                canvasColors[i] = Color.white; // Set the background color to white
+                canvasColors[i] = Color.white; // set the background color to white
             }
         }
-        // Apply the cleared colors to the canvas texture
+        // apply the cleared colors to the canvas texture
         canvasTexture.SetPixels32(canvasColors);
-        canvasTexture.Apply(); // Refresh the texture
+        canvasTexture.Apply(); // refresh the texture
     }
 
     private void OnDisable()

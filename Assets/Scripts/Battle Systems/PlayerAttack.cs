@@ -58,15 +58,11 @@ public class PlayerAttack : MonoBehaviour
     private void HandleStrokeCompleted( DrawOnRawImage source, Vector2[] points)
     {
         int characterIndex = drawingFields.IndexOf(source);
+        SymbolInStrokes referenceStrokes = trainingWord.symbolsAsStrokes[characterIndex];
 
-        if (trainingWord == null || characterIndex < 0 || characterIndex >= imageAmount)
-        {
-            return;
-        }
+        damageCalculator.AnalyzeStroke(characterIndex, points, referenceStrokes);
 
-        Vector2[] featurePoints = damageCalculator.AnalyzeStroke(characterIndex, points);
-
-        source.DisplayFeaturePoints(featurePoints);
+        //source.DisplayFeaturePoints(featurePoints);
     }
 
     public void SetWords(TrainingWord thisTrainingWord, bool healing)

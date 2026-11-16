@@ -6,10 +6,19 @@ public class DamageCalculator : MonoBehaviour
     [SerializeField, Min(0f)]
     private float ramerEpsilon = 5f;
 
-    public Vector2[] AnalyzeStroke( int characterIndex, Vector2[] points)
+    public void AnalyzeStroke( int characterIndex, Vector2[] points, SymbolInStrokes referenceStrokes)
     {
         Vector2[] featurePoints = StrokeSimplifier.Simplify(points, ramerEpsilon);
 
+        foreach (Stroke stroke in referenceStrokes.strokes)
+        {
+            foreach (Vector2 refPoints in stroke.points)
+            {
+                Debug.Log($"Punkt: X = {refPoints.x}, Y = {refPoints.y}");
+            }
+        }
+
+        /*
         Debug.Log(
             $"Zeichenfeld {characterIndex}: " +
             $"{points.Length} Eingabepunkte → " +
@@ -18,10 +27,11 @@ public class DamageCalculator : MonoBehaviour
 
         for (int i = 0; i < featurePoints.Length; i++)
         {
-            Debug.Log($"Punkt {i}: X = {points[i].x}, Y = {points[i].y}");
+            Debug.Log($"Punkt {i}: X = {featurePoints[i].x}, Y = {featurePoints[i].y}");
         }
+        */
 
-        return featurePoints;
+        //return featurePoints;
     }
 
     // compute similarity of two sprites

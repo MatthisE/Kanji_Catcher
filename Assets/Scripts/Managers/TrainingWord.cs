@@ -9,6 +9,7 @@ public class TrainingWord
     public string inKanji;
     public string inKana;
     public string englishMeaning;
+    public SymbolInStrokes[] symbolsAsStrokes;
 
     public KanjiManager[] kanjiInWord;
 }

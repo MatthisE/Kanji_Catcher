@@ -10,6 +10,7 @@ public class KanjiManager : MonoBehaviour
 
     public Sprite kanjiImage;
     public Sprite strokeOrder;
+    public Stroke[] strokes;
 
     public string kanjiSymbol;
 
