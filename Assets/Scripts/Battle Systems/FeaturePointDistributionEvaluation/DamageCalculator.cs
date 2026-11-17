@@ -6,32 +6,50 @@ public class DamageCalculator : MonoBehaviour
     [SerializeField, Min(0f)]
     private float ramerEpsilon = 5f;
 
-    public void AnalyzeStroke( int characterIndex, Vector2[] points, SymbolInStrokes referenceStrokes)
+    public void AnalyzeStroke(int characterIndex, Vector2[] points, SymbolInStrokes referenceStrokes)
     {
-        Vector2[] featurePoints = StrokeSimplifier.Simplify(points, ramerEpsilon);
+        // break down input stroke into few feature points
+        Vector2[] inputFeaturePoints = StrokeSimplifier.Simplify(points, ramerEpsilon);
 
-        foreach (Stroke stroke in referenceStrokes.strokes)
+        // pair input stroke feature points to reference stroke feature points (for all reference strokes)
+        var pairer = new FeaturePointPairer(positionalWeight: 0.5f, directionalWeight: 0.5f, normalizedCharacterSize: 1f);
+
+        foreach (Stroke referenceStroke in referenceStrokes.strokes)
         {
-            foreach (Vector2 refPoints in stroke.points)
+            FeaturePointPairing pairing = pairer.Pair(inputFeaturePoints, referenceStroke.points);
+
+            Debug.Log($"Reference stroke has {pairing.PrincipalPairs.Count} principal pairs.");
+
+            foreach (FeaturePointPair pair in pairing.PrincipalPairs)
             {
-                Debug.Log($"Punkt: X = {refPoints.x}, Y = {refPoints.y}");
+                Vector2 inputPoint = inputFeaturePoints[pair.InputIndex];
+                Vector2 referencePoint = referenceStroke.points[pair.ReferenceIndex];
+
+                Debug.Log(
+                    $"Input {pair.InputIndex} ({inputPoint.x}, {inputPoint.y}) " +
+                    $"<-> Reference {pair.ReferenceIndex} " +
+                    $"({referencePoint.x}, {referencePoint.y})");
             }
         }
+    }
 
-        /*
+    public Vector2[] GetFeaturePoints(int characterIndex, Vector2[] points)
+    {
+        // break down input stroke into few feature points
+        Vector2[] inputFeaturePoints = StrokeSimplifier.Simplify(points, ramerEpsilon);
+
         Debug.Log(
             $"Zeichenfeld {characterIndex}: " +
             $"{points.Length} Eingabepunkte → " +
-            $"{featurePoints.Length} Feature-Punkte."
+            $"{inputFeaturePoints.Length} Feature-Punkte."
         );
 
-        for (int i = 0; i < featurePoints.Length; i++)
+        for (int i = 0; i < inputFeaturePoints.Length; i++)
         {
-            Debug.Log($"Punkt {i}: X = {featurePoints[i].x}, Y = {featurePoints[i].y}");
+            Debug.Log($"Punkt {i}: X = {inputFeaturePoints[i].x}, Y = {inputFeaturePoints[i].y}");
         }
-        */
 
-        //return featurePoints;
+        return inputFeaturePoints;
     }
 
     // compute similarity of two sprites

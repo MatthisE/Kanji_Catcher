@@ -76,6 +76,13 @@ public static class StrokeSimplifier
             }
         }
 
+        for (int i = 0; i < result.Count; i++)
+        {
+            result[i] = new Vector2(
+                Mathf.Round(result[i].x),
+                Mathf.Round(result[i].y));
+        }
+
         return result.ToArray();
     }
 

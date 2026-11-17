@@ -4,6 +4,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+//using System.Numerics;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -62,6 +63,7 @@ public class PlayerAttack : MonoBehaviour
 
         damageCalculator.AnalyzeStroke(characterIndex, points, referenceStrokes);
 
+        //Vector2[] featurePoints = damageCalculator.GetFeaturePoints(characterIndex, points);
         //source.DisplayFeaturePoints(featurePoints);
     }
 
