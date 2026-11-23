@@ -312,20 +312,50 @@ public class DrawOnRawImage : MonoBehaviour
         currentStroke.Clear();
     }
 
-    public void DisplayFeaturePoints(Vector2[] featurePoints)
+    public void DisplayFeaturePoints(Vector2[] featurePoints, Color color)
     {
         foreach (Vector2 point in featurePoints)
         {
-            DrawPixel(
-                Mathf.RoundToInt(point.x),
-                Mathf.RoundToInt(point.y),
-                Color.red,
-                14f
-            );
+            DrawPixel(Mathf.RoundToInt(point.x), Mathf.RoundToInt(point.y), color, 14f);
         }
 
         canvasTexture.SetPixels32(canvasColors);
         canvasTexture.Apply();
+    }
+
+    public void DispayFeaturePointPairing(FeaturePointPairing pairing)
+    {
+        int pairCount = pairing.PrincipalPairs.Count;
+
+        for (int i = 0; i < pairCount; i++)
+        {
+            FeaturePointPair pair = pairing.PrincipalPairs[i];
+
+            Vector2 inputPoint = pairing.InputFeaturePoints[pair.InputIndex];
+            Vector2 referencePoint = pairing.ReferenceFeaturePoints[pair.ReferenceIndex];
+            Color pairColor = GetPairColor(i, pairCount);
+
+            DrawFeaturePointPair(inputPoint, referencePoint, pairColor);
+        }
+
+        canvasTexture.SetPixels32(canvasColors);
+        canvasTexture.Apply();
+    }
+
+    private void DrawFeaturePointPair(Vector2 inputPoint, Vector2 referencePoint, Color color)
+    {
+        DrawPixel(Mathf.RoundToInt(inputPoint.x), Mathf.RoundToInt(inputPoint.y), color, 14f);
+        DrawPixel(Mathf.RoundToInt(referencePoint.x), Mathf.RoundToInt(referencePoint.y), color, 14f);
+    }
+
+    private Color GetPairColor(int pairIndex, int pairCount)
+    {
+        if (pairCount <= 0)
+            return Color.white;
+
+        float hue = (float)pairIndex / pairCount;
+
+        return Color.HSVToRGB(hue, 0.9f, 1f);
     }
 
 }

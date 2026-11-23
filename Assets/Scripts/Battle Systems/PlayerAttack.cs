@@ -61,10 +61,19 @@ public class PlayerAttack : MonoBehaviour
         int characterIndex = drawingFields.IndexOf(source);
         SymbolInStrokes referenceStrokes = trainingWord.symbolsAsStrokes[characterIndex];
 
-        damageCalculator.AnalyzeStroke(characterIndex, points, referenceStrokes);
+        //damageCalculator.AnalyzeStroke(characterIndex, points, referenceStrokes);
 
         //Vector2[] featurePoints = damageCalculator.GetFeaturePoints(characterIndex, points);
         //source.DisplayFeaturePoints(featurePoints);
+
+        //FeaturePointPairing pairing = damageCalculator.GetFeaturePointPairing(points, referenceStrokes);
+        //source.DispayFeaturePointPairing(pairing);
+
+        ResampledStrokePair resampled = damageCalculator.GetResampledAuxiliaryFeaturePoints(points, referenceStrokes);
+        source.DisplayFeaturePoints(resampled.InputPoints, Color.blue);
+
+        Vector2[] featurePoints = damageCalculator.GetResampledPrincipalFeaturePoints(points, referenceStrokes);
+        source.DisplayFeaturePoints(featurePoints, Color.red);
     }
 
     public void SetWords(TrainingWord thisTrainingWord, bool healing)

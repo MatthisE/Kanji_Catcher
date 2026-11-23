@@ -2,21 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FeaturePointPairer
+public static class FeaturePointPairer
 {
-    private readonly float _positionalWeight;
-    private readonly float _directionalWeight;
-    private readonly float _normalizedCharacterSize;
-
-    public FeaturePointPairer(float positionalWeight = 0.5f, float directionalWeight = 0.5f, float normalizedCharacterSize = 1f)
-    {
-        _positionalWeight = positionalWeight;
-        _directionalWeight = directionalWeight;
-        _normalizedCharacterSize = normalizedCharacterSize;
-    }
+    private static float _positionalWeight = 0.9f;
+    private static float _directionalWeight = 0.1f;
+    private static float _normalizedCharacterSize = 568f;
 
     // compute principal one-to-one correspondences between an input stroke and a reference stroke
-    public FeaturePointPairing Pair(Vector2[] inputFeaturePoints, Vector2[] referenceFeaturePoints)
+    public static FeaturePointPairing Pair(Vector2[] inputFeaturePoints, Vector2[] referenceFeaturePoints)
     {
         int inputCount = inputFeaturePoints.Length;
         int referenceCount = referenceFeaturePoints.Length;
@@ -40,7 +33,7 @@ public class FeaturePointPairer
     }
 
     // equation: E(i,j) = Ep(i,j) * wp + Ed(i,j) * wd
-    private float CalculatePairCost(Vector2 inputPoint, Vector2 referencePoint)
+    private static float CalculatePairCost(Vector2 inputPoint, Vector2 referencePoint)
     {
         float positionalCost = CalculatePositionalCost(inputPoint, referencePoint);
         float directionalCost = CalculateDirectionalCost(inputPoint, referencePoint);
@@ -49,21 +42,21 @@ public class FeaturePointPairer
     }
 
     // positional feature: Ep(i,j)
-    private float CalculatePositionalCost(Vector2 inputPoint, Vector2 referencePoint)
+    private static float CalculatePositionalCost(Vector2 inputPoint, Vector2 referencePoint)
     {
-        float distance = Vector2.Distance(inputPoint, referencePoint);
-        return distance / Mathf.Max(_normalizedCharacterSize, 0.0001f);
+        float similarity = ((2f * _normalizedCharacterSize) - (Mathf.Abs(inputPoint.x - referencePoint.x) + Mathf.Abs(inputPoint.y - referencePoint.y))) / (2f * _normalizedCharacterSize);
+        return 1 - Mathf.Clamp01(similarity);
     }
 
     // directional feature: Ed(i,j)
-    private float CalculateDirectionalCost(Vector2 inputPoint, Vector2 referencePoint)
+    private static float CalculateDirectionalCost(Vector2 inputPoint, Vector2 referencePoint)
     {
         // no direction vector computed
         return 0f;
     }
 
     // calculate directional cost from explicit local direction vectors
-    public float CalculateDirectionalCostFromVectors(Vector2 inputDirection, Vector2 referenceDirection)
+    public static float CalculateDirectionalCostFromVectors(Vector2 inputDirection, Vector2 referenceDirection)
     {
         if (inputDirection.sqrMagnitude < 0.000001f || referenceDirection.sqrMagnitude < 0.000001f)
         {
@@ -77,7 +70,7 @@ public class FeaturePointPairer
     }
 
     // dynamic-programming alignment between the feature-point sequences
-    private DpMatchingResult RunDpMatching(float[,] cost)
+    private static DpMatchingResult RunDpMatching(float[,] cost)
     {
         int rows = cost.GetLength(0);
         int columns = cost.GetLength(1);
@@ -135,7 +128,7 @@ public class FeaturePointPairer
     }
 
     // backtrack the DP table and produce raw correspondences
-    private List<FeatureCorrespondence> ExtractRawCorrespondences(DpMatchingResult dp, float[,] cost)
+    private static List<FeatureCorrespondence> ExtractRawCorrespondences(DpMatchingResult dp, float[,] cost)
     {
         var correspondences = new List<FeatureCorrespondence>();
 
@@ -176,10 +169,7 @@ public class FeaturePointPairer
     }
 
     // apply reduction rules
-    private List<FeaturePointPair> ReduceToOneToOnePairs(
-        List<FeatureCorrespondence> correspondences,
-        int inputCount,
-        int referenceCount)
+    private static List<FeaturePointPair> ReduceToOneToOnePairs(List<FeatureCorrespondence> correspondences, int inputCount, int referenceCount)
     {
         var inputUsed = new bool[inputCount];
         var referenceUsed = new bool[referenceCount];
@@ -240,7 +230,7 @@ public class FeaturePointPairer
         return pairs;
     }
 
-    private void AddPair(List<FeaturePointPair> pairs, bool[] inputUsed, bool[] referenceUsed, FeatureCorrespondence correspondence)
+    private static void AddPair(List<FeaturePointPair> pairs, bool[] inputUsed, bool[] referenceUsed, FeatureCorrespondence correspondence)
     {
         inputUsed[correspondence.InputIndex] = true;
         referenceUsed[correspondence.ReferenceIndex] = true;
